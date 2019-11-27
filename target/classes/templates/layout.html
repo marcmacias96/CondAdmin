@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="frgHead">
+<meta charset="UTF-8">
+<title>CondAdmin</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+</head>
+<body>
+	<header th:fragment="frgHeader" class="container">
+		<br />
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			<a class="navbar-brand" th:href="@{/}">Inicio</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto"> 
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/owner/list}">Owner</a></li>
+						
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/incomes/list}">Incomes</a></li>
+						
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/house/list}">House</a></li>
+						
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/expenses/list}">Expenses</a></li>
+
+				</ul>
+			</div>
+	</nav>
+
+			<div id="success-alert" class="alert alert-success" role="alert"
+                th:if="${success != null}">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <span th:text=${success}></span>
+            </div>
+            <div id="error-alert" class="alert alert-error" role="alert" th:if="${error != null}"
+                th:text=${error}></div>
+            <div id="warning-alert" class="alert alert-warning" role="alert"
+                th:if="${warning != null}" th:text=${warning}></div>
+            <div id="info-alert" class="alert alert-info" role="alert" th:if="${info != null}"
+                th:text=${info}></div>
+ 
+        </header>
+
+        <div class="container"></div>
+
+        <footer th:fragment="frgFooter" class="container">
+                <br />
+            <hr />
+            <div class="row">
+                <div class="col-md-1">
+                    <i class="fas fa-university fa-5x"></i>
+                </div>
+                <div class="col-md-9">
+                    <h5 class="card-title">Universidad de las Fuerzas Armadas</h5>
+                    <div class="card-text">
+                        <strong>Career: Software Engineering</strong><br /> <small>Belisario
+                            Quevedo - Latacunga</small>
+                    </div>
+                </div>
+                <div class="col-md-1 center-block">
+                    <p>ISOW&copy;2019</p>
+                </div>
+            </div>
+            <hr />
+            <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+            <script th:src="@{/js/popper.js}"></script>
+            <script th:src="@{/js/bootstrap.min.js}"></script>
+        </footer>
+
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

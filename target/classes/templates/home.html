@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+
+	<header th:replace="layout :: header"></header>
+
+	<div class="container">
+		<br/>
+		<div class="content row">
+			<div class="col-md-6">
+				<div class="jumbotron">
+					<h1 class="display-4" th:text="${title}"></h1>
+					<p class="lead" th:text="${framework}"></p>
+					<hr class="my-4">
+					<p th:text="${description}"></p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<img class="card-img-top" th:src="@{/images/spring-boot.png}" />
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>
