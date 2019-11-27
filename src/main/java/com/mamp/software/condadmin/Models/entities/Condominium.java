@@ -1,0 +1,105 @@
+package com.mamp.software.condadmin.Models.entities;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
+
+@Entity
+@Table(name = "CONDOMINIUM")
+public class Condominium implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @javax.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "IDCONDOM")
+    private Integer Id;
+
+    @Column(name = "NAME")
+    @Size(max=55)
+    private String name;
+
+    @Column(name = "COSTALI")
+    @Size(max=55)
+    private Float costAli;
+
+    @Column(name = "STREET1")
+    @Size(max=55)
+    private String street1;
+
+    @Column(name = "STREET2")
+    @Size(max=55)
+    private String street2;
+
+    @Column(name = "REFERENCE")
+    @Size(max=55)
+    private String reference;
+
+    //Relations
+    @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
+    private List<Owner> ownerList;
+
+    @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
+    private List<Expenses> expensesList;
+
+    @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
+    private  List<AnnualCounts> annualCountsList;
+
+    public Condominium(){
+        super();
+    }
+
+    private Condominium(Integer id){
+        super();
+        this.Id = id;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getCostAli() {
+        return costAli;
+    }
+
+    public void setCostAli(Float costAli) {
+        this.costAli = costAli;
+    }
+
+    public String getStreet1() {
+        return street1;
+    }
+
+    public void setStreet1(String street1) {
+        this.street1 = street1;
+    }
+
+    public String getStreet2() {
+        return street2;
+    }
+
+    public void setStreet2(String street2) {
+        this.street2 = street2;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+}
