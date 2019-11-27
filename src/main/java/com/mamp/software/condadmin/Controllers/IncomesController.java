@@ -21,7 +21,7 @@ public class IncomesController {
     @GetMapping(value = "/create")
     public String create(Model model){
         Income income = new Income();
-        model.addAttribute("expenses", income);
+        model.addAttribute("income", income);
         model.addAttribute("title","Registro de nuevo Ingreso");
 
         return "incomes/form";
@@ -68,6 +68,6 @@ public class IncomesController {
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
-        return "redirect:/expenses/list";
+        return "redirect:/incomes/list";
     }
 }

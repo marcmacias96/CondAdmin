@@ -12,11 +12,11 @@ import java.util.Calendar;
 public class Income implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDINCOME")
-    private Integer Id;
+    private Integer idincome;
 
     @Column(name = "VALUE", precision=8, scale = 2)
     private float value;
@@ -39,52 +39,60 @@ public class Income implements Serializable {
     @ManyToOne
     private House house;
 
+    
+    /**/
     public Income(){
         super();
     }
 
-    private Income(Integer id){
+    private Income(Integer idincome){
         super();
-        this.Id = id;
+        this.idincome = idincome;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+	public Integer getIdincome() {
+		return idincome;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdincome(Integer idincome) {
+		this.idincome = idincome;
+	}
 
-    public float getValue() {
-        return value;
-    }
+	public float getValue() {
+		return value;
+	}
 
-    public void setValue(float value) {
-        this.value = value;
-    }
+	public void setValue(float value) {
+		this.value = value;
+	}
 
-    public Calendar getDate() {
-        return date;
-    }
+	public Calendar getDate() {
+		return date;
+	}
 
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
+
+    
+	
+
+    
 }

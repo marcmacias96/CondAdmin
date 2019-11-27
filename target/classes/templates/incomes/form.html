@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+<div id="wrapper">
+	<header th:replace="layout :: frgHeader"></header>
+	<div id="content-wrapper" class="d-flex flex-column">
+		<!-- Begin Page Content -->
+		<div class="container">
+			<div class="container-fluid">			
+				<br />
+		<div class="card col-md-12">
+			<div class="card-body">
+				<div class="form-group row">
+					<div class="content col-sm-1">
+						<i class="far fa-plus-square fa-2x"></i>
+					</div>
+					<h3 class="card-title col-sm-10" th:text="${title}"></h3>					
+				</div>
+				<hr />
+				
+				<form th:action="@{/incomes/save}" th:object="${incomes}" method="post">
+										
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Value:</label>						
+						</div>
+						<div class="content col-sm-6">							
+							<input class="form-control" type="text" 
+								th:field="*{value}"
+								th:errorclass="'form-control is-invalid'" />										
+						</div>
+					</div>
+				
+					
+										
+					<hr />
+					<div class="form-group row">
+						<div class="col-sm-4">
+							<a class="btn btn-danger" 
+								th:href="@{/incomes/list}">
+							<i class="fas fa-minus-circle"></i>&nbsp;Cancel</a>
+							<button class="btn btn-success" type="submit">
+								<i class="fas fa-plus-circle"></i>&nbsp;Save
+							</button>
+						</div>
+					</div>
+					<input type="hidden" th:field="*{idincome}" />
+							
+				
+				</form>
+				
+	
+				
+			</div>
+		</div>
+			</div>
+			<footer th:replace="layout :: frgFooter"></footer>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -10,11 +10,11 @@ import java.util.List;
 public class Condominium implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDCONDOM")
-    private Integer Id;
+    private Integer idcondominium;
 
     @Column(name = "NAME")
     @Size(max=55)
@@ -46,60 +46,63 @@ public class Condominium implements Serializable {
     @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
     private  List<AnnualCounts> annualCountsList;
 
+    /**/
     public Condominium(){
         super();
     }
 
-    private Condominium(Integer id){
+    private Condominium(Integer idcondominium){
         super();
-        this.Id = id;
+        this.idcondominium = idcondominium;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+	public Integer getIdcondominium() {
+		return idcondominium;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdcondominium(Integer idcondominium) {
+		this.idcondominium = idcondominium;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Float getCostAli() {
-        return costAli;
-    }
+	public Float getCostAli() {
+		return costAli;
+	}
 
-    public void setCostAli(Float costAli) {
-        this.costAli = costAli;
-    }
+	public void setCostAli(Float costAli) {
+		this.costAli = costAli;
+	}
 
-    public String getStreet1() {
-        return street1;
-    }
+	public String getStreet1() {
+		return street1;
+	}
 
-    public void setStreet1(String street1) {
-        this.street1 = street1;
-    }
+	public void setStreet1(String street1) {
+		this.street1 = street1;
+	}
 
-    public String getStreet2() {
-        return street2;
-    }
+	public String getStreet2() {
+		return street2;
+	}
 
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
+	public void setStreet2(String street2) {
+		this.street2 = street2;
+	}
 
-    public String getReference() {
-        return reference;
-    }
+	public String getReference() {
+		return reference;
+	}
 
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+    
 }

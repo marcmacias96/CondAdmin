@@ -10,11 +10,11 @@ import java.util.List;
 public class House implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDHOUSE")
-    private Integer Id;
+    private Integer idhouse;
 
     @Column(name = "NUMBER")
     @Size(max=5)
@@ -32,36 +32,40 @@ public class House implements Serializable {
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY)
     private List<Income> incomeList;
 
+    /**/
     public House(){
         super();
     }
 
-    private House(Integer id){
+    private House(Integer idhouse){
         super();
-        this.Id = id;
+        this.idhouse = idhouse;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+	public Integer getIdhouse() {
+		return idhouse;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdhouse(Integer idhouse) {
+		this.idhouse = idhouse;
+	}
 
-    public Integer getNumber() {
-        return number;
-    }
+	public Integer getNumber() {
+		return number;
+	}
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
 
-    public String getBlock() {
-        return block;
-    }
+	public String getBlock() {
+		return block;
+	}
 
-    public void setBlock(String block) {
-        this.block = block;
-    }
+	public void setBlock(String block) {
+		this.block = block;
+	}
+
+    
 }

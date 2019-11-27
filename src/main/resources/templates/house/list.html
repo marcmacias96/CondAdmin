@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: frgHead"></head>
+<body>
+<div id="wrapper">
+	<header th:replace="layout :: frgHeader"></header>
+	<div id="content-wrapper" class="d-flex flex-column">
+		<!-- Begin Page Content -->
+		<div class="container">
+			<div class="container-fluid">				
+				<br />
+		<div class="card col-md-12">
+			<div class="card-body">
+				<div class="form-group row">
+					<div class="content col-sm-1">
+						<i class="far fa-plus-square fa-2x"></i>
+					</div>
+					<h3 class="card-title col-sm-10" th:text="${title}"></h3>
+				</div>
+				<hr />
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Value</th>
+
+							<th><a class="btn btn-sm btn-success" th:href="@{/house/create}" >
+								<i class="fas fa-plus"></i>&nbsp;New</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>						
+						<tr th:each="house : ${houseList}" >
+							<td th:text="${house.block}"></td>
+							
+							<td>
+								<div class="row">
+									<a class="btn btn-sm btn-warning" title="Edit"
+									   th:href="@{/house/update/} + ${house.idhouse}">
+										<i class="fas fa-edit"></i>
+									</a>
+									<a class="btn btn-sm btn-primary" title="View"
+									   th:href="@{/house/retrieve/} + ${house.idhouse}">
+										<i class="fas fa-eye"></i>
+									</a>									
+								</div>
+
+							</td>							
+						</tr>				
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+			</div>
+			<footer th:replace="layout :: frgFooter"></footer>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -12,11 +12,11 @@ import java.util.List;
 public class AnnualCounts implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDANNUALCOUNTS")
-    private Integer Id;
+    private Integer idannualcounts;
 
     @Column(name = "YEAR")
     @Temporal(TemporalType.DATE)
@@ -37,44 +37,47 @@ public class AnnualCounts implements Serializable {
     @OneToMany(mappedBy = "annualCounts", fetch = FetchType.LAZY)
     private List<MonthlyAccounts> monthlyAccountsList;
 
+    /**/
     public AnnualCounts(){
         super();
     }
 
-    private AnnualCounts(Integer id){
+    private AnnualCounts(Integer idannualcounts){
         super();
-        this.Id = id;
+        this.idannualcounts = idannualcounts;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+	public Integer getIdannualcounts() {
+		return idannualcounts;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdannualcounts(Integer idannualcounts) {
+		this.idannualcounts = idannualcounts;
+	}
 
-    public Calendar getYear() {
-        return year;
-    }
+	public Calendar getYear() {
+		return year;
+	}
 
-    public void setYear(Calendar year) {
-        this.year = year;
-    }
+	public void setYear(Calendar year) {
+		this.year = year;
+	}
 
-    public float getIncome() {
-        return income;
-    }
+	public float getIncome() {
+		return income;
+	}
 
-    public void setIncome(float income) {
-        this.income = income;
-    }
+	public void setIncome(float income) {
+		this.income = income;
+	}
 
-    public float getExpenses() {
-        return expenses;
-    }
+	public float getExpenses() {
+		return expenses;
+	}
 
-    public void setExpenses(float expenses) {
-        this.expenses = expenses;
-    }
+	public void setExpenses(float expenses) {
+		this.expenses = expenses;
+	}
+
 }

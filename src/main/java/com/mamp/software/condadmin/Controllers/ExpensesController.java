@@ -47,7 +47,7 @@ public class ExpensesController {
             service.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
+            redirectAttributes.addFlashAttribute("message","Error al eliminar el registro");
 
         }
         return "redirect:/expenses/list";
@@ -56,7 +56,7 @@ public class ExpensesController {
     @GetMapping(value = "/list")
     public String list(Model model){
         List<Expenses> expensesList = service.findAll();
-        model.addAttribute("expenseslist", expensesList);
+        model.addAttribute("expensesList", expensesList);
         return "expenses/list";
     }
 

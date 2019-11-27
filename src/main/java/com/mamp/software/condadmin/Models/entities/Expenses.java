@@ -13,11 +13,11 @@ import java.util.Calendar;
 public class Expenses implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDEXPENSES")
-    private Integer Id;
+    private Integer idexpenses;
 
     @Column(name = "VALUE",precision=8, scale = 2)
     private float value;
@@ -36,37 +36,50 @@ public class Expenses implements Serializable {
     @ManyToOne
     private Condominium condominium;
 
+    /**/
     public Expenses(){
         super();
     }
 
-    private Expenses(Integer id){
+    private Expenses(Integer idexpenses){
         super();
-        this.Id = id;
+        this.idexpenses = idexpenses;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+    
+	public Integer getIdexpenses() {
+		return idexpenses;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdexpenses(Integer idexpenses) {
+		this.idexpenses = idexpenses;
+	}
 
-    public float getValue() {
-        return value;
-    }
+	public float getValue() {
+		return value;
+	}
 
-    public void setValue(float value) {
-        this.value = value;
-    }
+	public void setValue(float value) {
+		this.value = value;
+	}
 
-    public String getDetail() {
-        return detail;
-    }
+	public Calendar getDate() {
+		return date;
+	}
 
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+    
 }
 

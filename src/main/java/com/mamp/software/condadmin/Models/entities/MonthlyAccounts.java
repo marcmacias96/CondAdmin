@@ -11,11 +11,11 @@ import java.util.Calendar;
 public class MonthlyAccounts implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDMONTHCOUNTS")
-    private Integer Id;
+    private Integer idmonthlyaccounts;
 
     @Column(name = "MONTH")
     @Temporal(TemporalType.DATE)
@@ -33,44 +33,48 @@ public class MonthlyAccounts implements Serializable {
     @ManyToOne
     private AnnualCounts annualCounts;
 
+    /**/
     public MonthlyAccounts(){
         super();
     }
 
-    private MonthlyAccounts(Integer id){
+    private MonthlyAccounts(Integer idmonthlyaccounts){
         super();
-        this.Id = id;
+        this.idmonthlyaccounts = idmonthlyaccounts;
     }
 
-    public Integer getId() {
-        return Id;
-    }
+    /**/
+	public Integer getIdmonthlyaccounts() {
+		return idmonthlyaccounts;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public void setIdmonthlyaccounts(Integer idmonthlyaccounts) {
+		this.idmonthlyaccounts = idmonthlyaccounts;
+	}
 
-    public Calendar getMonth() {
-        return month;
-    }
+	public Calendar getMonth() {
+		return month;
+	}
 
-    public void setMonth(Calendar month) {
-        this.month = month;
-    }
+	public void setMonth(Calendar month) {
+		this.month = month;
+	}
 
-    public float getIncome() {
-        return income;
-    }
+	public float getIncome() {
+		return income;
+	}
 
-    public void setIncome(float income) {
-        this.income = income;
-    }
+	public void setIncome(float income) {
+		this.income = income;
+	}
 
-    public float getExpenses() {
-        return expenses;
-    }
+	public float getExpenses() {
+		return expenses;
+	}
 
-    public void setExpenses(float expenses) {
-        this.expenses = expenses;
-    }
+	public void setExpenses(float expenses) {
+		this.expenses = expenses;
+	}
+
+    
 }

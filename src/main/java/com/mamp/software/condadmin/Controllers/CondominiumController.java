@@ -55,7 +55,7 @@ public class CondominiumController {
     @GetMapping(value = "/list")
     public String list(Model model){
         List<Condominium> condominiumList = service.findAll();
-        model.addAttribute("condominiumlist", condominiumList);
+        model.addAttribute("condominiumList", condominiumList);
         return "paciente/list";
     }
 

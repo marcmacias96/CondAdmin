@@ -10,11 +10,11 @@ import java.util.List;
 public class Owner implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "IDOWNER")
-    private Integer Id;
+    private Integer idowner;
 
     @Column(name = "NAME")
     @Size(max=55)
@@ -40,44 +40,55 @@ public class Owner implements Serializable {
     @ManyToOne
     private Condominium condominium;
 
-    public Owner () {
-        super();
-    }
+    /**/
+    public Owner() {
+		super();
+	}
+    
+	public Owner(Integer idowner) {
+		super();
+		this.idowner = idowner;
+	}
 
-    public Owner (String cedula){
-        super();
-        this.ci = cedula;
-    }
+	/**/
+	public Integer getIdowner() {
+		return idowner;
+	}
 
-    public Integer getId() {
-        return Id;
-    }
+	public void setIdowner(Integer idowner) {
+		this.idowner = idowner;
+	}
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getCi() {
+		return ci;
+	}
 
-    public String getCi() {
-        return ci;
-    }
+	public void setCi(String ci) {
+		this.ci = ci;
+	}
 
-    public void setCi(String ci) {
-        this.ci = ci;
-    }
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+    
 }
