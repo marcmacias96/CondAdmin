@@ -22,6 +22,9 @@
 					<thead>
 						<tr>
 							<th><i class="fas fa-info-circle"></i>&nbsp;Value</th>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Date</th>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Description</th>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Type</th>
 
 							<th><a class="btn btn-sm btn-success" th:href="@{/incomes/create}" >
 								<i class="fas fa-plus"></i>&nbsp;New</a>
@@ -29,8 +32,11 @@
 						</tr>
 					</thead>
 					<tbody>						
-						<tr th:each="incomes : ${incomesList}" >
+						<tr th:each="incomes : ${incomeList}" >
 							<td th:text="${incomes.value}"></td>
+							<td th:text="${incomes.date}"></td>
+							<td th:text="${incomes.description}"></td>
+							<td th:text="${incomes.type}"></td>
 							
 							<td>
 								<div class="row">

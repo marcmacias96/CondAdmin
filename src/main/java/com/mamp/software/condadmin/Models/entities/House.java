@@ -1,6 +1,7 @@
 package com.mamp.software.condadmin.Models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
@@ -18,10 +19,12 @@ public class House implements Serializable {
 
     @Column(name = "NUMBER")
     @Size(max=5)
+    @NotEmpty
     private Integer number;
 
     @Column(name = "BLOCK")
     @Size(max=5)
+    @NotEmpty
     private String block;
 
     //RELATIONS

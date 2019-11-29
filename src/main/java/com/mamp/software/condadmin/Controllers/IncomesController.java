@@ -3,6 +3,8 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.entities.Expenses;
 import com.mamp.software.condadmin.Models.entities.Income;
 import com.mamp.software.condadmin.services.IIncomeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/incomes")
 public class IncomesController {
+	@Autowired
     public IIncomeService service;
 
     @GetMapping(value = "/create")
@@ -56,7 +59,8 @@ public class IncomesController {
     @GetMapping(value = "/list")
     public String list(Model model){
         List<Income> incomeListList = service.findAll();
-        model.addAttribute("incomeListList", incomeListList);
+        model.addAttribute("title","Listado de Ingresos");
+        model.addAttribute("incomeList", incomeListList);
         return "incomes/list";
     }
 

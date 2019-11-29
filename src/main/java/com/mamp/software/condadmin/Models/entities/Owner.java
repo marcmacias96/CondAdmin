@@ -1,6 +1,7 @@
 package com.mamp.software.condadmin.Models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
@@ -18,18 +19,22 @@ public class Owner implements Serializable {
 
     @Column(name = "NAME")
     @Size(max=55)
+    @NotEmpty
     private String name;
 
     @Column(name = "LASTNAME")
     @Size(max=55)
+    @NotEmpty
     private String lastName;
 
     @Column(name = "IDCARD")
     @Size(max=10)
+    @NotEmpty
     private String ci;
 
     @Column(name = "EMAIL")
     @Size(max=50)
+    @NotEmpty
     private String email;
 
     //Relations

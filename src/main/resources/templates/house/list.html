@@ -21,7 +21,8 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Value</th>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Number</th>
+							<th><i class="fas fa-info-circle"></i>&nbsp;Block</th>
 
 							<th><a class="btn btn-sm btn-success" th:href="@{/house/create}" >
 								<i class="fas fa-plus"></i>&nbsp;New</a>
@@ -30,6 +31,7 @@
 					</thead>
 					<tbody>						
 						<tr th:each="house : ${houseList}" >
+							<td th:text="${house.number}"></td>
 							<td th:text="${house.block}"></td>
 							
 							<td>

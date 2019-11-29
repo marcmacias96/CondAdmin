@@ -27,7 +27,54 @@
 				</div>
 				<input type="hidden" id="idincome"
 					th:value="${incomes.idincome}" />
+				
+
 				<hr />
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="content col-sm-3 bg-light">
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Date:</label>
+							</div>
+							<div class="col-sm-8">
+								<h5 class="card-text" th:text="${owners.date}"></h5>
+							</div>
+						</div>						
+					</div>
+				</div>
+				
+				
+				<hr />
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="content col-sm-3 bg-light">
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Description:</label>
+							</div>
+							<div class="col-sm-8">
+								<h5 class="card-text" th:text="${owners.description}"></h5>
+							</div>
+						</div>						
+					</div>
+				</div>
+				
+				
+				<hr />
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="content col-sm-3 bg-light">
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Type:</label>
+							</div>
+							<div class="col-sm-8">
+								<h5 class="card-text" th:text="${owners.type}"></h5>
+							</div>
+						</div>						
+					</div>
+				</div>
 				
 			</div>
 		</div>

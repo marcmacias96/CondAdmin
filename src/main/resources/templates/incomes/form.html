@@ -19,7 +19,7 @@
 				</div>
 				<hr />
 				
-				<form th:action="@{/incomes/save}" th:object="${incomes}" method="post">
+				<form th:action="@{/incomes/save}" th:object="${income}" method="post">
 										
 					<div class="form-group row">
 						<div class="content col-sm-3">
@@ -27,13 +27,66 @@
 							<label class="h5 col-form-label">&nbsp;Value:</label>						
 						</div>
 						<div class="content col-sm-6">							
-							<input class="form-control" type="text" 
+							<textarea class="form-control" type="text" 
 								th:field="*{value}"
-								th:errorclass="'form-control is-invalid'" />										
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('value')}"
+								th:errors="*{value}"></small>										
 						</div>
 					</div>
 				
+				
+					<hr />
+					<!-- CALENDER -->
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Date:</label>						
+						</div>
+						<div class="content col-sm-6">							
+							<textarea class="form-control" type="text" 
+								th:field="*{date}"
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('date')}"
+								th:errors="*{date}"></small>										
+						</div>
+					</div>
+									
 					
+					<hr />
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Description:</label>						
+						</div>
+						<div class="content col-sm-6">							
+							<textarea class="form-control" type="text" 
+								th:field="*{description}"
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('description')}"
+								th:errors="*{description}"></small>										
+						</div>
+					</div>				
+					
+					
+					<hr />
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Type:</label>						
+						</div>
+						<div class="content col-sm-6">							
+							<textarea class="form-control" type="text" 
+								th:field="*{type}"
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('type')}"
+								th:errors="*{type}"></small>										
+						</div>
+					</div>
 										
 					<hr />
 					<div class="form-group row">

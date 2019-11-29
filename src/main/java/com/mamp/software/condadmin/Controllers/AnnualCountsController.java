@@ -3,6 +3,8 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.entities.AnnualCounts;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.services.IAnnualCountsService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/annualCounts")
 public class AnnualCountsController {
+	@Autowired
     public IAnnualCountsService service;
 
     @GetMapping(value = "/create")

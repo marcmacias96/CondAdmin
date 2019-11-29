@@ -3,6 +3,8 @@ package com.mamp.software.condadmin.Models.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -21,12 +23,15 @@ public class AnnualCounts implements Serializable {
     @Column(name = "YEAR")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty
     private Calendar year;
 
     @Column(name = "INCOME",precision=8, scale = 2)
+    @NotEmpty
     private float income;
 
     @Column(name = "EXPENSES",precision=8, scale = 2)
+    @NotEmpty
     private float expenses;
 
     //Relations

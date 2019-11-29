@@ -3,6 +3,8 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.entities.AnnualCounts;
 import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
 import com.mamp.software.condadmin.services.IMonthlyAccountsService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/monthlyAccounts")
 public class MonthlyAccountsController {
+	@Autowired
     public IMonthlyAccountsService service;
 
     @GetMapping(value = "/create")

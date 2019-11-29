@@ -1,6 +1,7 @@
 package com.mamp.software.condadmin.Models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
@@ -18,22 +19,27 @@ public class Condominium implements Serializable {
 
     @Column(name = "NAME")
     @Size(max=55)
+    @NotEmpty
     private String name;
 
     @Column(name = "COSTALI")
     @Size(max=55)
+    @NotEmpty
     private Float costAli;
 
     @Column(name = "STREET1")
     @Size(max=55)
+    @NotEmpty
     private String street1;
 
     @Column(name = "STREET2")
     @Size(max=55)
+    @NotEmpty
     private String street2;
 
     @Column(name = "REFERENCE")
     @Size(max=55)
+    @NotEmpty
     private String reference;
 
     //Relations

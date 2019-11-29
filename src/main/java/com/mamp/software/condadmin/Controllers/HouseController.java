@@ -2,6 +2,8 @@ package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.entities.House;
 import com.mamp.software.condadmin.services.IHouseService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/house")
 public class HouseController {
+	@Autowired
     public IHouseService service;
 
     @GetMapping(value = "/create")
@@ -55,6 +58,7 @@ public class HouseController {
     @GetMapping(value = "/list")
     public String list(Model model){
         List<House> houseList = service.findAll();
+        model.addAttribute("title","Listado de Casas");
         model.addAttribute("houseList", houseList);
         return "house/list";
     }

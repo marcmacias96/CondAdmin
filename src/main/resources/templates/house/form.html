@@ -20,20 +20,38 @@
 				<hr />
 				
 				<form th:action="@{/house/save}" th:object="${house}" method="post">
-										
+							
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Number:</label>						
+						</div>
+						<div class="content col-sm-6">							
+							<textarea class="form-control" type="text" 
+								th:field="*{number}"
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('number')}"
+								th:errors="*{number}"></small>										
+						</div>
+					</div>	
+				
+					
+					<hr />
 					<div class="form-group row">
 						<div class="content col-sm-3">
 							<i class="fas fa-info-circle"></i>
 							<label class="h5 col-form-label">&nbsp;Block:</label>						
 						</div>
 						<div class="content col-sm-6">							
-							<input class="form-control" type="text" 
+							<textarea class="form-control" type="text" 
 								th:field="*{block}"
-								th:errorclass="'form-control is-invalid'" />										
+								th:errorclass="'form-control is-invalid'" /></textarea>	
+								<small class="invalid-feedback"
+								th:if="${#fields.hasErrors('block')}"
+								th:errors="*{block}"></small>										
 						</div>
-					</div>
-				
-					
+					</div>	
 										
 					<hr />
 					<div class="form-group row">

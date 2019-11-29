@@ -3,6 +3,7 @@ package com.mamp.software.condadmin.Models.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -20,15 +21,18 @@ public class Expenses implements Serializable {
     private Integer idexpenses;
 
     @Column(name = "VALUE",precision=8, scale = 2)
+    @NotEmpty
     private float value;
 
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotEmpty
     private Calendar date;
 
     @Column(name = "DETAIL")
     @Size(max = 100)
+    @NotEmpty
     private String detail;
 
     //Relations
