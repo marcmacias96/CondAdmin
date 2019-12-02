@@ -2,33 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head"></head>
 <body>
+
 	<header th:replace="layout :: header"></header>
-	
-	<div class="container py-4">
-		<div class="card border-primary text-center">
-			<div class="card-header">Entering to the web app</div>
-			<div class="card-body">
-				<form th:action="@{/login}" method="post">
-					<div class="form-group col-sm-6">
-						<input type="text" name="username" id="username" class="form-control" placeholder="Enter the username" required/>
-					</div>
-				
-					<div class="form-group col-sm-6">
-						<input type="password" name="password" id="password" class="form-control" placeholder="Password" required/>
-					</div>
-					
-					<div class="form-group col-sm-6">
-						<input type="submit" class="btn-lg btn-primary btn-block" value="Enter"/>
-					</div>
-					
-					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-					
-				</form>
+
+	<div class="container">
+		<br />
+		<div class="content row">
+			<div class="col-md-6">
+				<div class="jumbotron">
+					<form th:action="@{/login}" method="post">
+						<div class="form-group col-sm-6">
+							<input type="text" name="username" id="username"
+								class="form-control" placeholder="Usuario" autofocus required />
+						</div>
+
+						<div class="form-group col-sm-6">
+							<input type="password" name="password" id="password"
+								class="form-control" placeholder="Contrase&nacute;a" required />
+						</div>
+
+						<div class="form-group col-sm-6">
+							<input type="submit" class="btn btn-lg btn-primary btn-block"
+								value="Ingresar" />
+						</div>
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}" />
+					</form>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<img class="card-img-top" th:src="@{/images/spring-boot.png}" />
 			</div>
 		</div>
 	</div>
-	
-	
+
+
+
 	<footer th:replace="layout :: footer"></footer>
 </body>
 </html>

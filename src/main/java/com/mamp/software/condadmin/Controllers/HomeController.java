@@ -19,19 +19,20 @@ public class HomeController {
 		model.addAttribute("description", "CondAdmin");
 		return "home";
 	}
+
+
 	@GetMapping(value="/login")
-	public String login(@RequestParam(value = "error", required = false)String error, Principal principal, RedirectAttributes flash, Model model) {
+	public String login(@RequestParam(value="error", required=false) String error, 
+			Model model, Principal principal, RedirectAttributes flash) {
 		
 		if(principal != null) {
-			flash.addFlashAttribute("info", "The user has an active session");
+			flash.addFlashAttribute("info", "El usuario ya tiene una sesión activa.");
 			return "redirect:/";
-		}
-		
+		}		
 		if(error != null) {
-			model.addAttribute("error", "User or Password incorrect");
-		}
-		
-		return "home";
+			model.addAttribute("error", "Usuario o contraseña incorrectas");
+		}				
+		return "login";
 	}
 	
 }
