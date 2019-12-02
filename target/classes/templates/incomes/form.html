@@ -44,16 +44,17 @@
 							<i class="fas fa-info-circle"></i>
 							<label class="h5 col-form-label">&nbsp;Date:</label>						
 						</div>
-						<div class="content col-sm-6">							
-							<textarea class="form-control" type="text" 
-								th:field="*{date}"
-								th:errorclass="'form-control is-invalid'" /></textarea>	
-								<small class="invalid-feedback"
+						<div class="content col-sm-6">						
+							<div class='input-group date' id='date'>
+			                    <input type='text' class="form-control" />
+			                    <span class="input-group-addon">
+			                        <span class="glyphicon glyphicon-calendar"></span>
+			                    </span>
+			                    <small class="invalid-feedback"
 								th:if="${#fields.hasErrors('date')}"
-								th:errors="*{date}"></small>										
-						</div>
-					</div>
-									
+								th:errors="*{date}"></small>	
+							</div>
+						</div>q		
 					
 					<hr />
 					<div class="form-group row">
