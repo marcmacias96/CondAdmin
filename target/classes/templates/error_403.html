@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+
+	<header th:replace="layout :: header"></header>
+
+	<div class="container">
+		<br />
+		<div class="content row">
+			<div class="col-md-6">
+				<div class="jumbotron">
+					<div class="card alert-danger">
+						<div class="card-header">Access Denied</div>
+						<div class="card-body">
+							<h4 class="card-title">
+								<span th:text="${#authentication.name}"></span>
+							</h4>						
+						</div>					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<img class="card-img-top" th:src="@{/images/spring-boot.png}" />
+			</div>
+		</div>
+	</div>
+
+
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>
