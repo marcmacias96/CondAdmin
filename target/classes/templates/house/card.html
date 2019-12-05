@@ -37,7 +37,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Block:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owners.block}"></h5>
+								<h5 class="card-text" th:text="${house.block}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -57,7 +57,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p th:text=${house.block}></p>
+						<p th:text="${house.block}"></p>
 					</div>
 					<div class="modal-footer">						
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>

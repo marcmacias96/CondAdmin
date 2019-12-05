@@ -17,16 +17,16 @@
 						<i class="fas fa-info-circle"></i>
 					</div>
 					<h3 class="card-title col-sm-6"
-						th:text="${owners.name}"></h3>
+						th:text="${owner.name}"></h3>
 					<div class="col-sm-4">
 						<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
 						<i class="fas fa-info-circle"></i>&nbsp;Delete</button>
-						<a class="btn btn-primary" th:href="@{/owners/list}"><i
+						<a class="btn btn-primary" th:href="@{/owner/list}"><i
 							class="fas fa-arrow-left"></i>&nbsp;Back</a>
 					</div>
 				</div>
 				<input type="hidden" id="Id"
-					th:value="${owners.idowner}" />
+					th:value="${owner.idowner}" />
 					
 					
 				<hr />
@@ -38,7 +38,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Last Name:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owners.lastName}"></h5>
+								<h5 class="card-text" th:text="${owner.lastName}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -54,7 +54,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;ID Card:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owners.ci}"></h5>
+								<h5 class="card-text" th:text="${owner.ci}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -70,7 +70,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Email:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owners.email}"></h5>
+								<h5 class="card-text" th:text="${owner.email}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -89,11 +89,11 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<p th:text=${owners.name}></p>
+						<p th:text="${owner.name}"></p>
 					</div>
 					<div class="modal-footer">						
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-						<a th:href="@{/owners/delete/} + ${owners.idowner}" class="btn btn-success">Confirm</a>
+						<a th:href="@{/owner/delete/} + ${owner.idowner}" class="btn btn-success">Confirm</a>
 					</div>
 				</div>
 			</div>

@@ -16,7 +16,12 @@ public class OwnerService implements IOwnerService {
     @Override
     @Transactional
     public void save(Owner owner) {
-        dao.save(owner);
+        try {
+            dao.save(owner);
+        }
+        catch(Exception ex) {
+            throw ex;
+        }
     }
 
     @Override

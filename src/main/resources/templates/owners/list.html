@@ -33,7 +33,7 @@
 						
 					</thead>
 					<tbody>						
-						<tr th:each="owners : ${ownersList}" >
+						<tr th:each="owners : ${ownerList}" >
 							<td th:text="${owners.name}"></td>
 							<td th:text="${owners.lastName}"></td>
 							<td th:text="${owners.ci}"></td>
@@ -42,11 +42,11 @@
 							<td>
 								<div class="row">
 									<a class="btn btn-sm btn-warning" title="Edit"
-									   th:href="@{/owners/update/} + ${owners.idowner}">
+									   th:href="@{/owner/update/} + ${owners.idowner}">
 										<i class="fas fa-edit"></i>
 									</a>
 									<a class="btn btn-sm btn-primary" title="View"
-									   th:href="@{/owner/retrieve/} + ${owners.idowner}">
+									   th:href="@{/owner/retrive/} + ${owners.idowner}">
 										<i class="fas fa-eye"></i>
 									</a>									
 								</div>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CondAdmin.iml" filepath="$PROJECT_DIR$/CondAdmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/condadmin.iml" filepath="$PROJECT_DIR$/condadmin.iml" />
     </modules>
   </component>
 </project>

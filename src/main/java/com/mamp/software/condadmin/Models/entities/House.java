@@ -18,8 +18,6 @@ public class House implements Serializable {
     private Integer idhouse;
 
     @Column(name = "NUMBER")
-    @Size(max=5)
-    @NotEmpty
     private Integer number;
 
     @Column(name = "BLOCK")

@@ -6,12 +6,14 @@ import com.mamp.software.condadmin.services.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -64,8 +66,12 @@ public class HouseController {
     }
 
     @PostMapping(value = "/save")
-    public String save(House house, Model model, RedirectAttributes redirectAttributes){
+    public String save(@Valid  House house, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         try {
+            if (bindingResult.hasErrors()){
+                model.addAttribute("title","Error al guardar");
+                return "house/form";
+            }
             service.save(house);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){

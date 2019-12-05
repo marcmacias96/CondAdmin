@@ -50,7 +50,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 				.logout().permitAll()
 			.and()
-				.exceptionHandling().accessDeniedPage("/error_403");
+				.exceptionHandling().accessDeniedPage("/error_403")
+			.and()
+				.csrf().ignoringAntMatchers("/h2-console/**")
+			.and()
+				.headers().frameOptions().sameOrigin();
+
 			
 	}
 	
