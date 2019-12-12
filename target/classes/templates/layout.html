@@ -5,103 +5,96 @@
 <meta charset="UTF-8">
 <title>CondAdmin</title>
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-	crossorigin="anonymous">
-</head>
+	<link rel="stylesheet" th:href="@{/css/animate.css}" />
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/themify-icons.css}" />
+	<link rel="stylesheet" th:href="@{/css/magnific-popup.css}" />
+	<link rel="stylesheet" th:href="@{/css/nice-select.css}" />
+	<link rel="stylesheet" th:href="@{/css/slick.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
 <body>
-	<header th:fragment="frgHeader" class="container">
-		<br />
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" th:href="@{/}">Inicio</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse">
-				<ul class="navbar-nav mr-auto"> 
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/owner/list}">Owner</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/incomes/list}">Incomes</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/house/list}">House</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/expenses/list}">Expenses</a></li>
-						
-						
-					<!-- LOGIN AND LOGOUT -->	
-						
-					<li sec:authorize="!isAuthenticated()">
-						<a class="btn btn-outline-primary" th:href="@{/login}">LOGIN</a>
-					</li>
 
-					<li sec:authorize="isAuthenticated()" class="dropdown shown">
-						<a class="btn btn-outline-primary dropdown-toggle" href="#"
-							role="button" id="dropdownMenuLink" data-toggle="dropdown">
-							<span sec:authentication="name"></span>
-						</a>
-						<div class="dropdown-menu">
-							<form id="frmLogout" th:action="@{/logout}" method="post">
-								<button class="dropdown-item" 
-								onclick="document.getElementById('frmLogout').submit();">LOGOUT</button>
-								<input type="hidden" th:name="${_csrf.parameterName}" 
-									th:value="${_csrf.token}"/>														
-							</form>
+	<header th:fragment="frgHeader" class="main_menu home_menu">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<a class="navbar-brand" th:href="@{/home.html}"> <img th:src="@{/img/logo.png}" th:alt="logo"> </a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse main-menu-item justify-content-center"
+							 id="navbarSupportedContent">
+							<ul class="navbar-nav align-items-center">
+								<li class="nav-item active">
+									<a class="nav-link" th:href="@{home.html}">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" th:href="@{about.html}">about</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" th:href="@{Doctor.html}">Doctors</a>
+								</li>
+
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" th:href="blog.html" id="navbarDropdown"
+									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Pages
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" th:href="@{services.html}">services</a>
+										<a class="dropdown-item" th:href="@{dep.html}">depertments</a>
+										<a class="dropdown-item" th:href="@{elements.html}">Elements</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										blog
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+										<a class="dropdown-item" th:href="@{blog.html}">blog</a>
+										<a class="dropdown-item" th:href="@{single-blog.html}">Single blog</a>
+									</div>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" th:href="@{contact.html}">Contact</a>
+								</li>
+							</ul>
 						</div>
-					</li>	
-
-				</ul>
+						<a class="btn_2 d-none d-lg-block" th:href="@{#}">HOT LINE- 09856</a>
+					</nav>
+				</div>
 			</div>
-	</nav>
+		</div>
+	</header>
+<!-- Header part end-->
 
-			<div id="success-alert" class="alert alert-success" role="alert"
-                th:if="${success != null}">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <span th:text=${success}></span>
-            </div>
-            <div id="error-alert" class="alert alert-error" role="alert" th:if="${error != null}"
-                th:text=${error}></div>
-            <div id="warning-alert" class="alert alert-warning" role="alert"
-                th:if="${warning != null}" th:text=${warning}></div>
-            <div id="info-alert" class="alert alert-info" role="alert" th:if="${info != null}"
-                th:text=${info}></div>
- 
-        </header>
-
-        <div class="container"></div>
 
         <footer th:fragment="frgFooter" class="container">
-                <br />
-            <hr />
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fas fa-university fa-5x"></i>
-                </div>
-                <div class="col-md-9">
-                    <h5 class="card-title">Universidad de las Fuerzas Armadas</h5>
-                    <div class="card-text">
-                        <strong>Career: Software Engineering</strong><br /> <small>Belisario
-                            Quevedo - Latacunga</small>
-                    </div>
-                </div>
-                <div class="col-md-1 center-block">
-					<p sec:authorize="isAuthenticated()">
-						User: &nbsp; <span sec:authentication="name"></span>
-						Roles: &nbsp;<span sec:authentication="principal.authorities"> </span>
-					</p>
-                    <p>ISOW&copy;2019</p>
-                </div>
-            </div>
-            <hr />
-            <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
-            <script th:src="@{/js/popper.js}"></script>
-            <script th:src="@{/js/bootstrap.min.js}"></script>
-       	    <script th:src="@{/js/layout.js}"></script> 
+
+			<!-- jquery plugins here-->
+
+			<script th:src="@{js/jquery-1.12.1.min.js}"></script>
+			<!-- popper js -->
+			<script th:src="@{js/popper.min.js}"></script>
+			<!-- bootstrap js -->
+			<script th:src="@{js/bootstrap.min.js}"></script>
+			<!-- owl carousel js -->
+			<script th:src="@{js/owl.carousel.min.js}"></script>
+			<script th:src="@{js/jquery.nice-select.min.js}"></script>
+			<!-- contact js -->
+
+			<script th:src="@{js/jquery.form.js}"></script>
+			<script th:src="@{js/jquery.validate.min.js}"></script>
+			<script th:src="@{js/mail-script.js}"></script>
+			<script th:src="@{js/contact.js}"></script>
+			<!-- custom js -->
+			<script th:src="@{js/custom.js}"></script>
         </footer>
 
     </body>

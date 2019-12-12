@@ -4,6 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -22,7 +24,8 @@ public class MonthlyAccounts implements Serializable {
     @Column(name = "MONTH")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
+    @NotNull
+    @Past
     private Calendar month;
 
     @Column(name = "INCOME",precision=8, scale = 2)

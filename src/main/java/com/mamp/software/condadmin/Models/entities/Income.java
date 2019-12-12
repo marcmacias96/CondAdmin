@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class Income implements Serializable {
 
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
+    @Past
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotEmpty
     private Calendar date;
