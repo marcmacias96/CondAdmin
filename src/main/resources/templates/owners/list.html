@@ -38,31 +38,31 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th><i class="ti-user"></i>&nbsp;Name</th>
-							<th><i class="ti-user"></i>&nbsp;LastName</th>
-							<th><i class="ti-id-badge"></i>&nbsp;ID Card</th>
-							<th><i class="ti-email"></i>&nbsp;Email</th>
+							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Name</th>
+							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;LastName</th>
+							<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp;ID Card</th>
+							<th class="align-middle text-center"><i class="ti-email"></i>&nbsp;Email</th>
 
-							<th><a class="btn btn-sm btn-success" th:href="@{/owner/create}" >
-								<i class="fas fa-plus"></i>&nbsp;New</a>
+							<th><a class="genric-btn info circle" th:href="@{/owner/create}" >
+								<i class="ti-plus"></i>&nbsp;Nuevo</a>
 							</th>
 						</tr>
 						
 					</thead>
 					<tbody>						
 						<tr th:each="owners : ${ownerList}" >
-							<td th:text="${owners.name}"></td>
-							<td th:text="${owners.lastName}"></td>
-							<td th:text="${owners.ci}"></td>
-							<td th:text="${owners.email}"></td>
+							<td class="align-middle text-center" th:text="${owners.name}"></td>
+							<td class="align-middle text-center" th:text="${owners.lastName}"></td>
+							<td class="align-middle text-center" th:text="${owners.ci}"></td>
+							<td class="align-middle text-center" th:text="${owners.email}"></td>
 							
 							<td>
 								<div class="row">
-									<a class="btn btn-sm btn-warning" title="Edit"
+									<a class="genric-btn btn-sm info-border circle" title="Edit"
 									   th:href="@{/owner/update/} + ${owners.idowner}">
 										<i class="ti-pencil"></i>
 									</a>
-									<a class="btn btn-sm btn-primary" title="View"
+									<a class="genric-btn btn-sm info-border circle" title="View"
 									   th:href="@{/owner/retrive/} + ${owners.idowner}">
 										<i class="ti-hand-point-up"></i>
 									</a>									

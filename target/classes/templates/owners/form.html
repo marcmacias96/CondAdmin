@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="layout :: head"></head>
 <body>
 <header th:replace="layout :: frgHeader"></header>
@@ -42,7 +42,7 @@
 						<div class="col-sm-6">
 							<input class="single-input" type="text"
 								th:field="*{name}"
-								th:errorclass="'form-control is-invalid'" /></textarea>	
+								th:errorclass="'form-control is-invalid'" /></textarea>
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('name')}"
 								th:errors="*{name}"></small>										
@@ -60,7 +60,7 @@
 						<div class=" col-sm-6">
 							<input class="single-input" type="text"
 								th:field="*{lastName}"
-								th:errorclass="'form-control is-invalid'" /></textarea>	
+								th:errorclass="'form-control is-invalid'" /></input>
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('lastName')}"
 								th:errors="*{lastName}"></small>										
@@ -78,7 +78,7 @@
 						<div class="content col-sm-6">							
 							<input class="single-input" type="text"
 								th:field="*{ci}"
-								th:errorclass="'form-control is-invalid'" /></textarea>	
+								th:errorclass="'form-control is-invalid'" /></textarea>
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('ci')}"
 								th:errors="*{ci}"></small>										
@@ -96,7 +96,7 @@
 						<div class="content col-sm-6">							
 							<input class="single-input" type="text"
 								th:field="*{email}"
-								th:errorclass="'form-control is-invalid'" /></textarea>	
+								th:errorclass="'form-control is-invalid'" /></textarea>
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('email')}"
 								th:errors="*{email}"></small>										
@@ -105,10 +105,10 @@
 					<input type="hidden" th:field="*{idowner}" />
 
 					<div class="col-12 d-flex flex-row-reverse">
-						<a class="btn btn-danger px-2"
+						<a class="genric-btn  danger circle px-2"
 						   th:href="@{/owner/list}">
 							<i class="ti-close"></i>&nbsp;Cancel</a>
-						<button class="btn btn-success" type="submit">
+						<button class="genric-btn success circle" type="submit">
 							<i class="ti-save"></i>&nbsp;Save
 						</button>
 					</div>
