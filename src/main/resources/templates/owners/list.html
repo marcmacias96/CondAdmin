@@ -19,66 +19,69 @@
 </section>
 <!-- breadcrumb start-->
 
-<div class="container pb-5">
 
-	<div class="d-flex flex-column">
-		<!-- Begin Page Content -->
+	<!-- about us part start-->
+	<section class="about_us padding_top pb-5">
 		<div class="container">
-			<div class="container-fluid">				
-				<br />
-		<div class="card col-md-12">
-			<div class="card-body">
-				<div class="form-group row">
-					<div class="content col-sm-1">
-						<i class="far fa-plus-square fa-2x"></i>
+			<div class="row justify-content-between align-items-center">
+				<div class="col-md-2 col-lg-4">
+					<div class="about_us_img">
+						<img th:src="@{/img/GrupoCasa.png}" alt="">
 					</div>
-					<h3 class="card-title col-sm-10" th:text="${title}"></h3>
 				</div>
-				<hr />
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Name</th>
-							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;LastName</th>
-							<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp;ID Card</th>
-							<th class="align-middle text-center"><i class="ti-email"></i>&nbsp;Email</th>
-
-							<th><a class="genric-btn info circle" th:href="@{/owner/create}" >
-								<i class="ti-plus"></i>&nbsp;Nuevo</a>
-							</th>
-						</tr>
-						
-					</thead>
-					<tbody>						
-						<tr th:each="owners : ${ownerList}" >
-							<td class="align-middle text-center" th:text="${owners.name}"></td>
-							<td class="align-middle text-center" th:text="${owners.lastName}"></td>
-							<td class="align-middle text-center" th:text="${owners.ci}"></td>
-							<td class="align-middle text-center" th:text="${owners.email}"></td>
-							
-							<td>
-								<div class="row">
-									<a class="genric-btn btn-sm info-border circle" title="Edit"
-									   th:href="@{/owner/update/} + ${owners.idowner}">
-										<i class="ti-pencil"></i>
-									</a>
-									<a class="genric-btn btn-sm info-border circle" title="View"
-									   th:href="@{/owner/retrive/} + ${owners.idowner}">
-										<i class="ti-hand-point-up"></i>
-									</a>									
+				<div class="col-md-10 col-lg-8">
+					<div class="card col-md-12">
+						<div class="card-body">
+							<div class="form-group row">
+								<div class="content col-sm-1">
+									<i class="far fa-plus-square fa-2x"></i>
 								</div>
+								<h3 class="card-title col-sm-10" th:text="${title}"></h3>
+							</div>
+							<hr />
+							<table class="table table-hover">
+								<thead>
+								<tr>
+									<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Name</th>
+									<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;LastName</th>
+									<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp;ID Card</th>
+									<th class="align-middle text-center"><i class="ti-email"></i>&nbsp;Email</th>
 
-							</td>							
-						</tr>				
-					
-					</tbody>
-				</table>
+									<th><a class="genric-btn info circle" th:href="@{/owner/create}" >
+										<i class="ti-plus"></i>&nbsp;Nuevo</a>
+									</th>
+								</tr>
+
+								</thead>
+								<tbody>
+								<tr th:each="owners : ${ownerList}" >
+									<td class="align-middle text-center" th:text="${owners.name}"></td>
+									<td class="align-middle text-center" th:text="${owners.lastName}"></td>
+									<td class="align-middle text-center" th:text="${owners.ci}"></td>
+									<td class="align-middle text-center" th:text="${owners.email}"></td>
+
+									<td>
+										<div class="row">
+											<a class="genric-btn btn-sm info-border circle" title="Edit"
+											   th:href="@{/owner/update/} + ${owners.idowner}">
+												<i class="ti-pencil"></i>
+											</a>
+											<a class="genric-btn btn-sm info-border circle" title="View"
+											   th:href="@{/owner/retrive/} + ${owners.idowner}">
+												<i class="ti-hand-point-up"></i>
+											</a>
+										</div>
+
+									</td>
+								</tr>
+
+								</tbody>
+							</table>
+						</div>
+				</div>
 			</div>
 		</div>
-			</div>
-
-		</div>
-	</div>
+	</section>
 </div>
 <footer th:replace="layout :: frgFooter"></footer>
 </body>
