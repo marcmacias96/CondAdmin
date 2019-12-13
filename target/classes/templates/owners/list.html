@@ -2,84 +2,84 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: frgHead"></head>
 <body>
-<header th:replace="layout :: frgHeader"></header>
-<!-- breadcrumb start-->
-<section class="breadcrumb_part breadcrumb_bg">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="breadcrumb_iner">
-					<div class="breadcrumb_iner_item">
-						<h2>Propietarios</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- breadcrumb start-->
-
-<div class="container pb-5">
-
-	<div class="d-flex flex-column">
-		<!-- Begin Page Content -->
+	<header th:replace="layout :: frgHeader"></header>
+	<!-- breadcrumb start-->
+	<section class="breadcrumb_part breadcrumb_bg">
 		<div class="container">
-			<div class="container-fluid">				
-				<br />
-		<div class="card col-md-12">
-			<div class="card-body">
-				<div class="form-group row">
-					<div class="content col-sm-1">
-						<i class="far fa-plus-square fa-2x"></i>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb_iner">
+						<div class="breadcrumb_iner_item">
+							<h2>Propietarios</h2>
+						</div>
 					</div>
-					<h3 class="card-title col-sm-10" th:text="${title}"></h3>
 				</div>
-				<hr />
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Name</th>
-							<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;LastName</th>
-							<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp;ID Card</th>
-							<th class="align-middle text-center"><i class="ti-email"></i>&nbsp;Email</th>
-
-							<th><a class="genric-btn info circle" th:href="@{/owner/create}" >
-								<i class="ti-plus"></i>&nbsp;Nuevo</a>
-							</th>
-						</tr>
-						
-					</thead>
-					<tbody>						
-						<tr th:each="owners : ${ownerList}" >
-							<td class="align-middle text-center" th:text="${owners.name}"></td>
-							<td class="align-middle text-center" th:text="${owners.lastName}"></td>
-							<td class="align-middle text-center" th:text="${owners.ci}"></td>
-							<td class="align-middle text-center" th:text="${owners.email}"></td>
-							
-							<td>
-								<div class="row">
-									<a class="genric-btn btn-sm info-border circle" title="Edit"
-									   th:href="@{/owner/update/} + ${owners.idowner}">
-										<i class="ti-pencil"></i>
-									</a>
-									<a class="genric-btn btn-sm info-border circle" title="View"
-									   th:href="@{/owner/retrive/} + ${owners.idowner}">
-										<i class="ti-hand-point-up"></i>
-									</a>									
-								</div>
-
-							</td>							
-						</tr>				
-					
-					</tbody>
-				</table>
 			</div>
 		</div>
+	</section>
+	<!-- breadcrumb ends-->
+	
+	<div class="container pb-5">
+	
+		<div class="d-flex flex-column">
+			<!-- Begin Page Content -->
+			<div class="container">
+				<div class="container-fluid">				
+					<br />
+			<div class="card col-md-12">
+				<div class="card-body">
+					<div class="form-group row">
+						<div class="content col-sm-1">
+							<i class="far fa-plus-square fa-2x"></i>
+						</div>
+						<h3 class="card-title col-sm-10" th:text="${title}"></h3>
+					</div>
+					<hr />
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="align-middle text-center"><i class="ti-user"></i>&nbsp; Name</th>
+								<th class="align-middle text-center"><i class="ti-user"></i>&nbsp; LastName</th>
+								<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp; ID Card</th>
+								<th class="align-middle text-center"><i class="ti-email"></i>&nbsp; Email</th>
+	
+								<th><a class="genric-btn info circle" th:href="@{/owner/create}" >
+									<i class="ti-plus"></i>&nbsp;Nuevo</a>
+								</th>
+							</tr>
+							
+						</thead>
+						<tbody>						
+							<tr th:each="owners : ${ownerList}" >
+								<td class="align-middle text-center" th:text="${owners.name}"></td>
+								<td class="align-middle text-center" th:text="${owners.lastName}"></td>
+								<td class="align-middle text-center" th:text="${owners.ci}"></td>
+								<td class="align-middle text-center" th:text="${owners.email}"></td>
+								
+								<td>
+									<div class="row">
+										<a class="genric-btn btn-sm info-border circle" title="Edit"
+										   th:href="@{/owner/update/} + ${owners.idowner}">
+											<i class="ti-pencil"></i>
+										</a>
+										<a class="genric-btn btn-sm info-border circle" title="View"
+										   th:href="@{/owner/retrive/} + ${owners.idowner}">
+											<i class="ti-eye"></i>
+										</a>									
+									</div>
+	
+								</td>							
+							</tr>				
+						
+						</tbody>
+					</table>
+				</div>
 			</div>
-
+				</div>
+	
+			</div>
 		</div>
 	</div>
-</div>
-<footer th:replace="layout :: frgFooter"></footer>
+	<footer th:replace="layout :: frgFooter"></footer>
 </body>
 </html>

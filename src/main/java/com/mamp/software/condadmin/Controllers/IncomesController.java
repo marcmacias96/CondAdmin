@@ -1,6 +1,5 @@
 package com.mamp.software.condadmin.Controllers;
 
-import com.mamp.software.condadmin.Models.entities.Expenses;
 import com.mamp.software.condadmin.Models.entities.Income;
 import com.mamp.software.condadmin.services.IIncomeService;
 
@@ -36,19 +35,22 @@ public class IncomesController {
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Income income = service.findById(id);
         model.addAttribute("income", income);
+        model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
         return "incomes/card";
     }
 
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
         Income income = service.findById(id);
+        model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
         model.addAttribute("income",income);
         return "incomes/form";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
+    	model.addAttribute("title","eliminacion de registro de nuevo ingreso");
+    	try {
             service.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
