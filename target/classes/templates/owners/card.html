@@ -17,7 +17,7 @@
 		</div>
 	</div>
 </section>
-<!-- breadcrumb start-->
+<!-- breadcrumb ends-->
 <div class="container pb-5">
 	<header th:replace="layout :: frgHeader"></header>
 	<div  class="d-flex flex-column">
@@ -31,7 +31,7 @@
 				<div class="form-group row">
 					<div class="col-6 ">
 						<h3
-								th:text="${owner.name} +  ${owner.lastName} "></h3>
+								th:text="${owner.name} + ' ' +  ${owner.lastName} "></h3>
 					</div>
 					<div class="col-6 d-flex flex-row-reverse">
 						<div class="form-group px-2">
@@ -45,7 +45,7 @@
 
 					</div>
 				</div>
-				<input type="hidden" id="Id"
+				<input type="hidden" id="idowner"
 					th:value="${owner.idowner}" />
 					
 					

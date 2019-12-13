@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="frgHead">
 	<meta charset="UTF-8">
-	<title>CondAdmin</title>
+	<title>My Condo</title>
 	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/css/animate.css}" />
 	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
@@ -33,9 +33,6 @@
 						<div class="collapse navbar-collapse main-menu-item justify-content-center"
 							 id="navbarSupportedContent">
 							<ul class="navbar-nav align-items-center">
-								<li class="nav-item active">
-									<a class="nav-link" th:href="@{#}">Info-Panel</a>
-								</li>
 								<li class="nav-item">
 									<a class="nav-link" th:href="@{/owner/list}">Propietarios</a>
 								</li>
@@ -46,13 +43,13 @@
 									<a class="nav-link" th:href="@{/house/list}">Condominios</a>
 								</li>
 								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" th:href="blog.html" id="navbarDropdown"
+									<a class="nav-link dropdown-toggle" id="navbarDropdown"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Cuentas
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<a class="dropdown-item" th:href="@{#}">Gestion Pago Alicuotas</a>
-										<a class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a>
+										<a class="dropdown-item" th:href="@{#}">Gestión Pago Alicuotas</a>
+										<a class="dropdown-item nav-link" th:href="@{/incomes/list}">Ingresos</a>
 										<a class="dropdown-item" th:href="@{/expenses/list}">Gastos</a>
 									</div>
 								</li>
@@ -66,32 +63,41 @@
 	</header>
 <!-- Header part end-->
 
-	<!-- footer part start-->
+<!-- footer part start-->
 	<footer  th:fragment="frgFooter" class="footer-area">
 		<div class="footer section_padding">
 			<div class="container">
 				<div class="row justify-content-between">
-					<div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
-						<a href="#" class="footer_logo"> <img th:src="@{/img/logo.png}" alt="#"> </a>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
-						<div class="social_logo">
+					<div class="col-xl-3 col-md-4 col-sm-6 single-footer-widget">
+						<!-- <a href="#" class="footer_logo"> <img th:src="@{/img/logo.png}" alt="#"> </a> -->
+						<h4>Contactos</h4>
+						<h5>Teléfonos:</h5>
+						<p>Marco Macías - 0998758287</p>
+						<p>Darex León - 0987638245</p>
+						<br/>
+						<h5>Dirección:</h5>
+						<p>EC - Latacunga</p>
+						<br/>
+						<h5>Correo:</h5>
+						<p>info@mycondo.com</p>
+						<!--<div class="social_logo">
 							<a href="#"><i class="ti-facebook"></i></a>
 							<a href="#"> <i class="ti-twitter"></i> </a>
 							<a href="#"><i class="ti-instagram"></i></a>
 							<a href="#"><i class="ti-skype"></i></a>
-						</div>
+						</div>-->
 					</div>
 					<div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
 						<h4>Quick Links</h4>
 						<ul>
 							<li><a href="#">About us</a></li>
 							<li><a href="#">Department</a></li>
-							<li><a href="#"> Online payment</a></li>
+							<li><a href="#">Online payment</a></li>
 							<li><a href="#">Careers</a></li>
 							<li><a href="#">Department</a></li>
 						</ul>
 					</div>
-					<div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
+					<!-- <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
 						<h4>Explore</h4>
 						<ul>
 							<li><a href="#">In the community</a></li>
@@ -110,7 +116,7 @@
 							<li><a href="#">Without given She</a></li>
 							<li><a href="#">Isn two signs think</a></li>
 						</ul>
-					</div>
+					</div> -->
 					<div class="col-xl-3 col-sm-6 col-md-6 single-footer-widget">
 						<h4>Newsletter</h4>
 						<p>Seed good winged wherein which night multiply

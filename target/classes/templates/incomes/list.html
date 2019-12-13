@@ -2,65 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: frgHead"></head>
 <body>
-<div id="wrapper">
 	<header th:replace="layout :: frgHeader"></header>
-	<div id="content-wrapper" class="d-flex flex-column">
-		<!-- Begin Page Content -->
+	<!-- breadcrumb start-->
+	<section class="breadcrumb_part breadcrumb_bg">
 		<div class="container">
-			<div class="container-fluid">				
-				<br />
-		<div class="card col-md-12">
-			<div class="card-body">
-				<div class="form-group row">
-					<div class="content col-sm-1">
-						<i class="far fa-plus-square fa-2x"></i>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb_iner">
+						<div class="breadcrumb_iner_item">
+							<h2>Ingresos</h2>
+						</div>
 					</div>
-					<h3 class="card-title col-sm-10" th:text="${title}"></h3>
 				</div>
-				<hr />
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Value</th>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Date</th>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Description</th>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Type</th>
-
-							<th><a class="btn btn-sm btn-success" th:href="@{/incomes/create}" >
-								<i class="fas fa-plus"></i>&nbsp;New</a>
-							</th>
-						</tr>
-					</thead>
-					<tbody>						
-						<tr th:each="incomes : ${incomeList}" >
-							<td th:text="${incomes.value}"></td>
-							<td th:text="${incomes.date}"></td>
-							<td th:text="${incomes.description}"></td>
-							<td th:text="${incomes.type}"></td>
-							
-							<td>
-								<div class="row">
-									<a class="btn btn-sm btn-warning" title="Edit"
-									   th:href="@{/incomes/update/} + ${incomes.idincome}">
-										<i class="fas fa-edit"></i>
-									</a>
-									<a class="btn btn-sm btn-primary" title="View"
-									   th:href="@{/incomes/retrieve/} + ${incomes.idincome}">
-										<i class="fas fa-eye"></i>
-									</a>									
-								</div>
-
-							</td>							
-						</tr>				
-					
-					</tbody>
-				</table>
 			</div>
 		</div>
+	</section>
+	<!-- breadcrumb ends-->
+	
+	<div class="container pb-5">
+	
+		<div class="d-flex flex-column">
+			<!-- Begin Page Content -->
+			<div class="container">
+				<div class="container-fluid">				
+					<br />
+			<div class="card col-md-12">
+				<div class="card-body">
+					<div class="form-group row">
+						<div class="content col-sm-1">
+							<i class="far fa-plus-square fa-2x"></i>
+						</div>
+						<h3 class="card-title col-sm-10" th:text="${title}"></h3>
+					</div>
+					<hr />
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="align-middle text-center"><i class="ti-money"></i>&nbsp; Value</th>
+								<th class="align-middle text-center"><i class="ti-calendar"></i>&nbsp; Date</th>
+								<th class="align-middle text-center"><i class="ti-comment-alt"></i>&nbsp; Description</th>
+								<th class="align-middle text-center"><i class="ti-layers"></i>&nbsp; Type</th>
+	
+								<th><a class="genric-btn info circle" th:href="@{/incomes/create}" >
+									<i class="ti-plus"></i>&nbsp;Nuevo</a>
+								</th>
+							</tr>
+							
+						</thead>
+						<tbody>						
+							<tr th:each="incomes : ${incomeList}" >
+								<td class="align-middle text-center" th:text="${incomes.value}"></td>
+								<td class="align-middle text-center" th:text="${incomes.date}"></td>
+								<td class="align-middle text-center" th:text="${incomes.description}"></td>
+								<td class="align-middle text-center" th:text="${incomes.type}"></td>
+								
+								<td>
+									<div class="row">
+										<a class="genric-btn btn-sm info-border circle" title="Edit"
+										   th:href="@{/incomes/update/} + ${incomes.idincome}">
+											<i class="ti-pencil"></i>
+										</a>
+										<a class="genric-btn btn-sm info-border circle" title="View"
+										   th:href="@{/incomes/retrieve/} + ${incomes.idincome}">
+											<i class="ti-eye"></i>
+										</a>									
+									</div>
+	
+								</td>							
+							</tr>				
+						
+						</tbody>
+					</table>
+				</div>
 			</div>
-			<footer th:replace="layout :: frgFooter"></footer>
+				</div>
+				<footer th:replace="layout :: frgFooter"></footer>
+			</div>
 		</div>
 	</div>
-</div>
 </body>
 </html>

@@ -42,7 +42,7 @@
 						<div class="col-sm-6">
 							<input class="single-input" type="text"
 								th:field="*{name}"
-								th:errorclass="'form-control is-invalid'" /></textarea>
+								th:errorclass="'form-control is-invalid'" /></input>
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('name')}"
 								th:errors="*{name}"></small>										
@@ -57,7 +57,7 @@
 							<i class="ti-user"></i>
 							<label class="h5 col-form-label">&nbsp;Last Name</label>
 						</div>
-						<div class=" col-sm-6">
+						<div class="col-sm-6">
 							<input class="single-input" type="text"
 								th:field="*{lastName}"
 								th:errorclass="'form-control is-invalid'" /></input>
@@ -105,11 +105,11 @@
 					<input type="hidden" th:field="*{idowner}" />
 
 					<div class="col-12 d-flex flex-row-reverse">
-						<a class="genric-btn  danger circle px-2"
+						<a class="genric-btn  danger circle"
 						   th:href="@{/owner/list}">
-							<i class="ti-close"></i>&nbsp;Cancel</a>
+							<i class="ti-close"></i>&nbsp; Cancel</a>
 						<button class="genric-btn success circle" type="submit">
-							<i class="ti-save"></i>&nbsp;Save
+							<i class="ti-save"></i>&nbsp; Save
 						</button>
 					</div>
 
