@@ -67,6 +67,14 @@ public class House implements Serializable {
 	public void setBlock(String block) {
 		this.block = block;
 	}
+	
+	public Owner getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
 
     
 }

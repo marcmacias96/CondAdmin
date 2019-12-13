@@ -57,18 +57,16 @@
 							<i class="ti-calendar"></i>
 							<label class="h5 col-form-label">&nbsp;Date:</label>						
 						</div>
-						<div class="col-sm-6">						
-							<div class="single-input" id="date">
-			                    <input type="text" class="form-control" />
-			                    <span class="input-group-addon">
-			                        <span class="glyphicon glyphicon-calendar"></span>
-			                    </span>
-			                    <small class="invalid-feedback"
-								th:if="${#fields.hasErrors('date')}"
-								th:errors="*{date}"></small>	
-							</div>
+						<div class="col-sm-6">
+						<input th:field="*{date}" placeholder="Fecha de nacimiento" 
+											class="single-input" type="date"											
+											th:errorclass="'form-control is-invalid'">
+										 <small
+											class="invalid-feedback"
+											th:if="${#fields.hasErrors('date')}"
+											th:errors="*{date}"></small>
 						</div>
-					
+					</div>
 					<hr />
 					<div class="form-group row">
 						<div class="col-sm-3">

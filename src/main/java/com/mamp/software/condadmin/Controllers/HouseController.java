@@ -1,6 +1,8 @@
 package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.entities.House;
+import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.services.IOwnerService;
 import com.mamp.software.condadmin.services.IHouseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,17 @@ import java.util.List;
 public class HouseController {
 	@Autowired
     public IHouseService service;
+	
+	@Autowired
+	public IOwnerService srvOwner;
 
     @GetMapping(value = "/create")
     public String create(Model model){
         House house = new House();
         model.addAttribute("house", house);
         model.addAttribute("title","Registro de nueva Casa");
+        List<Owner> owner = srvOwner.findAll();
+        model.addAttribute("owner", owner);
 
         return "house/form";
     }
@@ -42,6 +49,8 @@ public class HouseController {
     public String update(@PathVariable(value = "id") Integer id, Model model){
         House house = service.findById(id);
         model.addAttribute("house",house);
+        List<Owner> owner = srvOwner.findAll();
+        model.addAttribute("owner", owner);
         return "house/form";
     }
 
@@ -70,6 +79,8 @@ public class HouseController {
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute("title","Error al guardar");
+                List<Owner> owner = srvOwner.findAll();
+                model.addAttribute("owner", owner);
                 return "house/form";
             }
             service.save(house);

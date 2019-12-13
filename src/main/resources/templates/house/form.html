@@ -20,6 +20,24 @@
 				<hr />
 				
 				<form th:action="@{/house/save}" th:object="${house}" method="post">
+						
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Dueno:</label>						
+						</div>
+						 <div class="content col-sm-6">							
+							<select class="form-control" th:field="*{owner.idowner}"> 
+								<option value=0>--Seleccione--</option>
+								<option th:each="o : ${owner}"
+								th:value="${o.idowner}" 
+								th:text="${o.name}"
+								th:selected="${house.owner.idowner == o.idowner}"></option>
+							</select>									
+						</div>
+					</div>	
+					
+					<hr/>
 							
 					<div class="form-group row">
 						<div class="content col-sm-3">
