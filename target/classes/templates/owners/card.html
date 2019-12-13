@@ -18,6 +18,7 @@
 	</div>
 </section>
 <!-- breadcrumb ends-->
+
 <div class="container pb-5">
 	<header th:replace="layout :: frgHeader"></header>
 	<div  class="d-flex flex-column">
@@ -30,17 +31,16 @@
 			<div class="card-body">
 				<div class="form-group row">
 					<div class="col-6 ">
-						<h3
-								th:text="${owner.name} + ' ' +  ${owner.lastName} "></h3>
+						<h3 th:text="${owner.name} + ' ' +  ${owner.lastName} "></h3>
 					</div>
 					<div class="col-6 d-flex flex-row-reverse">
 						<div class="form-group px-2">
 							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
-								<i class="ti-trash"></i>&nbsp;Delete</button>
+								<i class="ti-trash"></i>&nbsp; Delete</button>
 						</div>
 						<div class="form-group">
 							<a class="genric-btn info circle" th:href="@{/owner/list}"><i
-									class="ti-back-left"></i>&nbsp;Back</a>
+									class="ti-back-left"></i>&nbsp; Back</a>
 						</div>
 
 					</div>

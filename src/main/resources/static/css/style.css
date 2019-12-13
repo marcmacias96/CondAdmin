@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Girassol:400,700|Rancho:400,700|Roboto:300,400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Playfair Display:400,700|Roboto:300,400,500,700&display=swap");
 /* line 1, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_extends.scss */
 .btn_1, .btn_2, .regervation_part .btn_2:hover {
   background-image: -webkit-linear-gradient(to right, #649bff, #0070fa, #649bff);
@@ -185,7 +185,7 @@ a:hover {
 /* line 87, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
 h1, h2, h3, h4, h5, h6 {
   color: #242429;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
 }
 
 /* line 91, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
@@ -510,7 +510,7 @@ ul {
   text-transform: capitalize;
   border: 1px solid #e4e6ea;
   border-radius: 2px;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   background-size: 200% auto;
 }
 
@@ -2326,7 +2326,7 @@ ul {
   color: #242429;
   font-size: 20px;
   padding: 38px 23px;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   line-height: 13px;
   text-transform: capitalize;
 }
@@ -2369,7 +2369,7 @@ ul {
 .dropdown .dropdown-menu .dropdown-item {
   font-size: 20px;
   padding: 9px 18px !important;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   color: #000 !important;
   text-transform: capitalize;
 }
@@ -2828,7 +2828,7 @@ ul {
   color: #242429;
   width: 50%;
   float: left;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   position: relative;
   padding-left: 29px;
 }
@@ -3356,7 +3356,7 @@ ul {
 /* line 59, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_review.scss */
 .review_part .client_review_single .client_review_text p {
   font-size: 18px;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   color: #fff;
   line-height: 1.9;
 }
@@ -3420,7 +3420,7 @@ ul {
 
 /* line 109, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_review.scss */
 .review_part h4 span {
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   font-size: 14px;
   color: #fff;
   font-weight: 400;
@@ -3610,7 +3610,7 @@ ul {
 .regervation_part .btn_2 {
   margin-top: 10px;
   background-color: #fff !important;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   font-weight: 500;
   color: #242429;
   font-size: 14px;
@@ -5753,7 +5753,7 @@ h1, h2, h3, h4, h5, h6 {
 .blog_part .blog_btn {
   font-size: 14px;
   text-transform: uppercase;
-  font-family: "Girassol", serif;
+  font-family: "Playfair Display", serif;
   font-weight: 500;
   margin-top: 20px;
   display: inline-block;
@@ -5990,7 +5990,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   font-size: 100px;
   font-weight: 200;
-  font-family: "Rancho", serif;
+  font-family: "Playfair Display", serif;
   text-transform: capitalize;
   text-align: center;
 }
