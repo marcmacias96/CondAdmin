@@ -2672,7 +2672,7 @@ ul {
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 999px) {
   /* line 129, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_banner.scss */
   .banner_part .banner_img {
     display: none;
