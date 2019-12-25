@@ -25,10 +25,36 @@ public class House implements Serializable {
     @NotEmpty
     private String block;
 
+    @Transient
+    private Integer ownerId;
+
+    @Transient
+    private Integer condmId;
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public void setIncomeList(List<Income> incomeList) {
+        this.incomeList = incomeList;
+    }
+
     //RELATIONS
     @JoinColumn(name = "IDOWNER", referencedColumnName = "IDOWNER")
     @ManyToOne
     private Owner owner;
+
+    @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
+    @ManyToOne
+    private Condominium condominium;
 
     @OneToMany(mappedBy = "house", fetch = FetchType.LAZY)
     private List<Income> incomeList;
@@ -44,37 +70,52 @@ public class House implements Serializable {
     }
 
     /**/
-	public Integer getIdhouse() {
-		return idhouse;
-	}
 
-	public void setIdhouse(Integer idhouse) {
-		this.idhouse = idhouse;
-	}
+    public Integer getCondmId() {
+        return condmId;
+    }
 
-	public Integer getNumber() {
-		return number;
-	}
+    public void setCondmId(Integer condmId) {
+        this.condmId = condmId;
+    }
 
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    public Integer getIdhouse() {
+        return idhouse;
+    }
 
-	public String getBlock() {
-		return block;
-	}
+    public void setIdhouse(Integer idhouse) {
+        this.idhouse = idhouse;
+    }
 
-	public void setBlock(String block) {
-		this.block = block;
-	}
-	
-	public Owner getOwner() {
-		return owner;
-	}
-	
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}
+    public Integer getNumber() {
+        return number;
+    }
 
-    
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Condominium getCondominium() {
+        return condominium;
+    }
+
+    public void setCondominium(Condominium condominium) {
+        this.condominium = condominium;
+    }
 }

@@ -1,9 +1,12 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
+import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.ICondominiumService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/condominium")
 public class CondominiumController {
 	@Autowired
-    public ICondominiumService service;
+    private ICondominiumService service;
+
+	@Autowired
+    private IUser srvUser;
 
     @GetMapping(value = "/create")
     public String create(Model model){
@@ -56,10 +63,19 @@ public class CondominiumController {
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model){
+    public String list(Model model, Authentication authentication){
         List<Condominium> condominiumList = service.findAll();
+        model.addAttribute("title","Codominios");
         model.addAttribute("condominiumList", condominiumList);
-        return "paciente/list";
+        return "condominium/list";
+    }
+    @GetMapping(value = "/myCondo")
+    public String listByCondom(Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = service.findByUser(user.getIdUser());
+        model.addAttribute("title","Codominios");
+        model.addAttribute("condominium", condominium);
+        return "condominium/card";
     }
 
     @PostMapping(value = "/save")
@@ -68,6 +84,7 @@ public class CondominiumController {
             service.save(condominium);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
+            System.out.println(e);
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
         return "redirect:/condominium/list";

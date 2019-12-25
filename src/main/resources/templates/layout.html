@@ -34,15 +34,23 @@
 							 id="navbarSupportedContent">
 							<ul class="navbar-nav align-items-center">
 								<li class="nav-item">
-									<a class="nav-link" th:href="@{/owner/list}">Propietarios</a>
+									<a class="nav-link"  th:href="@{/}">Inicio</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" th:href="@{/house/list}">Casas</a>
+									<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/condominium/list}">Condominios</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" th:href="@{/house/list}">Condominios</a>
+								<li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER-ADMIN')">
+									<a class="nav-link dropdown-toggle"
+									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mi Condominio
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
+										<a class="dropdown-item" th:href="@{/owner/list}">Propietarios</a>
+										<a class="dropdown-item nav-link"  th:href="@{/house/list}">Casas</a>
+									</div>
 								</li>
-								<li class="nav-item dropdown">
+								<li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER-ADMIN')">
 									<a class="nav-link dropdown-toggle" id="navbarDropdown"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Cuentas
@@ -56,6 +64,7 @@
 							</ul>
 						</div>
 						<a sec:authorize="!isAuthenticated()" class="btn_2 d-none d-lg-block" th:href="@{login.html}">Iniciar Sesión</a>
+						<a sec:authorize="!isAuthenticated()" class="btn_2 d-none d-lg-block" th:href="@{/user/create}">Registrate</a>
 
 					</nav>
 				</div>

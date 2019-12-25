@@ -22,9 +22,12 @@ public class Condominium implements Serializable {
     @NotEmpty
     private String name;
 
-    @Column(name = "COSTALI")
+    @Column(name = "SECTOR")
     @Size(max=55)
     @NotEmpty
+    private String sector;
+
+    @Column(name = "COSTALI")
     private Float costAli;
 
     @Column(name = "STREET1")
@@ -44,7 +47,7 @@ public class Condominium implements Serializable {
 
     //Relations
     @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
-    private List<Owner> ownerList;
+    private List<House> houseList;
 
     @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
     private List<Expenses> expensesList;
@@ -52,10 +55,17 @@ public class Condominium implements Serializable {
     @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
     private  List<AnnualCounts> annualCountsList;
 
-    /**/
+    @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
+    private List<Owner> ownerList;
+
+    @JoinColumn(name = "IDUSER", referencedColumnName = "IDUSER")
+    @ManyToOne
+    private USer uSer;
+
     public Condominium(){
         super();
     }
+
 
     private Condominium(Integer idcondominium){
         super();
@@ -63,52 +73,100 @@ public class Condominium implements Serializable {
     }
 
     /**/
-	public Integer getIdcondominium() {
-		return idcondominium;
-	}
 
-	public void setIdcondominium(Integer idcondominium) {
-		this.idcondominium = idcondominium;
-	}
+    public List<Owner> getOwnerList() {
+        return ownerList;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setOwnerList(List<Owner> ownerList) {
+        this.ownerList = ownerList;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public USer getuSer() {
+        return uSer;
+    }
 
-	public Float getCostAli() {
-		return costAli;
-	}
+    public void setuSer(USer uSer) {
+        this.uSer = uSer;
+    }
 
-	public void setCostAli(Float costAli) {
-		this.costAli = costAli;
-	}
+    public Integer getIdcondominium() {
+        return idcondominium;
+    }
 
-	public String getStreet1() {
-		return street1;
-	}
+    public void setIdcondominium(Integer idcondominium) {
+        this.idcondominium = idcondominium;
+    }
 
-	public void setStreet1(String street1) {
-		this.street1 = street1;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getStreet2() {
-		return street2;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setStreet2(String street2) {
-		this.street2 = street2;
-	}
+    public String getSector() {
+        return sector;
+    }
 
-	public String getReference() {
-		return reference;
-	}
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
 
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
-    
+    public Float getCostAli() {
+        return costAli;
+    }
+
+    public void setCostAli(Float costAli) {
+        this.costAli = costAli;
+    }
+
+    public String getStreet1() {
+        return street1;
+    }
+
+    public void setStreet1(String street1) {
+        this.street1 = street1;
+    }
+
+    public String getStreet2() {
+        return street2;
+    }
+
+    public void setStreet2(String street2) {
+        this.street2 = street2;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public List<House> getHouseList() {
+        return houseList;
+    }
+
+    public void setHouseList(List<House> houseList) {
+        this.houseList = houseList;
+    }
+
+    public List<Expenses> getExpensesList() {
+        return expensesList;
+    }
+
+    public void setExpensesList(List<Expenses> expensesList) {
+        this.expensesList = expensesList;
+    }
+
+    public List<AnnualCounts> getAnnualCountsList() {
+        return annualCountsList;
+    }
+
+    public void setAnnualCountsList(List<AnnualCounts> annualCountsList) {
+        this.annualCountsList = annualCountsList;
+    }
 }

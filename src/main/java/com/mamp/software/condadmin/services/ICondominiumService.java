@@ -13,4 +13,6 @@ public interface ICondominiumService {
     public void delete(Integer id);
 
     public List<Condominium> findAll();
+
+    public Condominium findByUser (Integer id);
 }

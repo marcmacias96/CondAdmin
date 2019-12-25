@@ -12,4 +12,8 @@ public interface IHouseService {
     public void delete(Integer id);
 
     public List<House> findAll();
+
+    public List<House> findByOwner(Integer id);
+
+    public List<House> findByCondom(Integer id);
 }

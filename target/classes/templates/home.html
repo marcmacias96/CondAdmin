@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html 	xmlns:th="http://www.thymeleaf.org"
+		 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout :: head"></head>
 <body>
 
@@ -16,7 +17,7 @@
 							<h1>Administraci&oacute;n y
 								control de Condomios</h1>
 							<p>Sea parte de la administraci&oacute;n de su condomino, acceda a sus cuentas y lleve control de sus pagos rapido y facil </p>
-							<a href="#" class="btn_2">Unete a MyCondo</a>
+							<a href="#" class="btn_2" sec:authorize="!isAuthenticated()">Unete a MyCondo</a>
 
 						</div>
 					</div>

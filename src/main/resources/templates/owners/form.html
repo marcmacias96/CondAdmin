@@ -102,8 +102,8 @@
 								th:errors="*{email}"></small>										
 						</div>
 					</div>
+					<input type="hidden" th:field="*{condmId}" />
 					<input type="hidden" th:field="*{idowner}" />
-
 					<div class="col-12 d-flex flex-row-reverse">
 						<a class="genric-btn  danger circle"
 						   th:href="@{/owner/list}">

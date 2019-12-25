@@ -1,5 +1,6 @@
 package com.mamp.software.condadmin;
 
+import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,30 +20,31 @@ import com.mamp.software.condadmin.security.LoginSuccessHandler;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private LoginSuccessHandler successHandler;	
-	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
+	private LoginSuccessHandler successHandler;
+
+	@Autowired
+	private UserService srvUser;
+
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception{
-		PasswordEncoder encoder = passwordEncoder();
-		UserBuilder users = User.builder().passwordEncoder(password -> encoder.encode(password));
-		builder.inMemoryAuthentication().withUser(users.username("admin").password("12345").roles("ADMIN"))
-										.withUser(users.username("user").password("12345").roles("USER"));
+		builder.userDetailsService(srvUser).passwordEncoder(passwordEncoder);
 	}
 	
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/css/**", "/js/**", "/img/**", "/sass/**","/fonts/**").permitAll()
-			.antMatchers("/house/**").hasAnyRole("ADMIN")
-			.antMatchers("/expenses/**").hasAnyRole("ADMIN")
-			.antMatchers("/incomes/**").hasAnyRole("ADMIN")
-			.antMatchers("/owners/**").hasAnyRole("ADMIN")
+			.antMatchers("/", "/css/**", "/js/**", "/img/**", "/sass/**","/fonts/**","/h2-console/**").permitAll()
+			.antMatchers("/user/**").permitAll()
+			.antMatchers("/house/**").hasAnyRole("ADMIN","USER-ADMIN")
+			.antMatchers("/expenses/**").hasAnyRole( "USER-ADMIN")
+			.antMatchers("/incomes/**").hasAnyRole( "USER-ADMIN")
+			.antMatchers("/owners/**").hasAnyRole("USER-ADMIN")
+			.antMatchers("/condominium/**").hasAnyRole("USER-ADMIN","ADMIN")
 			.anyRequest().authenticated()
 			.and()
 				.formLogin().successHandler(successHandler)

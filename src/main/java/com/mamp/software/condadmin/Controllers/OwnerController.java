@@ -1,6 +1,8 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IOwnerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,15 @@ import java.util.List;
 @RequestMapping(value = "/owner")
 public class OwnerController {
 	@Autowired
-    public IOwnerService service;
+    public IOwnerService srvOwner;
 
-    @GetMapping(value = "/create")
-    public String create(Model model){
+    @Autowired
+    public ICondominiumService srvCondom;
+
+    @GetMapping(value = "/create/{id}")
+    public String create(@PathVariable(value = "id") Integer id, Model model){
         Owner owner = new Owner();
+        owner.setCondmId(id);
         model.addAttribute("owner", owner);
         model.addAttribute("title","Registro de nuevo propietario");
 
@@ -33,7 +39,7 @@ public class OwnerController {
 
     @GetMapping(value = "/retrive/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Owner owner = service.findById(id);
+        Owner owner = srvOwner.findById(id);
         model.addAttribute("owner", owner);
         model.addAttribute("title","Actualizacion de registro de nuevo propietario");
         return "owners/card";
@@ -41,7 +47,7 @@ public class OwnerController {
 
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
-        Owner owner = service.findById(id);
+        Owner owner = srvOwner.findById(id);
         model.addAttribute("title","Actualizacion de registro de nuevo propietario");
         model.addAttribute("owner",owner);
         return "owners/form";
@@ -51,7 +57,7 @@ public class OwnerController {
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
     	 model.addAttribute("title","eliminacion de registro de nuevo propietario");
         try {
-            service.delete(id);
+            srvOwner.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
@@ -62,7 +68,7 @@ public class OwnerController {
 
     @GetMapping(value = "/list")
     public String list(Model model){
-        List<Owner> ownerList = service.findAll();
+        List<Owner> ownerList = srvOwner.findAll();
         model.addAttribute("title","Listado de Propietarios");
         model.addAttribute("ownerList", ownerList);
         return "owners/list";
@@ -76,7 +82,9 @@ public class OwnerController {
                 model.addAttribute("title","Error al guardar");
                 return "owners/form";
             }
-            service.save(owner);
+            Condominium condominium = srvCondom.findById(owner.getCondmId());
+            owner.setCondominium(condominium);
+            srvOwner.save(owner);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");

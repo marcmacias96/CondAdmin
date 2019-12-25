@@ -1,7 +1,10 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.ICondominium;
+import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.House;
 import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IOwnerService;
 import com.mamp.software.condadmin.services.IHouseService;
 
@@ -22,42 +25,44 @@ import java.util.List;
 @RequestMapping(value = "/house")
 public class HouseController {
 	@Autowired
-    public IHouseService service;
+    public IHouseService srvHouse;
 	
 	@Autowired
 	public IOwnerService srvOwner;
 
-    @GetMapping(value = "/create")
-    public String create(Model model){
-        House house = new House();
-        model.addAttribute("house", house);
-        model.addAttribute("title","Registro de nueva Casa");
-        List<Owner> owner = srvOwner.findAll();
-        model.addAttribute("owner", owner);
+    @Autowired
+    public ICondominiumService srvCondm;
 
+    @GetMapping(value = "/create/{id}")
+    public String create(@PathVariable(value = "id") Integer id, Model model){
+        House house = new House();
+        house.setCondmId(id);
+        List<Owner> ownerList = srvOwner.findByCondom(id);
+        model.addAttribute("house", house);
+        model.addAttribute("ownerList", ownerList);
+        model.addAttribute("title","Registro de nueva Casa");
         return "house/form";
     }
 
     @GetMapping(value = "/retrive/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        House house = service.findById(id);
+        House house = srvHouse.findById(id);
         model.addAttribute("house", house);
         return "house/card";
     }
 
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
-        House house = service.findById(id);
+        House house = srvHouse.findById(id);
+        house.setOwnerId(house.getOwner().getIdowner());
         model.addAttribute("house",house);
-        List<Owner> owner = srvOwner.findAll();
-        model.addAttribute("owner", owner);
         return "house/form";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
         try {
-            service.delete(id);
+            srvHouse.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
@@ -66,9 +71,17 @@ public class HouseController {
         return "redirect:/house/list";
     }
 
-    @GetMapping(value = "/list")
-    public String list(Model model){
-        List<House> houseList = service.findAll();
+    @GetMapping(value = "/listByOwner/{id}")
+    public String listByOwner(@PathVariable(value = "id") Integer id,Model model){
+        List<House> houseList = srvHouse.findByOwner(id);
+        model.addAttribute("title","Listado de Casas");
+        model.addAttribute("houseList", houseList);
+        return "house/list";
+    }
+
+    @GetMapping(value = "/listByCondom/{id}")
+    public String lisByCondom(@PathVariable(value = "id") Integer id,Model model){
+        List<House> houseList = srvHouse.findByCondom(id);
         model.addAttribute("title","Listado de Casas");
         model.addAttribute("houseList", houseList);
         return "house/list";
@@ -79,15 +92,15 @@ public class HouseController {
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute("title","Error al guardar");
-                List<Owner> owner = srvOwner.findAll();
-                model.addAttribute("owner", owner);
                 return "house/form";
             }
-            service.save(house);
+            Condominium condominium = srvCondm.findById(house.getCondmId());
+            house.setCondominium(condominium);
+            srvHouse.save(house);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
-        return "redirect:/house/list";
+        return "redirect:/condominium/retrive/" + house.getCondmId();
     }
 }

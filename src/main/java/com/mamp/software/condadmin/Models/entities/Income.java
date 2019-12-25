@@ -46,6 +46,9 @@ public class Income implements Serializable {
     @ManyToOne
     private House house;
 
+    @JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
+    @ManyToOne
+    private MonthlyAccounts monthlyAccounts;
     
     /**/
     public Income(){
@@ -58,48 +61,60 @@ public class Income implements Serializable {
     }
 
     /**/
-	public Integer getIdincome() {
-		return idincome;
-	}
 
-	public void setIdincome(Integer idincome) {
-		this.idincome = idincome;
-	}
+    public Integer getIdincome() {
+        return idincome;
+    }
 
-	public float getValue() {
-		return value;
-	}
+    public void setIdincome(Integer idincome) {
+        this.idincome = idincome;
+    }
 
-	public void setValue(float value) {
-		this.value = value;
-	}
+    public float getValue() {
+        return value;
+    }
 
-	public Calendar getDate() {
-		return date;
-	}
+    public void setValue(float value) {
+        this.value = value;
+    }
 
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
+    public Calendar getDate() {
+        return date;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-    
-	
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    
+    public House getHouse() {
+        return house;
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
+    }
+
+    public MonthlyAccounts getMonthlyAccounts() {
+        return monthlyAccounts;
+    }
+
+    public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
+        this.monthlyAccounts = monthlyAccounts;
+    }
 }

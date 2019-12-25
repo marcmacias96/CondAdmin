@@ -43,6 +43,10 @@ public class Expenses implements Serializable {
     @ManyToOne
     private Condominium condominium;
 
+    @JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
+    @ManyToOne
+    private MonthlyAccounts monthlyAccounts;
+
     /**/
     public Expenses(){
         super();
@@ -54,39 +58,53 @@ public class Expenses implements Serializable {
     }
 
     /**/
-    
-	public Integer getIdexpenses() {
-		return idexpenses;
-	}
 
-	public void setIdexpenses(Integer idexpenses) {
-		this.idexpenses = idexpenses;
-	}
+    public Integer getIdexpenses() {
+        return idexpenses;
+    }
 
-	public float getValue() {
-		return value;
-	}
+    public void setIdexpenses(Integer idexpenses) {
+        this.idexpenses = idexpenses;
+    }
 
-	public void setValue(float value) {
-		this.value = value;
-	}
+    public float getValue() {
+        return value;
+    }
 
-	public Calendar getDate() {
-		return date;
-	}
+    public void setValue(float value) {
+        this.value = value;
+    }
 
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
+    public Calendar getDate() {
+        return date;
+    }
 
-	public String getDetail() {
-		return detail;
-	}
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
 
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
+    public String getDetail() {
+        return detail;
+    }
 
-    
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Condominium getCondominium() {
+        return condominium;
+    }
+
+    public void setCondominium(Condominium condominium) {
+        this.condominium = condominium;
+    }
+
+    public MonthlyAccounts getMonthlyAccounts() {
+        return monthlyAccounts;
+    }
+
+    public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
+        this.monthlyAccounts = monthlyAccounts;
+    }
 }
 

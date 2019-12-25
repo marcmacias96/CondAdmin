@@ -19,7 +19,7 @@
 </section>
 <!-- breadcrumb ends-->
 
-<div class="container pb-5">
+<div class="container  pb-5">
 	<header th:replace="layout :: frgHeader"></header>
 	<div  class="d-flex flex-column">
 		<!-- Begin Page Content -->
@@ -34,31 +34,27 @@
 						<h3 th:text="${owner.name} + ' ' +  ${owner.lastName} "></h3>
 					</div>
 					<div class="col-6 d-flex flex-row-reverse">
+
 						<div class="form-group px-2">
 							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
-								<i class="ti-trash"></i>&nbsp; Delete</button>
+								<i class="ti-trash"></i>&nbsp; Eliminar </button>
 						</div>
 						<div class="form-group">
 							<a class="genric-btn info circle" th:href="@{/owner/list}"><i
-									class="ti-back-left"></i>&nbsp; Back</a>
+									class="ti-back-left"></i>&nbsp; Atras</a>
 						</div>
 
 					</div>
 				</div>
-				<input type="hidden" id="idowner"
-					th:value="${owner.idowner}" />
-					
-					
-				<hr />
-				
 				<div class="row">
+					<input type="hidden" th:field="${owner.idowner}" />
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Last Name:</label>
+								<i class="ti-user"></i> <label class="h5 col-form-label">&nbsp;Apellido:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owner.lastName}"></h5>
+								<h5 class="align-content-start " th:text="${owner.lastName}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -71,10 +67,10 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;ID Card:</label>
+								<i class="ti-id-badge"></i> <label class="h5 col-form-label">&nbsp;Cedula:</label>
 							</div>
-							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owner.ci}"></h5>
+							<div class="col-sm-8 ">
+								<h5 class="align-content-start" th:text="${owner.ci}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -87,12 +83,27 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Email:</label>
+								<i class="ti-email"></i> <label class="h5 col-form-label">&nbsp;Correo:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${owner.email}"></h5>
+								<h5 class="align-content-start" th:text="${owner.email}"></h5>
 							</div>
 						</div>						
+					</div>
+				</div>
+
+				<hr />
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="content col-sm-3 bg-light">
+								<i class="ti-email"></i> <label class="h5 col-form-label">&nbsp;Condominio:</label>
+							</div>
+							<div class="col-sm-8">
+								<h5 class="align-content-start" th:text="${owner.condominium.name}"></h5>
+							</div>
+						</div>
 					</div>
 				</div>
 				
@@ -112,16 +123,18 @@
 						<p th:text="${owner.name}"></p>
 					</div>
 					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-						<a th:href="@{/owner/delete/} + ${owner.idowner}" class="btn btn-success">Confirm</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						<a th:href="@{/owner/delete/} + ${owner.idowner}" class="btn btn-success">Confirmar</a>
 					</div>
 				</div>
 			</div>
 		</div>
+				<div id="HouseList"></div>
 			</div>
 		</div>
 	</div>
 </div>
 <footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/AjaxFunctions/OwnerCard.js}"></script>
 </body>
 </html>

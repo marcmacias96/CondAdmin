@@ -41,4 +41,10 @@ public class OwnerService implements IOwnerService {
     public List<Owner> findAll() {
         return (List<Owner>) dao.findAll();
     }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<Owner> findByCondom(Integer id) {
+        return (List<Owner>) dao.findByCondom(id);
+    }
 }

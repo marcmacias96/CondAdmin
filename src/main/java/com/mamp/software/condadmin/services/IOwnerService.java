@@ -13,4 +13,6 @@ public interface IOwnerService {
     public void delete(Integer id);
 
     public List<Owner> findAll();
+
+    public List<Owner> findByCondom(Integer id);
 }

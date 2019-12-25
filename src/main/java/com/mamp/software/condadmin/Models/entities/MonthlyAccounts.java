@@ -9,6 +9,7 @@ import javax.validation.constraints.Past;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "MONTHLYACCOUNTS")
@@ -41,6 +42,12 @@ public class MonthlyAccounts implements Serializable {
     @ManyToOne
     private AnnualCounts annualCounts;
 
+    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    private List<Income> incomeList;
+
+    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    private List<Expenses> expensesList;
+
     /**/
     public MonthlyAccounts(){
         super();
@@ -52,37 +59,60 @@ public class MonthlyAccounts implements Serializable {
     }
 
     /**/
-	public Integer getIdmonthlyaccounts() {
-		return idmonthlyaccounts;
-	}
 
-	public void setIdmonthlyaccounts(Integer idmonthlyaccounts) {
-		this.idmonthlyaccounts = idmonthlyaccounts;
-	}
+    public Integer getIdmonthlyaccounts() {
+        return idmonthlyaccounts;
+    }
 
-	public Calendar getMonth() {
-		return month;
-	}
+    public void setIdmonthlyaccounts(Integer idmonthlyaccounts) {
+        this.idmonthlyaccounts = idmonthlyaccounts;
+    }
 
-	public void setMonth(Calendar month) {
-		this.month = month;
-	}
+    public Calendar getMonth() {
+        return month;
+    }
 
-	public float getIncome() {
-		return income;
-	}
+    public void setMonth(Calendar month) {
+        this.month = month;
+    }
 
-	public void setIncome(float income) {
-		this.income = income;
-	}
+    public float getIncome() {
+        return income;
+    }
 
-	public float getExpenses() {
-		return expenses;
-	}
+    public void setIncome(float income) {
+        this.income = income;
+    }
 
-	public void setExpenses(float expenses) {
-		this.expenses = expenses;
-	}
+    public float getExpenses() {
+        return expenses;
+    }
 
-    
+    public void setExpenses(float expenses) {
+        this.expenses = expenses;
+    }
+
+    public AnnualCounts getAnnualCounts() {
+        return annualCounts;
+    }
+
+    public void setAnnualCounts(AnnualCounts annualCounts) {
+        this.annualCounts = annualCounts;
+    }
+
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public void setIncomeList(List<Income> incomeList) {
+        this.incomeList = incomeList;
+    }
+
+    public List<Expenses> getExpensesList() {
+        return expensesList;
+    }
+
+    public void setExpensesList(List<Expenses> expensesList) {
+        this.expensesList = expensesList;
+    }
 }

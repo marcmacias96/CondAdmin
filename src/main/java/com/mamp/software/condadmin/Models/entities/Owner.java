@@ -37,13 +37,16 @@ public class Owner implements Serializable {
     @NotEmpty
     private String email;
 
+	@Transient
+	private Integer condmId;
+
     //Relations
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<House> houselist;
 
-    @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
-    @ManyToOne
-    private Condominium condominium;
+	@JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
+	@ManyToOne
+	private Condominium condominium;
 
     /**/
     public Owner() {
@@ -55,7 +58,22 @@ public class Owner implements Serializable {
 		this.idowner = idowner;
 	}
 
-	/**/
+	public Integer getCondmId() {
+		return condmId;
+	}
+
+	public void setCondmId(Integer condmId) {
+		this.condmId = condmId;
+	}
+
+	public Condominium getCondominium() {
+		return condominium;
+	}
+
+	public void setCondominium(Condominium condominium) {
+		this.condominium = condominium;
+	}
+
 	public Integer getIdowner() {
 		return idowner;
 	}
@@ -95,5 +113,12 @@ public class Owner implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
+
+	public List<House> getHouselist() {
+		return houselist;
+	}
+
+	public void setHouselist(List<House> houselist) {
+		this.houselist = houselist;
+	}
 }
