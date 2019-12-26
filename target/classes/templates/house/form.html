@@ -68,31 +68,9 @@
 
 							<hr/>
 
-							<div class="form-group row ">
-								<div class="content col-sm-3">
-									<i class="ti-email"></i>
-									<label class="h5 col-form-label">&nbsp;Dueño:</label>
-								</div>
-								<div class="content col-sm-6">
-									<select class="default-select" th:field="*{owner.idowner}">
-										<option value=0>--Seleccione--</option>
-										<option th:each="owner : ${ownerList}"
-												th:value="${owner.idowner}"
-												th:text="${owner.name}"
-												th:selected="${house.owner.idowner == owner.idowner}"></option>
-									</select>
-								</div>
-
-								<small class="invalid-feedback"
-									   th:if="${#fields.hasErrors('owner.idowner')}"
-									   th:errors="*{owner.idowner}"
-								></small>
-							</div>
-							<hr/>
-
 							<input type="hidden" th:field="*{ownerId}" />
 							<input type="hidden" th:field="*{idhouse}" />
-							<input type="hidden" th:field="*{condmId}" />
+
 							<div class="col-12 d-flex flex-row-reverse">
 								<a class="genric-btn  danger circle"
 								   th:href="@{/house/list}">

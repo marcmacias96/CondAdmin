@@ -46,8 +46,7 @@
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<a class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
-										<a class="dropdown-item" th:href="@{/owner/list}">Propietarios</a>
-										<a class="dropdown-item nav-link"  th:href="@{/house/list}">Casas</a>
+										<a class="dropdown-item" th:href="@{/owner/listByCondom}">Propietarios</a>
 									</div>
 								</li>
 								<li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER-ADMIN')">
@@ -57,15 +56,13 @@
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<a class="dropdown-item" th:href="@{#}">Gestión Pago Alicuotas</a>
-										<a class="dropdown-item nav-link" th:href="@{/incomes/list}">Ingresos</a>
-										<a class="dropdown-item" th:href="@{/expenses/list}">Gastos</a>
+										<a class="dropdown-item nav-link" th:href="@{/templates/cuentas/incomes/list}">Ingresos</a>
+										<a class="dropdown-item" th:href="@{/templates/cuentas/expenses/list}">Gastos</a>
 									</div>
 								</li>
 							</ul>
 						</div>
 						<a sec:authorize="!isAuthenticated()" class="btn_2 d-none d-lg-block" th:href="@{login.html}">Iniciar Sesión</a>
-						<a sec:authorize="!isAuthenticated()" class="btn_2 d-none d-lg-block" th:href="@{/user/create}">Registrate</a>
-
 					</nav>
 				</div>
 			</div>

@@ -1,14 +1,17 @@
 package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.dao.ICondominium;
+import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.House;
 import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IOwnerService;
 import com.mamp.software.condadmin.services.IHouseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,21 +28,22 @@ import java.util.List;
 @RequestMapping(value = "/house")
 public class HouseController {
 	@Autowired
-    public IHouseService srvHouse;
+    private IHouseService srvHouse;
 	
 	@Autowired
-	public IOwnerService srvOwner;
+	private IOwnerService srvOwner;
 
     @Autowired
-    public ICondominiumService srvCondm;
+    private ICondominiumService srvCondm;
+
+    @Autowired
+    private IUser srvUser;
 
     @GetMapping(value = "/create/{id}")
     public String create(@PathVariable(value = "id") Integer id, Model model){
         House house = new House();
-        house.setCondmId(id);
-        List<Owner> ownerList = srvOwner.findByCondom(id);
+        house.setOwnerId(id);
         model.addAttribute("house", house);
-        model.addAttribute("ownerList", ownerList);
         model.addAttribute("title","Registro de nueva Casa");
         return "house/form";
     }
@@ -88,19 +92,24 @@ public class HouseController {
     }
 
     @PostMapping(value = "/save")
-    public String save(@Valid  House house, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+    public String save(@Valid  House house, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, Authentication authentication){
+        Condominium condominium = null;
+        Owner owner= null;
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute("title","Error al guardar");
                 return "house/form";
             }
-            Condominium condominium = srvCondm.findById(house.getCondmId());
+            owner = srvOwner.findById(house.getOwnerId());
+            USer user = srvUser.findByName(authentication.getName());
+            condominium = srvCondm.findByUser(user.getIdUser());
             house.setCondominium(condominium);
+            house.setOwner(owner);
             srvHouse.save(house);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
-        return "redirect:/condominium/retrive/" + house.getCondmId();
+        return "redirect:/owner/retrive/" + owner.getIdowner() ;
     }
 }
