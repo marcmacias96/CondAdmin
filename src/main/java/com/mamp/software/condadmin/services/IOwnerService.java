@@ -1,6 +1,7 @@
 package com.mamp.software.condadmin.services;
 
 import com.mamp.software.condadmin.Models.entities.Owner;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface IOwnerService {
     public void delete(Integer id);
 
     public List<Owner> findAll();
+
+    public List<Owner> findAll(Pageable pageable);
 
     public List<Owner> findByCondom(Integer id);
 }
