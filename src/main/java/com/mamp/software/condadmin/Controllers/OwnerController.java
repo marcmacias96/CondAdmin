@@ -1,11 +1,15 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IOwnerService;
 
+import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +26,13 @@ import java.util.List;
 @RequestMapping(value = "/owner")
 public class OwnerController {
 	@Autowired
-    public IOwnerService srvOwner;
+    private IOwnerService srvOwner;
 
     @Autowired
-    public ICondominiumService srvCondom;
+    private ICondominiumService srvCondom;
+
+    @Autowired
+    private IUser srvUser;
 
     @GetMapping(value = "/create/{id}")
     public String create(@PathVariable(value = "id") Integer id, Model model){
@@ -74,21 +81,30 @@ public class OwnerController {
         return "owners/list";
     }
 
+    @GetMapping(value = "/listByCondom")
+    public String listByCondom( Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        List<Owner> ownerList = srvOwner.findByCondom(user.getIdUser());
+        model.addAttribute("ownerList", ownerList);
+        return "owners/list";
+    }
+
     @PostMapping(value = "/save")
     public String save(@Valid Owner owner, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
-    	model.addAttribute("title","Guardar");
+        Condominium condominium= null;
+        model.addAttribute("title","Guardar");
         try {
             if (bindingResult.hasErrors()){
                 model.addAttribute("title","Error al guardar");
                 return "owners/form";
             }
-            Condominium condominium = srvCondom.findById(owner.getCondmId());
+            condominium = srvCondom.findById(owner.getCondmId());
             owner.setCondominium(condominium);
             srvOwner.save(owner);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
-        return "redirect:/owner/list";
+        return "redirect:/owner/listByCondom";
     }
 }

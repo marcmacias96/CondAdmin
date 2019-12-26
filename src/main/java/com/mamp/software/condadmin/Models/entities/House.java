@@ -28,9 +28,6 @@ public class House implements Serializable {
     @Transient
     private Integer ownerId;
 
-    @Transient
-    private Integer condmId;
-
     public Integer getOwnerId() {
         return ownerId;
     }
@@ -70,15 +67,6 @@ public class House implements Serializable {
     }
 
     /**/
-
-    public Integer getCondmId() {
-        return condmId;
-    }
-
-    public void setCondmId(Integer condmId) {
-        this.condmId = condmId;
-    }
-
     public Integer getIdhouse() {
         return idhouse;
     }

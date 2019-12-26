@@ -63,7 +63,7 @@ public class CondominiumController {
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model, Authentication authentication){
+    public String list(Model model){
         List<Condominium> condominiumList = service.findAll();
         model.addAttribute("title","Codominios");
         model.addAttribute("condominiumList", condominiumList);
