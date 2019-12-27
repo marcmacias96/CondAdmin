@@ -3,26 +3,26 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.entities.Owner;
 import com.mamp.software.condadmin.services.IOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController(value = "ownerRest")
+@RestController
+@RequestMapping(value = "/ownersRest")
 public class OwnerRestController {
 
     @Autowired
     private IOwnerService srvOwner;
 
-    @RequestMapping(value = "/listByCondm/{id}", method= RequestMethod.GET)
+   @GetMapping(value = "/listByCondom/{id}")
     public List<Owner> getAllEmployees(@PathVariable("id") Integer id){
+        System.out.println("hola");
         return srvOwner.findByCondom(id);
     }
 
-    @RequestMapping(value = "/list", method= RequestMethod.GET)
+    @GetMapping(value = "/list")
     public List<Owner> getAllEmployees(){
-        return srvOwner.findAll();
+        List<Owner> list =srvOwner.findAll();
+       return list;
     }
 }

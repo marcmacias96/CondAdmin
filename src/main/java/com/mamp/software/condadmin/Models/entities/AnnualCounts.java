@@ -1,5 +1,6 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -42,6 +43,7 @@ public class AnnualCounts implements Serializable {
     @ManyToOne
     private Condominium condominium;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "annualCounts", fetch = FetchType.LAZY)
     private List<MonthlyAccounts> monthlyAccountsList;
 

@@ -1,5 +1,7 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -28,10 +30,12 @@ public class USer implements Serializable {
     @Transient
     private String condName;
 
+    @JsonIgnore
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "IDUSER")
     private List<Role> roleList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "uSer", fetch = FetchType.LAZY)
     private List<Condominium> condominiumList;
 

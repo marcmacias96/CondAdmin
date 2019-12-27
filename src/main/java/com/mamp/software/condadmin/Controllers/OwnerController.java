@@ -79,17 +79,15 @@ public class OwnerController {
 
     @GetMapping(value = "/list")
     public String list(Model model){
-        List<Owner> ownerList = srvOwner.findAll();
         model.addAttribute("title","Listado de Propietarios");
-        model.addAttribute("ownerList", ownerList);
         return "owners/list";
     }
 
     @GetMapping(value = "/listByCondom")
     public String listByCondom( Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
+       /* USer user = srvUser.findByName(authentication.getName());
         List<Owner> ownerList = srvOwner.findByCondom(user.getIdUser());
-        model.addAttribute("ownerList", ownerList);
+        model.addAttribute("ownerList", ownerList);*/
         return "owners/list";
     }
 

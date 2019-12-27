@@ -1,5 +1,7 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -41,6 +43,7 @@ public class Owner implements Serializable {
 	private Integer condmId;
 
     //Relations
+	@JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<House> houselist;
 

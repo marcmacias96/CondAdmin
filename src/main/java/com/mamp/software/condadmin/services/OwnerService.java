@@ -44,10 +44,6 @@ public class OwnerService implements IOwnerService {
         return (List<Owner>) dao.findAll();
     }
 
-    @Override
-    public List<Owner> findAll(Pageable pageable) {
-        return (List<Owner>) dao.findAll(pageable);
-    }
 
     @Override
     @Transactional(readOnly=true)

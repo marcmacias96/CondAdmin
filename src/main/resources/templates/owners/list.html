@@ -40,39 +40,17 @@
 								<h3 class="card-title col-sm-10" th:text="${title}"></h3>
 							</div>
 							<hr />
-							<table class="table table-hover">
+							<table  id="ownersTable" >
 								<thead>
 								<tr>
-									<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Name</th>
-									<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;LastName</th>
-									<th class="align-middle text-center"><i class="ti-id-badge"></i>&nbsp;ID Card</th>
-									<th class="align-middle text-center"><i class="ti-email"></i>&nbsp;Email</th>
+									<th ><i class="ti-user"></i>&nbsp;ID</th>
+									<th ><i class="ti-user"></i>&nbsp;Name</th>
+									<th ><i class="ti-user"></i>&nbsp;LastName</th>
+									<th ><i class="ti-id-badge"></i>&nbsp;ID Card</th>
+									<th ><i class="ti-email"></i>&nbsp;Email</th>
 								</th>
 								</tr>
-
 								</thead>
-								<tbody>
-								<tr th:each="owners : ${ownerList}" >
-									<td class="align-middle text-center" th:text="${owners.name}"></td>
-									<td class="align-middle text-center" th:text="${owners.lastName}"></td>
-									<td class="align-middle text-center" th:text="${owners.ci}"></td>
-									<td class="align-middle text-center" th:text="${owners.email}"></td>
-									<td>
-										<div class="row">
-											<a class="genric-btn btn-sm info-border circle" title="Edit"
-											   th:href="@{/owner/update/} + ${owners.idowner}">
-												<i class="ti-pencil"></i>
-											</a>
-											<a class="genric-btn btn-sm info-border circlegenric-btn btn-sm info-border circle" title="View"
-											   th:href="@{/owner/retrive/} + ${owners.idowner}">
-												<i class="ti-hand-point-up"></i>
-											</a>
-										</div>
-
-									</td>
-								</tr>
-
-								</tbody>
 							</table>
 						</div>
 				</div>

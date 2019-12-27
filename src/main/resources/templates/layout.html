@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html 	xmlns:th="http://www.thymeleaf.org"
+<html
+		xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="frgHead">
 	<meta charset="UTF-8">
@@ -14,6 +15,8 @@
 	<link rel="stylesheet" th:href="@{/css/slick.css}" />
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
 
+	<!-- CDNS  -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css}">
 <head/>
 
 <body>
@@ -184,6 +187,11 @@
 		<script th:src="@{/js/contact.js}"></script>
 		<!-- custom js -->
 		<script th:src="@{/js/custom.js}"></script>
+
+		<!-- CDNS  -->
+		<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/tables/datatable.js}"></script>
 	</footer>
 
 	<!-- footer part end-->
