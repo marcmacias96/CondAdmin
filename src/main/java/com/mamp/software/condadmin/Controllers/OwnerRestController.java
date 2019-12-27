@@ -16,7 +16,6 @@ public class OwnerRestController {
 
    @GetMapping(value = "/listByCondom/{id}")
     public List<Owner> getAllEmployees(@PathVariable("id") Integer id){
-        System.out.println("hola");
         return srvOwner.findByCondom(id);
     }
 

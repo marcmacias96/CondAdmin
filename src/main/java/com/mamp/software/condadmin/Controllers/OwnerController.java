@@ -85,9 +85,9 @@ public class OwnerController {
 
     @GetMapping(value = "/listByCondom")
     public String listByCondom( Model model, Authentication authentication){
-       /* USer user = srvUser.findByName(authentication.getName());
-        List<Owner> ownerList = srvOwner.findByCondom(user.getIdUser());
-        model.addAttribute("ownerList", ownerList);*/
+        USer user = srvUser.findByName(authentication.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("title", "Listado de Propietarios");
         return "owners/list";
     }
 
