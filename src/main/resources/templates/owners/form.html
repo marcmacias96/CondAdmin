@@ -96,10 +96,26 @@
 						<div class="content col-sm-6">							
 							<input class="single-input" type="text"
 								th:field="*{email}"
-								th:errorclass="'form-control is-invalid'" /></textarea>
+								th:errorclass="'form-control is-invalid'" />
 								<small class="invalid-feedback"
 								th:if="${#fields.hasErrors('email')}"
 								th:errors="*{email}"></small>										
+						</div>
+					</div>
+					<hr />
+
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="ti-email"></i>
+							<label class="h5 col-form-label">&nbsp;Nombre de Usuario:</label>
+						</div>
+						<div class="content col-sm-6">
+							<input class="single-input" type="text"
+								   th:field="*{tuser.name}"
+								   th:errorclass="'form-control is-invalid'" />
+							<small class="invalid-feedback"
+								   th:if="${#fields.hasErrors('tuser.name')}"
+								   th:errors="*{tuser.name}"></small>
 						</div>
 					</div>
 					<input type="hidden" th:field="*{condmId}" />

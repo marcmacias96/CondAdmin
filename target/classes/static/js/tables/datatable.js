@@ -13,7 +13,6 @@ $(document).ready( function () {
             { "mData": "idowner"},
             { "mData": "name" },
             { "mData": "lastName" },
-            { "mData": "ci" },
             { "mData": "email" },
             { "mData": "acctions" }
         ],

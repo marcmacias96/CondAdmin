@@ -16,4 +16,8 @@ public interface IOwnerService {
     public List<Owner> findAll();
 
     public List<Owner> findByCondom(Integer id);
+
+    public Owner findByUser(Integer id);
+
+
 }

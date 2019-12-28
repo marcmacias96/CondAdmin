@@ -2,9 +2,11 @@ package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
+import com.mamp.software.condadmin.Models.entities.Owner;
 import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.ICondominiumService;
 
+import com.mamp.software.condadmin.services.IOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class CondominiumController {
 
 	@Autowired
     private IUser srvUser;
+
+    @Autowired
+    private IOwnerService srvOwner;
 
     @GetMapping(value = "/create")
     public String create(Model model){
@@ -71,6 +76,18 @@ public class CondominiumController {
     }
     @GetMapping(value = "/myCondo")
     public String listByCondom(Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = service.findByUser(user.getIdUser());
+        if(condominium == null) {
+            Owner owner = srvOwner.findByUser(user.getIdUser());
+            condominium = service.findById(owner.getCondominium().getIdcondominium());
+        }
+        model.addAttribute("title","Codominios");
+        model.addAttribute("condominium", condominium);
+        return "condominium/card";
+    }
+    @GetMapping(value = "/cliMyCondo")
+    public String cliMycondo(Model model, Authentication authentication){
         USer user = srvUser.findByName(authentication.getName());
         Condominium condominium = service.findByUser(user.getIdUser());
         model.addAttribute("title","Codominios");

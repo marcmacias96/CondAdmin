@@ -39,6 +39,10 @@ public class USer implements Serializable {
     @OneToMany(mappedBy = "uSer", fetch = FetchType.LAZY)
     private List<Condominium> condominiumList;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "uSer")
+    private Owner owner;
+
     public String getCondName() {
         return condName;
     }
@@ -90,5 +94,17 @@ public class USer implements Serializable {
             this.condominiumList = new ArrayList<Condominium>();
         }
         this.condominiumList.add(condominium);
+    }
+
+    public void setCondominiumList(List<Condominium> condominiumList) {
+        this.condominiumList = condominiumList;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }

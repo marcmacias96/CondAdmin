@@ -50,4 +50,9 @@ public class OwnerService implements IOwnerService {
     public List<Owner> findByCondom(Integer id) {
         return (List<Owner>) dao.findByCondom(id);
     }
+
+    @Override
+    public Owner findByUser(Integer id) {
+        return dao.findByUser(id);
+    }
 }

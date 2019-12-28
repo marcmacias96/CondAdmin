@@ -16,7 +16,7 @@ public class Role implements Serializable {
     @Column(name = "IDROLE")
     private Integer idRole;
 
-    @Column(name = "NAME", unique = true)
+    @Column(name = "NAME")
     @Size(max = 15)
     private String name;
 

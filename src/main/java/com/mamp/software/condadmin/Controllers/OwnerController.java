@@ -3,6 +3,7 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Owner;
+import com.mamp.software.condadmin.Models.entities.Role;
 import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IOwnerService;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,13 +40,17 @@ public class OwnerController {
     @Autowired
     private IUser srvUser;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @GetMapping(value = "/create/{id}")
     public String create(@PathVariable(value = "id") Integer id, Model model){
         Owner owner = new Owner();
-        owner.setCondmId(id);
         model.addAttribute("owner", owner);
         model.addAttribute("title","Registro de nuevo propietario");
-
         return "owners/form";
     }
 
@@ -52,7 +58,14 @@ public class OwnerController {
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Owner owner = srvOwner.findById(id);
         model.addAttribute("owner", owner);
-        model.addAttribute("title","Actualizacion de registro de nuevo propietario");
+        return "owners/card";
+    }
+
+    @GetMapping(value = "/myHouse")
+    public String myHouse(Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Owner owner = srvOwner.findByUser(user.getIdUser());
+        model.addAttribute("owner", owner);
         return "owners/card";
     }
 
@@ -91,8 +104,10 @@ public class OwnerController {
         return "owners/list";
     }
 
+
     @PostMapping(value = "/save")
-    public String save(@Valid Owner owner, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+    public String save(@Valid Owner owner, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, Authentication authentication){
+        USer adminUser = srvUser.findByName(authentication.getName());
         Condominium condominium= null;
         model.addAttribute("title","Guardar");
         try {
@@ -100,12 +115,20 @@ public class OwnerController {
                 model.addAttribute("title","Error al guardar");
                 return "owners/form";
             }
-            condominium = srvCondom.findById(owner.getCondmId());
+            USer uSer = new USer();
+            uSer.setName(owner.getTuser().getName());
+            uSer.setPassword(passwordEncoder.encode("123456"));
+            uSer.getRoleList().add(new Role("ROLE_USER"));
+            userService.save(uSer);
+            uSer = srvUser.findByName(uSer.getName());
+            owner.setuSer(uSer);
+            condominium = srvCondom.findByUser(adminUser.getIdUser());
             owner.setCondominium(condominium);
             srvOwner.save(owner);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
+            return "owner/form";
         }
         return "redirect:/owner/listByCondom";
     }

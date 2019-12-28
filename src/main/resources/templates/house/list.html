@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout :: frgHead"></head>
 <body>
 <div class="m-1 row">
@@ -33,7 +34,7 @@
 
 					<td>
 						<div class="d-flex justify-content-center">
-							<a class="genric-btn btn-sm info-border circle" title="Edit"
+							<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm info-border circle" title="Edit"
 							   th:href="@{/house/update/} + ${house.idhouse}">
 								<i class="ti-pencil"></i>
 							</a>

@@ -15,12 +15,12 @@ public class OwnerRestController {
     private IOwnerService srvOwner;
 
    @GetMapping(value = "/listByCondom/{id}")
-    public List<Owner> getAllEmployees(@PathVariable("id") Integer id){
+    public List<Owner> listByCondom(@PathVariable("id") Integer id){
         return srvOwner.findByCondom(id);
     }
 
     @GetMapping(value = "/list")
-    public List<Owner> getAllEmployees(){
+    public List<Owner> listAll(){
         List<Owner> list =srvOwner.findAll();
        return list;
     }

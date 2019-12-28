@@ -42,6 +42,9 @@ public class Owner implements Serializable {
 	@Transient
 	private Integer condmId;
 
+	@Transient
+	private USer Tuser;
+
     //Relations
 	@JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
@@ -50,6 +53,10 @@ public class Owner implements Serializable {
 	@JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
 	@ManyToOne
 	private Condominium condominium;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "IDUSER")
+	private USer uSer;
 
     /**/
     public Owner() {
@@ -123,5 +130,21 @@ public class Owner implements Serializable {
 
 	public void setHouselist(List<House> houselist) {
 		this.houselist = houselist;
+	}
+
+	public USer getuSer() {
+		return uSer;
+	}
+
+	public void setuSer(USer uSer) {
+		this.uSer = uSer;
+	}
+
+	public USer getTuser() {
+		return Tuser;
+	}
+
+	public void setTuser(USer tuser) {
+		Tuser = tuser;
 	}
 }

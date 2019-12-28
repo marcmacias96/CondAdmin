@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout :: frgHead"></head>
 <body>
 <header th:replace="layout :: frgHeader"></header>
@@ -46,9 +47,6 @@
                                 <th class="align-middle text-center"><i class="ti-home"></i>&nbsp;Name</th>
                                 <th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Costo</th>
                                 <th class="align-middle text-center"><i class="ti-map"></i> Sector</th>
-                                <th><a class="genric-btn info circle" th:href="@{/condominium/create}" >
-                                    <i class="ti-plus"></i>&nbsp;Nuevo</a>
-                                </th>
                             </tr>
 
                             </thead>
@@ -58,7 +56,7 @@
                                 <td class="align-middle text-center" th:text="${cond.costAli}"></td>
                                 <td class="align-middle text-center" th:text="${cond.sector}"></td>
                                 <td>
-                                    <div class="row">
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="row">
                                         <a class="genric-btn btn-sm info-border circle" title="Edit"
                                            th:href="@{/condominium/update/} + ${cond.idcondominium}">
                                             <i class="ti-pencil"></i>

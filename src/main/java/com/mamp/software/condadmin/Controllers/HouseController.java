@@ -55,6 +55,7 @@ public class HouseController {
         return "house/card";
     }
 
+
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
         House house = srvHouse.findById(id);
