@@ -71,7 +71,7 @@
 									<form id="frmLogout" th:action="@{/logout}" method="post">
 										<a href="#"
 										   onclick="document.getElementById('frmLogout').submit();"><i
-												class="fas fa-sign-out-alt"></i>Salir</a> <input type="hidden"
+												class="fas fa-sign-out-alt"></i><span sec:authentication="name"></span> Salir</a> <input type="hidden"
 																								 th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 									</form>
 								</li>
