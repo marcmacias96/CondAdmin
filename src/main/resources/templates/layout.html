@@ -42,7 +42,7 @@
 								<li sec:authorize="hasRole('ROLE_USER-ADMIN')" class="nav-item">
 									<a class="nav-link"  th:href="@{/condominium/list}">Condominios</a>
 								</li>
-								<li  class="nav-item dropdown">
+								<li sec:authorize="isAuthenticated()"  class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Mi Condominio
