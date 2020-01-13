@@ -49,6 +49,10 @@ public class Income implements Serializable {
     @JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
     @ManyToOne
     private MonthlyAccounts monthlyAccounts;
+
+    @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
+    @ManyToOne
+    private Condominium condominium;
     
     /**/
     public Income(){
@@ -116,5 +120,13 @@ public class Income implements Serializable {
 
     public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
         this.monthlyAccounts = monthlyAccounts;
+    }
+
+    public Condominium getCondominium() {
+        return condominium;
+    }
+
+    public void setCondominium(Condominium condominium) {
+        this.condominium = condominium;
     }
 }

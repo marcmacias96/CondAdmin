@@ -68,6 +68,10 @@ public class Condominium implements Serializable {
     @ManyToOne
     private USer uSer;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "condominium", fetch = FetchType.LAZY)
+    private List<Income> incomeList;
+
     public Condominium(){
         super();
     }
@@ -174,5 +178,13 @@ public class Condominium implements Serializable {
 
     public void setAnnualCountsList(List<AnnualCounts> annualCountsList) {
         this.annualCountsList = annualCountsList;
+    }
+
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public void setIncomeList(List<Income> incomeList) {
+        this.incomeList = incomeList;
     }
 }
