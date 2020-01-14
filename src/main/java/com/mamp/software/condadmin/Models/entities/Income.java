@@ -55,12 +55,16 @@ public class Income implements Serializable {
         super();
     }
 
-    private Income(Integer idincome){
-        super();
-        this.idincome = idincome;
-    }
+    
 
-    /**/
+    public Income(Integer idincome) {
+		super();
+		this.idincome = idincome;
+	}
+
+
+
+	/**/
 
     public Integer getIdincome() {
         return idincome;

@@ -56,7 +56,7 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Date:</label>
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text="${income.date}"></h5>
@@ -72,7 +72,7 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Description:</label>
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Descripción:</label>
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text="${income.description}"></h5>
@@ -88,7 +88,7 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Type:</label>
+								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Tipo:</label>
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text="${income.type}"></h5>
@@ -103,7 +103,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Do you want to delete incomes?</h5>
+						<h5 class="modal-title">Deseas eliminar el ingreso?</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -113,8 +113,8 @@
 						<p th:text="${income.value}"></p>
 					</div>
 					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-						<a th:href="@{/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirm</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						<a th:href="@{/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirmar</a>
 					</div>
 				</div>
 			</div>

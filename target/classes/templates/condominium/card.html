@@ -36,16 +36,16 @@
                             </div>
                             <div class="col-6 d-flex flex-row-reverse">
                                 <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
-                                    <a class="genric-btn btn-sm info circle" th:href="@{/owner/create/} + ${condominium.idcondominium}">
-                                        <i class="ti-plus"></i>&nbsp;Propietario</a>
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/owner/create/} + ${condominium.idcondominium}">
+                                        <i class="ti-plus"></i>&nbsp; Propietario</a>
                                 </div>
                                 <div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
                                     <a class="genric-btn btn-sm danger circle" th:href="@{/condominium/delete/} + ${condominium.idcondominium}" >
-                                        <i class="ti-trash"></i>&nbsp;Eliminar</a>
+                                        <i class="ti-trash"></i>&nbsp; Eliminar</a>
                                 </div>
                                 <div class="form-group">
-                                    <a class="genric-btn btn-sm info circle" th:href="@{/condominium/list}"><i
-                                            class="ti-back-left"></i>&nbsp;Atras</a>
+                                    <a class="genric-btn btn-sm info circle" th:href="@{/condominium/list}">
+                                    	<i class="ti-back-left"></i>&nbsp; Atras</a>
                                 </div>
 
                             </div>

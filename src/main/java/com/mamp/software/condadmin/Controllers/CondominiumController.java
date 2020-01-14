@@ -1,4 +1,4 @@
-package com.mamp.software.condadmin.Controllers;
+ package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.Condominium;
@@ -102,7 +102,7 @@ public class CondominiumController {
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             System.out.println(e);
-            redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
+            redirectAttributes.addFlashAttribute("message","No se pudo guardar");
         }
         return "redirect:/condominium/list";
     }

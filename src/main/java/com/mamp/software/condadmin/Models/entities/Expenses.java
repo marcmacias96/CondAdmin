@@ -52,14 +52,15 @@ public class Expenses implements Serializable {
         super();
     }
 
-    private Expenses(Integer idexpenses){
-        super();
-        this.idexpenses = idexpenses;
-    }
+    public Expenses(Integer idexpenses) {
+		super();
+		this.idexpenses = idexpenses;
+	}
+    
 
     /**/
 
-    public Integer getIdexpenses() {
+	public Integer getIdexpenses() {
         return idexpenses;
     }
 

@@ -39,9 +39,9 @@
 								<li class="nav-item">
 									<a class="nav-link"  th:href="@{/}">Inicio</a>
 								</li>
-								<li sec:authorize="hasRole('ROLE_USER-ADMIN')" class="nav-item">
+								<!--  <li sec:authorize="hasRole('ROLE_USER-ADMIN')" class="nav-item">
 									<a class="nav-link"  th:href="@{/condominium/list}">Condominios</a>
-								</li>
+								</li> -->
 								<li  class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,10 +52,11 @@
 										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
 										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/owner/listByCondom}">Propietarios</a>
 										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/owner/myHouse}">Mi Casa</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/list}">Gastos</a>
 
 									</div>
 								</li>
-								<li  class="nav-item"  sec:authorize="hasRole('ROLE_ADMIN-USER')" >
+								<li  class="nav-item"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
 									<a class="nav-link dropdown-toggle" id="navbarDropdown"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Cuentas
@@ -66,6 +67,7 @@
 										<a  class="dropdown-item" th:href="@{/templates/cuentas/expenses/list}">Gastos</a>
 									</div>
 								</li>
+								
 								<li sec:authorize="isAuthenticated()">
 									<form id="frmLogout" th:action="@{/logout}" method="post">
 										<a href="#"
@@ -175,7 +177,6 @@
 						<a href="#"><i class="ti-facebook"></i></a>
 						<a href="#"> <i class="ti-twitter"></i> </a>
 						<a href="#"><i class="ti-instagram"></i></a>
-						<a href="#"><i class="ti-skype"></i></a>
 					</div>
 				</div>
 			</div>
