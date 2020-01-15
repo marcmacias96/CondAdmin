@@ -40,14 +40,14 @@
 								<i class="ti-trash"></i>&nbsp;Eliminar</button>
 						</div>
 						<div class="form-group">
-							<a class="genric-btn info circle" th:href="@{/owner/list}"><i
+							<a class="genric-btn info circle" th:href="@{/incomes/list}"><i
 									class="ti-back-left"></i>&nbsp;Atras</a>
 						</div>
 
 					</div>
 				</div>
 				<input type="hidden" id="idincome"
-					th:value="${income.idincome}" />
+					th:value="${incomes.idincome}" />
 				
 
 				<hr />
@@ -59,7 +59,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${income.date}"></h5>
+								<h5 class="card-text" th:text=${#dates.format(incomes.date,'dd-MM-yyyy')}></h5>
 							</div>
 						</div>						
 					</div>
@@ -75,7 +75,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Descripción:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${income.description}"></h5>
+								<h5 class="card-text" th:text="${incomes.description}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -91,7 +91,7 @@
 								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Tipo:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${income.type}"></h5>
+								<h5 class="card-text" th:text="${incomes.type}"></h5>
 							</div>
 						</div>						
 					</div>
@@ -114,7 +114,7 @@
 					</div>
 					<div class="modal-footer">						
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<a th:href="@{/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirmar</a>
+						<a th:href="@{cuentas/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirmar</a>
 					</div>
 				</div>
 			</div>

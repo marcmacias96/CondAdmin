@@ -38,10 +38,10 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th class="align-middle text-center"><i class="ti-money"></i>&nbsp; Valor</th>
-								<th class="align-middle text-center"><i class="ti-calendar"></i>&nbsp; Fecha</th>
-								<th class="align-middle text-center"><i class="ti-comment-alt"></i>&nbsp; Descripcion</th>
-								<th class="align-middle text-center"><i class="ti-layers"></i>&nbsp; Tipo</th>
+								<th><i class="ti-money"></i>&nbsp; Valor</th>
+								<th><i class="ti-calendar"></i>&nbsp; Fecha</th>
+								<th><i class="ti-comment-alt"></i>&nbsp; Descripcion</th>
+								<th><i class="ti-layers"></i>&nbsp; Tipo</th>
 	
 								<th><a class="genric-btn info circle" th:href="@{/incomes/create}" >
 									<i class="ti-plus"></i>&nbsp;Nuevo</a>
@@ -51,18 +51,18 @@
 						</thead>
 						<tbody>						
 							<tr th:each="incomes : ${incomeList}" >
-								<td class="align-middle text-center" th:text="${incomes.value}"></td>
-								<td class="align-middle text-center" th:text="${incomes.date}"></td>
-								<td class="align-middle text-center" th:text="${incomes.description}"></td>
-								<td class="align-middle text-center" th:text="${incomes.type}"></td>
+								<td th:text="${incomes.value}"></td>
+								<td th:text=${#dates.format(incomes.date,'dd-MM-yyyy')}></td>
+								<td th:text="${incomes.description}"></td>
+								<td th:text="${incomes.type}"></td>
 								
 								<td>
 									<div class="row">
-										<a class="genric-btn btn-sm info-border circle" title="Edit"
+										<a class="btn btn-sm btn-warning" title="Editar"
 										   th:href="@{/incomes/update/} + ${incomes.idincome}">
 											<i class="ti-pencil"></i>
 										</a>
-										<a class="genric-btn btn-sm info-border circle" title="View"
+										<a class="btn btn-sm btn-primary" title="Ver"
 										   th:href="@{/incomes/retrieve/} + ${incomes.idincome}">
 											<i class="ti-eye"></i>
 										</a>									

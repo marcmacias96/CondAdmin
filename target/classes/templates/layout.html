@@ -39,15 +39,9 @@
 								<li class="nav-item">
 									<a class="nav-link"  th:href="@{/}">Inicio</a>
 								</li>
-								<!--  <li sec:authorize="hasRole('ROLE_USER-ADMIN')" class="nav-item">
-									<a class="nav-link"  th:href="@{/condominium/list}">Condominios</a>
-<<<<<<< HEAD
-								</li> -->
 								<li  class="nav-item dropdown">
-=======
 								</li>
 								<li sec:authorize="isAuthenticated()"  class="nav-item dropdown">
->>>>>>> 3ec71a313be450efe863a87be8af325f683f5dfa
 									<a class="nav-link dropdown-toggle"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Mi Condominio
@@ -58,11 +52,12 @@
 										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/owner/listByCondom}">Propietarios</a>
 										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/owner/myHouse}">Mi Casa</a>
 										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/list}">Gastos</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a>
 
 									</div>
 								</li>
 								<li  class="nav-item"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
-									<a class="nav-link dropdown-toggle" id="navbarDropdown"
+									<a class="nav-link dropdown-toggle"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Cuentas
 									</a>

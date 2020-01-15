@@ -41,9 +41,9 @@
                         <table class="table table-hover">
 					<thead>
 						<tr>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Valor</th>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Fecha</th>
-							<th><i class="fas fa-info-circle"></i>&nbsp;Detalle</th>
+							<th><i class="ti-money"></i>&nbsp;Valor</th>
+							<th><i class="ti-calendar"></i>&nbsp;Fecha</th>
+							<th><i class="ti-comment-alt"></i>&nbsp;Detalle</th>
 
 							<th><a class="genric-btn btn-sm info circle" th:href="@{/expenses/myExpenses}" >
 								<i class="ti-plus"></i>&nbsp; Nuevo</a>
@@ -53,7 +53,6 @@
 					<tbody>						
 						<tr th:each="expenses : ${expensesList}" >
 							<td th:text="${expenses.value}"></td>
-							<!--<td th:text="${expenses.fecha}"></td>-->
 							<td th:text=${#dates.format(expenses.date,'dd-MM-yyyy')}></td>
 							<td th:text="${expenses.detail}"></td>
 							

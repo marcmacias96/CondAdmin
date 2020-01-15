@@ -1,9 +1,18 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IUser;
+import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Income;
+import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.IIncomeService;
 
+import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
 import java.util.List;
 
 @Controller
@@ -21,22 +31,26 @@ import java.util.List;
 public class IncomesController {
 	@Autowired
     public IIncomeService service;
+	
+	@Autowired
+    private IUser srvUser;
 
     @GetMapping(value = "/create")
-    public String create(Model model){
+    public String create(Model model, Authentication authentication){
+    	USer user = srvUser.findByName(authentication.getName());
         Income income = new Income();
         model.addAttribute("income", income);
         model.addAttribute("title","Registro de nuevo Ingreso");
 
-        return "incomes/form";
+        return "cuentas/incomes/form";
     }
 
-    @GetMapping(value = "/retrive/{id}")
+    @GetMapping(value = "/retrieve/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Income income = service.findById(id);
         model.addAttribute("income", income);
         model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
-        return "incomes/card";
+        return "cuentas/incomes/card";
     }
 
     @GetMapping(value = "update/{id}")
@@ -44,7 +58,7 @@ public class IncomesController {
         Income income = service.findById(id);
         model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
         model.addAttribute("income",income);
-        return "incomes/form";
+        return "cuentas/incomes/form";
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -65,20 +79,16 @@ public class IncomesController {
         List<Income> incomeListList = service.findAll();
         model.addAttribute("title","Listado de Ingresos");
         model.addAttribute("incomeList", incomeListList);
-        return "incomes/list";
+        return "cuentas/incomes/list";
     }
 
     @PostMapping(value = "/save")
     public String save(@Valid  Income income, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         try {
-            if (bindingResult.hasErrors()){
-                model.addAttribute("title","Error al guardar");
-                return "incomes/form";
-            }
             service.save(income);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
+            redirectAttributes.addFlashAttribute("message","No se pudo guardar");
         }
         return "redirect:/incomes/list";
     }

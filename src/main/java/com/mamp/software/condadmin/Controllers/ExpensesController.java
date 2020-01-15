@@ -49,19 +49,22 @@ public class ExpensesController {
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Expenses expenses = service.findById(id);
         model.addAttribute("expenses", expenses);
+        model.addAttribute("title","Actualizacion de registro de nuevo gasto");
         return "cuentas/expenses/card";
     }
 
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
         Expenses expenses = service.findById(id);
+        model.addAttribute("title","Actualizacion de registro de nuevo gasto");
         model.addAttribute("expenses",expenses);
         return "cuentas/expenses/form";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
+    	model.addAttribute("title","eliminacion de registro de nuevo gasto");
+    	try {
             service.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
@@ -80,7 +83,7 @@ public class ExpensesController {
     }
 
     @PostMapping(value = "/save")
-    public String save(Expenses expenses, Model model, RedirectAttributes redirectAttributes){
+    public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes){
         try {
             service.save(expenses);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");

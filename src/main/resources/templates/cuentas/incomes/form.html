@@ -40,7 +40,7 @@
 							<label class="h5 col-form-label">&nbsp;Valor:</label>						
 						</div>
 						<div class="col-sm-6">							
-							<input class="single-input" type="text" 
+							<input class="single-input" type="text" required
 								th:field="*{value}"
 								th:errorclass="'form-control is-invalid'" /></input>	
 								<small class="invalid-feedback"
@@ -58,7 +58,7 @@
 							<label class="h5 col-form-label">&nbsp;Fecha:</label>						
 						</div>
 						<div class="col-sm-6">
-						<input th:field="*{date}" placeholder="Fecha de nacimiento" 
+						<input th:field="*{date}" placeholder="Fecha" required
 											class="single-input" type="date"											
 											th:errorclass="'form-control is-invalid'">
 										 <small
@@ -105,9 +105,9 @@
 						<div class="col-sm-4">
 							<a class="genric-btn  danger circle" 
 								th:href="@{/incomes/list}">
-							<i class="ti-close"></i>&nbsp; Cancel</a>
+							<i class="ti-close"></i>&nbsp; Cancelar</a>
 							<button class="genric-btn success circle" type="submit">
-								<i class="ti-save"></i>&nbsp; Save
+								<i class="ti-save"></i>&nbsp; Guardar
 							</button>
 						</div>
 					</div>

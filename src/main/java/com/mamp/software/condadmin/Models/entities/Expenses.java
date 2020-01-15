@@ -29,7 +29,7 @@ public class Expenses implements Serializable {
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotEmpty
     @Past
     private Calendar date;
 
