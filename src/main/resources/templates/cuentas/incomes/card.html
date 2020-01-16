@@ -19,110 +19,99 @@
 </section>
 <!-- breadcrumb ends-->
 
-<div class = "container pb-5">
-	<header th:replace="layout :: frgHeader"></header>
-	<div class="d-flex flex-column">
-		<!-- Begin Page Content -->
-		<div class="container">
-			<div class="container-fluid">
-				<br />
-
+<div id="content-wrapper" class="d-flex flex-column">
+	<!-- Begin Page Content -->
+	<div class="container">
+		<div class="container-fluid">
+			<br/>
+			
 		<div class="card col-md-12">
 			<div class="card-body">
 				<div class="form-group row">
-					<div class="col-6">					
-						<h3
-							th:text="${income.value} + ' - ' + ${income.type}"></h3>
-					</div>
-					<div class="col-6 d-flex flex-row-reverse">
-						<div class="form-group px-2">
-							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
-								<i class="ti-trash"></i>&nbsp;Eliminar</button>
+							<h3 class="card-title col-sm-6"
+								th:text="${incomes.value}"></h3>
+						<div class="col-sm-4">
+							<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+							<i class="ti-trash"></i>&nbsp; Eliminar</button>
+							<a class="btn btn-primary" th:href="@{/incomes/list}"><i
+								class="ti-arrow-left"></i>&nbsp; Atras</a>
 						</div>
-						<div class="form-group">
-							<a class="genric-btn info circle" th:href="@{/incomes/list}"><i
-									class="ti-back-left"></i>&nbsp;Atras</a>
+					</div>
+					<input type="hidden" id="idincome"
+						th:value="${incomes.idincome}" />
+					
+					<hr />
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="content col-sm-3 bg-light">
+									<i class="ti-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
+								</div>
+								<div class="col-sm-8">
+									<h5 class="card-text" th:text=${#dates.format(incomes.date,'dd-MM-yyyy')}></h5>
+								</div>
+							</div>						
 						</div>
-
 					</div>
-				</div>
-				<input type="hidden" id="idincome"
-					th:value="${incomes.idincome}" />
-				
-
-				<hr />
-				
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
-							</div>
-							<div class="col-sm-8">
-								<h5 class="card-text" th:text=${#dates.format(incomes.date,'dd-MM-yyyy')}></h5>
-							</div>
-						</div>						
+									
+					<hr />
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="content col-sm-3 bg-light">
+									<i class="ti-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Descripción:</label>
+								</div>
+								<div class="col-sm-8">
+									<h5 class="card-text" th:text="${incomes.description}"></h5>
+								</div>
+							</div>						
+						</div>
 					</div>
-				</div>
-				
-				
-				<hr />
-				
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Descripción:</label>
-							</div>
-							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${incomes.description}"></h5>
-							</div>
-						</div>						
+					
+					
+					<hr />
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group row">
+								<div class="content col-sm-3 bg-light">
+									<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Tipo:</label>
+								</div>
+								<div class="col-sm-8">
+									<h5 class="card-text" th:text="${incomes.type}"></h5>
+								</div>
+							</div>						
+						</div>
 					</div>
-				</div>
-				
-				
-				<hr />
-				
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Tipo:</label>
-							</div>
-							<div class="col-sm-8">
-								<h5 class="card-text" th:text="${incomes.type}"></h5>
-							</div>
-						</div>						
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Deseas eliminar el ingreso?</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<p th:text="${income.value}"></p>
-					</div>
-					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<a th:href="@{cuentas/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirmar</a>
-					</div>
+					
 				</div>
 			</div>
-		</div>
+			
+				<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Deseas eliminar el ingreso?</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<p th:text="${incomes.value}"></p>
+							</div>
+							<div class="modal-footer">						
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+								<a th:href="@/incomes/delete/} + ${incomes.idincome}" class="btn btn-success">Confirmar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer th:replace="layout :: frgFooter"></footer>
 			</div>
-			<footer th:replace="layout :: frgFooter"></footer>
 		</div>
 	</div>
-</div>
 </body>
 </html>

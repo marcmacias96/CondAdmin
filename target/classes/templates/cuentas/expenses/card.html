@@ -28,16 +28,13 @@
 		<div class="card col-md-12">
 			<div class="card-body">
 				<div class="form-group row">
-					<div class="content col-sm-1">
-						<i class="fas fa-info-circle"></i>
-					</div>
 					<h3 class="card-title col-sm-6"
 						th:text="${expenses.value}"></h3>
 					<div class="col-sm-4">
 						<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-						<i class="fas fa-info-circle"></i>&nbsp;Eliminar</button>
+						<i class="ti-trash"></i>&nbsp; Eliminar</button>
 						<a class="btn btn-primary" th:href="@{/expenses/list}"><i
-							class="fas fa-arrow-left"></i>&nbsp;Atras</a>
+							class="ti-arrow-left"></i>&nbsp; Atras</a>
 					</div>
 				</div>
 				<input type="hidden" id="idexpenses"
@@ -49,22 +46,22 @@
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
+								<i class="ti-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Fecha:</label>
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text=${#dates.format(expenses.date,'dd-MM-yyyy')}></h5>
 							</div>
 						</div>						
 					</div>
-				</div>
-				
+				</div>				
 				
 				<hr />
+				
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
-								<i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Detalle:</label>
+								<i class="ti-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Detalle:</label>
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text="${expenses.detail}"></h5>
@@ -90,7 +87,7 @@
 					</div>
 					<div class="modal-footer">						
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<a th:href="@{/cuentas/expenses/delete/} + ${expenses.idexpenses}" class="btn btn-success">Confirmar</a>
+						<a th:href="@{/expenses/delete/} + ${expenses.idexpenses}" class="btn btn-success">Confirmar</a>
 					</div>
 				</div>
 			</div>

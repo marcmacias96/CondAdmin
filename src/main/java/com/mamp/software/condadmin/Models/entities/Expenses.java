@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
 
-
 @Entity
 @Table(name = "EXPENSES")
 public class Expenses implements Serializable {

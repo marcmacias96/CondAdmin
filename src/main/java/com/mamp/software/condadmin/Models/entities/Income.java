@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class Income implements Serializable {
     private Integer idincome;
 
     @Column(name = "VALUE", precision=8, scale = 2)
-    @NotEmpty
+    @NotNull
     private float value;
 
     @Column(name = "DATE")
