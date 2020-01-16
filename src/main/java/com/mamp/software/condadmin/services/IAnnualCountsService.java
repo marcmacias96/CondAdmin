@@ -12,4 +12,6 @@ public interface IAnnualCountsService {
     public void delete(Integer id);
 
     public List<AnnualCounts> findAll();
+    
+    public AnnualCounts findByYear(Integer year);
 }

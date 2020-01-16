@@ -24,11 +24,12 @@ public class MonthlyAccounts implements Serializable {
     private Integer idmonthlyaccounts;
 
     @Column(name = "MONTH")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    @Past
-    private Calendar month;
+    private Integer month;
+    
+    @Column(name = "MONTHNAME")
+    @NotEmpty
+    private String monthname;    
 
     @Column(name = "INCOME",precision=8, scale = 2)
     @NotEmpty
@@ -71,15 +72,23 @@ public class MonthlyAccounts implements Serializable {
         this.idmonthlyaccounts = idmonthlyaccounts;
     }
 
-    public Calendar getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(Calendar month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
+    
+    public String getMonthname() {
+		return monthname;
+	}
 
-    public float getIncome() {
+	public void setMonthname(String monthname) {
+		this.monthname = monthname;
+	}
+
+	public float getIncome() {
         return income;
     }
 

@@ -23,14 +23,13 @@ public class Expenses implements Serializable {
     private Integer idexpenses;
 
     @Column(name = "VALUE",precision=8, scale = 2)
-    @NotEmpty
+    @NotNull
     private float value;
 
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
-    @Past
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past
     private Calendar date;
 
     @Column(name = "DETAIL")
@@ -76,7 +75,7 @@ public class Expenses implements Serializable {
         this.value = value;
     }
 
-    public Calendar getDate() {
+   public Calendar getDate() {
         return date;
     }
 

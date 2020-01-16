@@ -36,4 +36,9 @@ public class AnnualCountsService implements IAnnualCountsService {
     public List<AnnualCounts> findAll() {
         return (List<AnnualCounts>) dao.findAll();
     }
+
+	@Override
+	public AnnualCounts findByYear(Integer year) {
+		return dao.findByYear(year);
+	}
 }
