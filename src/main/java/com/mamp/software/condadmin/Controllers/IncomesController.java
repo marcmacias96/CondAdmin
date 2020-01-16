@@ -1,8 +1,12 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IAnnualCounts;
+import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
 import com.mamp.software.condadmin.Models.dao.IUser;
+import com.mamp.software.condadmin.Models.entities.AnnualCounts;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Income;
+import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
 import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.IIncomeService;
 
@@ -24,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -31,6 +36,12 @@ import java.util.List;
 public class IncomesController {
 	@Autowired
     public IIncomeService service;
+	
+	@Autowired
+	public IAnnualCounts srvAnual;
+	
+	@Autowired
+	public IMonthlyAccounts srvMonthly;
 	
 	@Autowired
     private IUser srvUser;
@@ -76,19 +87,26 @@ public class IncomesController {
 
     @GetMapping(value = "/list")
     public String list(Model model){
-        List<Income> incomeListList = service.findAll();
+        List<Income> incomeList = service.findAll();
         model.addAttribute("title","Listado de Ingresos");
-        model.addAttribute("incomeList", incomeListList);
+        model.addAttribute("incomeList", incomeList);
         return "cuentas/incomes/list";
     }
 
     @PostMapping(value = "/save")
     public String save(@Valid  Income income, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
-        try {
-            service.save(income);
+    	int year = income.getDate().get(Calendar.YEAR);
+    	int month = income.getDate().get(Calendar.MONTH);
+    	try {
+    		AnnualCounts annualCount = srvAnual.findByYear(year);
+        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
+        	System.out.println(monthlyAccount);
+        	income.setMonthlyAccounts(monthlyAccount);
+    		service.save(income);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+            return "cuentas/incomes/form";
         }
         return "redirect:/incomes/list";
     }

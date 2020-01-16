@@ -26,9 +26,8 @@ public class Income implements Serializable {
 
     @Column(name = "DATE")
     @Temporal(TemporalType.DATE)
-    @Past
-    @DateTimeFormat(pattern = "mm-dd-yyyy")
-    @NotEmpty
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past
     private Calendar date;
 
     @Column(name = "DESCRIPTION")

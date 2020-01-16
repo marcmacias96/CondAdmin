@@ -1,8 +1,12 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IAnnualCounts;
+import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
 import com.mamp.software.condadmin.Models.dao.IUser;
+import com.mamp.software.condadmin.Models.entities.AnnualCounts;
 import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Expenses;
+import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
 import com.mamp.software.condadmin.Models.entities.USer;
 import com.mamp.software.condadmin.services.IExpensesService;
 
@@ -25,18 +29,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.TimeZone;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/expenses")
 public class ExpensesController {
 	@Autowired
     public IExpensesService service;
+	
+	@Autowired
+	public IAnnualCounts srvAnual;
+	
+	@Autowired
+	public IMonthlyAccounts srvMonthly;
 
 	@Autowired
     private IUser srvUser;
 	
     @GetMapping(value = "/myExpenses")
-    public String create(Model model, Authentication authentication){
+    public String create(Model model, Authentication authentication){    	
     	USer user = srvUser.findByName(authentication.getName());
     	Expenses expenses = new Expenses();
         model.addAttribute("expenses", expenses);
@@ -84,11 +97,21 @@ public class ExpensesController {
 
     @PostMapping(value = "/save")
     public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes){
+    	/*Date fecha = new Date();
+    	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Bogota/Quito"));
+    	cal.setTime(fecha);*/
+    	int year = expenses.getDate().get(Calendar.YEAR);
+    	int month = expenses.getDate().get(Calendar.MONTH);
         try {
+        	AnnualCounts annualCount = srvAnual.findByYear(year);
+        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
+        	System.out.println(monthlyAccount);
+        	expenses.setMonthlyAccounts(monthlyAccount);
             service.save(expenses);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+            return "cuentas/expenses/form";
         }
         return "redirect:/expenses/list";
     }

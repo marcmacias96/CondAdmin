@@ -23,14 +23,14 @@ public class AnnualCountsController {
 
     @GetMapping(value = "/create")
     public String create(Model model){
+    	
         AnnualCounts annualCounts = new AnnualCounts();
         model.addAttribute("annualCounts", annualCounts);
         model.addAttribute("title","Registro nuevo de Cuentas Anuales");
-
         return "annualCounts/form";
     }
 
-    @GetMapping(value = "/retrive/{id}")
+    @GetMapping(value = "/retrieve/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         AnnualCounts annualCounts = service.findById(id);
         model.addAttribute("annualCounts", annualCounts);

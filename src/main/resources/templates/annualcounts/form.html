@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="layout :: head"></head>
+<body>
+<header th:replace="layout :: frgHeader"></header>
+<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Cuentas Anuales</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container pb-5">
+    <div  class="d-flex flex-column">
+        <!-- Begin Page Content -->
+        <div class="container">
+            <div class="container-fluid">
+                <br />
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="content col-sm-1">
+                                <i class="far fa-plus-square fa-2x"></i>
+                            </div>
+                            <h3 class="card-title col-sm-10" th:text="${title}"></h3>
+                        </div>
+                        <hr />
+
+                        <form th:action="@{/annualCounts/save}" th:object="${annualcounts}" method="post">
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <i class="ti-home"></i>
+                                    <label class="h5 col-form-label">&nbsp;Anio</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{year}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('year')}"
+                                           th:errors="*{year}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <i class="ti-money"></i>
+                                    <label class="h5 col-form-label">&nbsp;Ingresos</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="single-input" type="number"
+                                           th:field="*{income}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('income')}"
+                                           th:errors="*{income}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="content col-sm-3">
+                                    <i class="ti-money"></i>
+                                    <label class="h5 col-form-label">&nbsp;Gastos</label>
+                                </div>
+                                <div class="content col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{expenses}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('expenses')}"
+                                           th:errors="*{expenses}"></small>
+                                </div>
+                            </div>
+                            
+                            
+                            <input type="hidden" th:field="*{idannualcounts}" />
+                            <div class="col-12 d-flex flex-row-reverse">
+                                <a class="genric-btn  danger circle"
+                                   th:href="@{/annualCounts/list}">
+                                    <i class="ti-close"></i>&nbsp; Cancelar</a>
+                                <button class="genric-btn success circle" type="submit">
+                                    <i class="ti-save"></i>&nbsp; Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer th:replace="layout :: frgFooter"></footer>
+</body>
+</html>

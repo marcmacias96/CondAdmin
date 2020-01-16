@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: frgHead"></head>
+<body>
+
+<!-- breadcrumb start-->
+<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Cuentas Anuales</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb ends-->
+
+<div class="container pb-5">
+    <header th:replace="layout :: frgHeader"></header>
+    <div  class="d-flex flex-column">
+        <!-- Begin Page Content -->
+        <div class="container">
+            <div class="container-fluid">
+                <br />
+
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-6 d-flex flex-row-reverse">
+                                <div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm danger circle" th:href="@{/annualCounts/delete/} + ${annualcounts.idannualcounts}" >
+                                        <i class="ti-trash"></i>&nbsp; Eliminar</a>
+                                </div>
+                                <div class="form-group">
+                                    <a class="genric-btn btn-sm info circle" th:href="@{/annualCounts/list}">
+                                    	<i class="ti-back-left"></i>&nbsp; Atras</a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <input type="hidden" id="idannualcounts"
+                               th:value="${annualcounts.idannualcounts}" />
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="content col-sm-3 bg-light">
+                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Año:</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h5 class="card-text" th:text="${annualcounts.year}"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="content col-sm-3 bg-light">
+                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Ingresos:</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h5 class="card-text" th:text="${annualcounts.income}"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="content col-sm-3 bg-light">
+                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h5 class="card-text" th:text="${annualcounts.expenses}"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="layout :: frgFooter"></footer>
+</body>
+</html>

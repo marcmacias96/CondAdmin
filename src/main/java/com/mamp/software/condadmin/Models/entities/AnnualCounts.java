@@ -24,17 +24,14 @@ public class AnnualCounts implements Serializable {
     private Integer idannualcounts;
 
     @Column(name = "YEAR")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    @Past
-    private Calendar year;
+    private Integer year;
 
-    @Column(name = "INCOME",precision=8, scale = 2)
+    @Column(name = "INCOME", precision=8, scale = 2)
     @NotEmpty
     private float income;
 
-    @Column(name = "EXPENSES",precision=8, scale = 2)
+    @Column(name = "EXPENSES", precision=8, scale = 2)
     @NotEmpty
     private float expenses;
 
@@ -52,12 +49,14 @@ public class AnnualCounts implements Serializable {
         super();
     }
 
-    private AnnualCounts(Integer idannualcounts){
-        super();
-        this.idannualcounts = idannualcounts;
-    }
+    public AnnualCounts(Integer idannualcounts) {
+		super();
+		this.idannualcounts = idannualcounts;
+	}
 
-    /**/
+
+
+	/**/
 	public Integer getIdannualcounts() {
 		return idannualcounts;
 	}
@@ -66,11 +65,11 @@ public class AnnualCounts implements Serializable {
 		this.idannualcounts = idannualcounts;
 	}
 
-	public Calendar getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(Calendar year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
