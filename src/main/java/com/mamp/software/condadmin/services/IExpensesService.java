@@ -12,4 +12,6 @@ public interface IExpensesService {
     public void delete(Integer id);
 
     public List<Expenses> findAll();
+
+    public List<Expenses> findByCondom(Integer id);
 }

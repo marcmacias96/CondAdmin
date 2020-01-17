@@ -3,11 +3,7 @@ package com.mamp.software.condadmin.Controllers;
 import com.mamp.software.condadmin.Models.dao.IAnnualCounts;
 import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
 import com.mamp.software.condadmin.Models.dao.IUser;
-import com.mamp.software.condadmin.Models.entities.AnnualCounts;
-import com.mamp.software.condadmin.Models.entities.Condominium;
-import com.mamp.software.condadmin.Models.entities.Expenses;
-import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
-import com.mamp.software.condadmin.Models.entities.USer;
+import com.mamp.software.condadmin.Models.entities.*;
 import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IExpensesService;
 
@@ -21,21 +17,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-import java.util.List;
-import java.util.TimeZone;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/expenses")
+@SessionAttributes({"details"})
 public class ExpensesController {
 	@Autowired
     public IExpensesService service;
@@ -52,13 +44,13 @@ public class ExpensesController {
 	@Autowired
     private ICondominiumService srvCond;
 	
-    @GetMapping(value = "/myExpenses")
+    @GetMapping(value = "/create")
     public String create(Model model){
 
     	Expenses expenses = new Expenses();
         model.addAttribute("expenses", expenses);
         model.addAttribute("title","Registro de nuevo Gasto");
-
+        model.addAttribute("details", new ArrayList<ExpenseDetail>());
         return "cuentas/expenses/form";
     }
 
@@ -88,24 +80,31 @@ public class ExpensesController {
             redirectAttributes.addFlashAttribute("message","Error al eliminar el registro");
 
         }
-        return "redirect:/expenses/list";
+        return "redirect:/expenses/myExpenses";
     }
 
-    @GetMapping(value = "/list")
-    public String list(Model model){
-        List<Expenses> expensesList = service.findAll();
+    @GetMapping(value = "/myExpenses")
+    public String list(Model model, Authentication authentication){
+        //Aqui tomamos el usuario loggeado y obtenemos el condominio al que pertenece
+        USer user = srvUser.findByName(authentication.getName());
+        //Cree una busqueda especifica en el dao para obtener los gastos de solo el condominio deseado (findbyCondom)
+        Condominium condominium = srvCond.findByUser(user.getIdUser());
+        List<Expenses> expensesList = service.findByCondom(condominium.getIdcondominium());
         model.addAttribute("title","Listado de Gastos");
         model.addAttribute("expensesList", expensesList);
         return "cuentas/expenses/list";
     }
 
     @PostMapping(value = "/save")
-    public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication){
+    public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<ExpenseDetail> detalles
+            , SessionStatus session){
         USer user = srvUser.findByName(authentication.getName());
         Condominium condominium = srvCond.findByUser(user.getIdUser());
     	int year = expenses.getDate().get(Calendar.YEAR);
     	int month = expenses.getDate().get(Calendar.MONTH);
         try {
+            //Aqui hacemos la busqueda del reporte anual
+            //si no existe ceamos uno esto debe aplicarse en ingresos tambien
         	AnnualCounts annualCount = srvAnual.findByYear(year);
         	if(annualCount == null) {
         	    annualCount = new AnnualCounts();
@@ -115,6 +114,8 @@ public class ExpensesController {
         	    annualCount.setCondominium(condominium);
         	    srvAnual.save(annualCount);
             }
+            //Aqui hacemos la busqueda del reporte mensual
+            //si no existe ceamos uno esto debe aplicarse en ingresos tambien
         	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
         	if(monthlyAccount == null ) {
         	    monthlyAccount= new MonthlyAccounts();
@@ -126,12 +127,21 @@ public class ExpensesController {
             }
         	expenses.setMonthlyAccounts(monthlyAccount);
         	expenses.setCondominium(condominium);
+        	expenses.setExpenseDetailList(detalles);
             service.save(expenses);
+            List<Expenses> ex = service.findByCondom(condominium.getIdcondominium());
+            session.setComplete();
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guardar");
             return "cuentas/expenses/form";
         }
-        return "redirect:/expenses/list";
+        return "redirect:/expenses/myExpenses";
+    }
+
+    @PostMapping(value="/addDetail", produces="application/json")
+    public @ResponseBody List<ExpenseDetail> addDetail(@RequestBody ExpenseDetail detail, @SessionAttribute(value="details") List<ExpenseDetail> detalles) {
+        detalles.add(detail);
+        return detalles;
     }
 }

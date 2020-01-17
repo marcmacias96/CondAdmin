@@ -36,4 +36,9 @@ public class ExpensesService implements IExpensesService {
     public List<Expenses> findAll() {
         return (List<Expenses>) dao.findAll();
     }
+
+    @Override
+    public List<Expenses> findByCondom(Integer id) {
+        return  (List<Expenses>) dao.findByCondom(id);
+    }
 }

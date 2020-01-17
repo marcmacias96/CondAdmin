@@ -1,5 +1,6 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "EXPENSES")
@@ -22,7 +24,6 @@ public class Expenses implements Serializable {
     private Integer idexpenses;
 
     @Column(name = "VALUE",precision=8, scale = 2)
-    @NotNull
     private float value;
 
     @Column(name = "DATE")
@@ -31,10 +32,6 @@ public class Expenses implements Serializable {
 	@Past
     private Calendar date;
 
-    @Column(name = "DETAIL")
-    @Size(max = 100)
-    @NotEmpty
-    private String detail;
 
     //Relations
     @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
@@ -45,6 +42,10 @@ public class Expenses implements Serializable {
     @ManyToOne
     private MonthlyAccounts monthlyAccounts;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name= "IDEXPENSES")
+    private List<ExpenseDetail> expenseDetailList;
+
     /**/
     public Expenses(){
         super();
@@ -54,11 +55,16 @@ public class Expenses implements Serializable {
 		super();
 		this.idexpenses = idexpenses;
 	}
-    
 
-    /**/
+    public List<ExpenseDetail> getExpenseDetailList() {
+        return expenseDetailList;
+    }
 
-	public Integer getIdexpenses() {
+    public void setExpenseDetailList(List<ExpenseDetail> expenseDetailList) {
+        this.expenseDetailList = expenseDetailList;
+    }
+
+    public Integer getIdexpenses() {
         return idexpenses;
     }
 
@@ -82,14 +88,6 @@ public class Expenses implements Serializable {
         this.date = date;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
     public Condominium getCondominium() {
         return condominium;
     }
@@ -105,5 +103,7 @@ public class Expenses implements Serializable {
     public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
         this.monthlyAccounts = monthlyAccounts;
     }
+
+
 }
 
