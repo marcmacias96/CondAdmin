@@ -37,7 +37,7 @@
 					<div class="form-group row">
 						<div class="col-sm-3">
 							<i class="ti-user"></i>
-							<label class="h5 col-form-label">&nbsp;Name</label>
+							<label class="h5 col-form-label">&nbsp;Nombre: </label>
 						</div>
 						<div class="col-sm-6">
 							<input class="single-input" type="text"
@@ -55,7 +55,7 @@
 					<div class="form-group row">
 						<div class="col-sm-3">
 							<i class="ti-user"></i>
-							<label class="h5 col-form-label">&nbsp;Last Name</label>
+							<label class="h5 col-form-label">&nbsp;Apellido: </label>
 						</div>
 						<div class="col-sm-6">
 							<input class="single-input" type="text"
@@ -73,7 +73,7 @@
 					<div class="form-group row">
 						<div class="content col-sm-3">
 							<i class="ti-id-badge"></i>
-							<label class="h5 col-form-label">&nbsp;ID Card</label>
+							<label class="h5 col-form-label">&nbsp;Cedula: </label>
 						</div>
 						<div class="content col-sm-6">							
 							<input class="single-input" type="text"
@@ -122,10 +122,10 @@
 					<input type="hidden" th:field="*{idowner}" />
 					<div class="col-12 d-flex flex-row-reverse">
 						<a class="genric-btn  danger circle"
-						   th:href="@{/owner/list}">
-							<i class="ti-close"></i>&nbsp; Cancel</a>
+						   th:href="@{/owner/myHouse}">
+							<i class="ti-close"></i>&nbsp; Cancelar</a>
 						<button class="genric-btn success circle" type="submit">
-							<i class="ti-save"></i>&nbsp; Save
+							<i class="ti-save"></i>&nbsp; Guardar
 						</button>
 					</div>
 

@@ -39,10 +39,6 @@
 							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
 							<i class="ti-trash"></i>&nbsp; Eliminar</button>
 						</div>
-						<div class="form-group px-2">
-							<a class="genric-btn info circle" th:href="@{/house/list}"><i
-							class="ti-back-left"></i>&nbsp; Atras</a>
-						</div>
 						
 					</div>
 				</div>
@@ -51,7 +47,7 @@
 
 				<hr />
 				
-				<div class="row">
+				<div class="row">	
 					<div class="col-md-12">
 						<div class="form-group row">
 							<div class="content col-sm-3 bg-light">
@@ -100,7 +96,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Do you want to delete the house?</h5>
+						<h5 class="modal-title">Deseas eliminar la casa?</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -110,8 +106,8 @@
 						<p th:text="${house.block}"></p>
 					</div>
 					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-						<a th:href="@{/house/delete/} + ${house.idhouse}" class="btn btn-success">Confirm</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+						<a th:href="@{/house/delete/} + ${house.idhouse}" class="btn btn-success">Confirmar</a>
 					</div>
 				</div>
 			</div>
