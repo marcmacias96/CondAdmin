@@ -11,11 +11,10 @@ function addDetail(){
         dataType : "json",
         data : JSON.stringify(detail),
         success : function(response){
+            $('#tblDetalle tr:not(:first-child)')
+                .remove();
             $.each(response, function(i, item){
-                $("#tblDetalle").append("<tr>");
-                $("#tblDetalle").append("<td  class='align-middle text-center'>"+ item.detail +"</td>");
-                $("#tblDetalle").append("<td  class='align-middle text-center'>"+ item.value +"</td>");
-                $("#tblDetalle").append("</tr>");
+                $("#tblDetalle tr:last").after("<tr> <td  class='align-middle text-center'>" + item.detail+ " </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>");
             });
         },
         error : function(err){
