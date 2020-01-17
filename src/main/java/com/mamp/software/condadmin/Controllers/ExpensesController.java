@@ -8,6 +8,7 @@ import com.mamp.software.condadmin.Models.entities.Condominium;
 import com.mamp.software.condadmin.Models.entities.Expenses;
 import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
 import com.mamp.software.condadmin.Models.entities.USer;
+import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IExpensesService;
 
 import com.mamp.software.condadmin.services.UserService;
@@ -47,10 +48,13 @@ public class ExpensesController {
 
 	@Autowired
     private IUser srvUser;
+
+	@Autowired
+    private ICondominiumService srvCond;
 	
     @GetMapping(value = "/myExpenses")
-    public String create(Model model, Authentication authentication){    	
-    	USer user = srvUser.findByName(authentication.getName());
+    public String create(Model model){
+
     	Expenses expenses = new Expenses();
         model.addAttribute("expenses", expenses);
         model.addAttribute("title","Registro de nuevo Gasto");
@@ -96,17 +100,32 @@ public class ExpensesController {
     }
 
     @PostMapping(value = "/save")
-    public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes){
-    	/*Date fecha = new Date();
-    	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Bogota/Quito"));
-    	cal.setTime(fecha);*/
+    public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = srvCond.findByUser(user.getIdUser());
     	int year = expenses.getDate().get(Calendar.YEAR);
     	int month = expenses.getDate().get(Calendar.MONTH);
         try {
         	AnnualCounts annualCount = srvAnual.findByYear(year);
+        	if(annualCount == null) {
+        	    annualCount = new AnnualCounts();
+        	    annualCount.setYear(year);
+        	    annualCount.setExpenses(0.0f);
+        	    annualCount.setIncome(0.0f);
+        	    annualCount.setCondominium(condominium);
+        	    srvAnual.save(annualCount);
+            }
         	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
-        	System.out.println(monthlyAccount);
+        	if(monthlyAccount == null ) {
+        	    monthlyAccount= new MonthlyAccounts();
+        	    monthlyAccount.setExpenses(0.0f);
+        	    monthlyAccount.setIncome(0.0f);
+        	    monthlyAccount.setMonth(month);
+        	    monthlyAccount.setAnnualCounts(annualCount);
+        	    srvMonthly.save(monthlyAccount);
+            }
         	expenses.setMonthlyAccounts(monthlyAccount);
+        	expenses.setCondominium(condominium);
             service.save(expenses);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){

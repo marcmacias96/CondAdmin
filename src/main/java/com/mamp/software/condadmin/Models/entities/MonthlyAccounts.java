@@ -26,17 +26,11 @@ public class MonthlyAccounts implements Serializable {
     @Column(name = "MONTH")
     @NotNull
     private Integer month;
-    
-    @Column(name = "MONTHNAME")
-    @NotEmpty
-    private String monthname;    
 
     @Column(name = "INCOME",precision=8, scale = 2)
-    @NotEmpty
     private float income;
 
     @Column(name = "EXPENSES",precision=8, scale = 2)
-    @NotEmpty
     private float expenses;
 
     //Relations
@@ -79,14 +73,6 @@ public class MonthlyAccounts implements Serializable {
     public void setMonth(Integer month) {
         this.month = month;
     }
-    
-    public String getMonthname() {
-		return monthname;
-	}
-
-	public void setMonthname(String monthname) {
-		this.monthname = monthname;
-	}
 
 	public float getIncome() {
         return income;

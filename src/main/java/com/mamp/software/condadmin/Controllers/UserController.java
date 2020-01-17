@@ -71,6 +71,7 @@ public class UserController {
         }
         catch(Exception ex) {
             flash.addFlashAttribute("error", "El registro no pudo ser guardado.");
+            System.out.println(ex);
         }
         return "redirect:/login";
     }

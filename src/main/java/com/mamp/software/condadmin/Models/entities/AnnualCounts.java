@@ -28,11 +28,9 @@ public class AnnualCounts implements Serializable {
     private Integer year;
 
     @Column(name = "INCOME", precision=8, scale = 2)
-    @NotEmpty
     private float income;
 
     @Column(name = "EXPENSES", precision=8, scale = 2)
-    @NotEmpty
     private float expenses;
 
     //Relations
@@ -89,4 +87,19 @@ public class AnnualCounts implements Serializable {
 		this.expenses = expenses;
 	}
 
+	public Condominium getCondominium() {
+		return condominium;
+	}
+
+	public void setCondominium(Condominium condominium) {
+		this.condominium = condominium;
+	}
+
+	public List<MonthlyAccounts> getMonthlyAccountsList() {
+		return monthlyAccountsList;
+	}
+
+	public void setMonthlyAccountsList(List<MonthlyAccounts> monthlyAccountsList) {
+		this.monthlyAccountsList = monthlyAccountsList;
+	}
 }
