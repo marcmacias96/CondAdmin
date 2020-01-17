@@ -127,9 +127,11 @@ public class ExpensesController {
             }
         	expenses.setMonthlyAccounts(monthlyAccount);
         	expenses.setCondominium(condominium);
+        	//guardamos la lista de detalles en el maestro
         	expenses.setExpenseDetailList(detalles);
             service.save(expenses);
             List<Expenses> ex = service.findByCondom(condominium.getIdcondominium());
+            //cerramos la sesion
             session.setComplete();
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
