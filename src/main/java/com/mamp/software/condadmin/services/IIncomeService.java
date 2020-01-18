@@ -12,4 +12,6 @@ public interface IIncomeService {
     public void delete(Integer id);
 
     public List<Income> findAll();
+    
+    public List<Income> findByCondom(Integer id);
 }

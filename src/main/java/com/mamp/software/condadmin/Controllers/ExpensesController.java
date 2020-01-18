@@ -104,7 +104,7 @@ public class ExpensesController {
     	int month = expenses.getDate().get(Calendar.MONTH);
         try {
             //Aqui hacemos la busqueda del reporte anual
-            //si no existe ceamos uno esto debe aplicarse en ingresos tambien
+            //si no existe creamos uno esto debe aplicarse en ingresos tambien
         	AnnualCounts annualCount = srvAnual.findByYear(year);
         	if(annualCount == null) {
         	    annualCount = new AnnualCounts();
@@ -115,7 +115,7 @@ public class ExpensesController {
         	    srvAnual.save(annualCount);
             }
             //Aqui hacemos la busqueda del reporte mensual
-            //si no existe ceamos uno esto debe aplicarse en ingresos tambien
+            //si no existe creamos uno esto debe aplicarse en ingresos tambien
         	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
         	if(monthlyAccount == null ) {
         	    monthlyAccount= new MonthlyAccounts();
@@ -141,8 +141,8 @@ public class ExpensesController {
         return "redirect:/expenses/myExpenses";
     }
 
-    @PostMapping(value="/addDetail", produces="application/json")
-    public @ResponseBody List<ExpenseDetail> addDetail(@RequestBody ExpenseDetail detail, @SessionAttribute(value="details") List<ExpenseDetail> detalles) {
+    @PostMapping(value="/addDetailExpenses", produces="application/json")
+    public @ResponseBody List<ExpenseDetail> addDetailExpenses(@RequestBody ExpenseDetail detail, @SessionAttribute(value="details") List<ExpenseDetail> detalles) {
         detalles.add(detail);
         return detalles;
     }

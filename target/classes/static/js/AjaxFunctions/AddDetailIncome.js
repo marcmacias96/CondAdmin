@@ -1,10 +1,11 @@
 function addDetail(){
     var detail = {
         detail : $("#txbdetail").val(),
+        type : $("txbtype").val(),
         value : $("#txbvalor").val()
     }
     $.ajax({
-        url : "/expenses/addDetail",
+        url : "/incomes/addDetail",
         method : 'POST',
         headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
         contentType : "application/json",
@@ -14,7 +15,9 @@ function addDetail(){
             $('#tblDetalle tr:not(:first-child)')
                 .remove();
             $.each(response, function(i, item){
-                $("#tblDetalle tr:last").after("<tr> <td  class='align-middle text-center'>" + item.detail+ " </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>");
+                $("#tblDetalle tr:last").after("<tr> <td  class='align-middle text-center'>" + item.detail + 
+                		" </td> <td  class='align-middle text-center'>" + item.type+ 
+                		" </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>");
             });
         },
         error : function(err){

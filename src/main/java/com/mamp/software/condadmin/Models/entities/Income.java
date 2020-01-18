@@ -9,6 +9,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "INCOME")
@@ -53,6 +54,12 @@ public class Income implements Serializable {
     @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
     @ManyToOne
     private Condominium condominium;
+    
+    /**/
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name= "IDINCOME")
+    private List<IncomeDetail> incomeDetailList;
     
     /**/
     public Income(){
@@ -133,4 +140,15 @@ public class Income implements Serializable {
     public void setCondominium(Condominium condominium) {
         this.condominium = condominium;
     }
+
+    /**/
+	public List<IncomeDetail> getIncomeDetailList() {
+		return incomeDetailList;
+	}
+
+	public void setIncomeDetailList(List<IncomeDetail> incomeDetailList) {
+		this.incomeDetailList = incomeDetailList;
+	}
+    
+    
 }

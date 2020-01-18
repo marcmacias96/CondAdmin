@@ -31,4 +31,9 @@ public class IncomeService implements IIncomeService {
     public List<Income> findAll() {
         return (List<Income>) dao.findAll();
     }
+    
+    @Override
+    public List<Income> findByCondom(Integer id){
+    	return (List<Income>) dao.findByCondom(id);
+    }
 }

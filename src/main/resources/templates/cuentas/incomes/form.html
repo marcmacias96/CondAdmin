@@ -25,104 +25,126 @@
 		<div class="card col-md-12">
 			<div class="card-body">
 				<div class="form-group row">
-					<div class="content col-sm-1">
-						<i class="far fa-plus-square fa-2x"></i>
+					<div class="col-6 ">
+						<h3 th:text="${title}"></h3>
 					</div>
-					<h3 class="card-title col-sm-10" th:text="${title}"></h3>					
+						<div class="col-6 d-flex flex-row-reverse">
+							<div class="form-group px-2">
+								<a class="genric-btn btn-sm success circle"  data-toggle="modal" data-target="#addModal">
+									<i class="ti-plus"></i>&nbsp; Añadir Detalle</a>
+							</div>
+						</div>
+								
 				</div>
+				
 				<hr />
 				
 				<form th:action="@{/incomes/save}" th:object="${income}" method="post">
-										
+					
 					<div class="form-group row">
-						<div class="col-sm-3">
-							<i class="ti-money"></i>
-							<label class="h5 col-form-label">&nbsp;Valor:</label>						
-						</div>
-						<div class="col-sm-6">							
-							<input class="single-input" type="text" required
-								th:field="*{value}"
-								th:errorclass="'form-control is-invalid'" /></input>	
-								<small class="invalid-feedback"
-								th:if="${#fields.hasErrors('value')}"
-								th:errors="*{value}"></small>										
-						</div>
-					</div>
-				
-				
-					<hr />
-					<!-- CALENDER -->
-					<div class="form-group row">
-						<div class="col-sm-3">
-							<i class="ti-calendar"></i>
-							<label class="h5 col-form-label">&nbsp;Fecha:</label>						
-						</div>
-						<div class="col-sm-6">
-						<input th:field="*{date}" placeholder="Fecha" required
-											class="single-input" type="date"											
-											th:errorclass="'form-control is-invalid'">
-										 <small
+								<div class="content col-sm-3">
+									<i class="ti-calendar"></i>
+									<label class="h5 col-form-label">&nbsp;Fecha:</label>
+								</div>
+								<div class="col-sm-6">
+									<input class="form-control"  type="date" required
+										   th:field="*{date}"
+										   th:errorclass="'form-control is-invalid'">
+									<small
 											class="invalid-feedback"
 											th:if="${#fields.hasErrors('date')}"
 											th:errors="*{date}"></small>
-						</div>
+								</div>
 					</div>
-					<hr />
-					<div class="form-group row">
-						<div class="col-sm-3">
-							<i class="ti-comment-alt"></i>
-							<label class="h5 col-form-label">&nbsp;Descripci�n:</label>						
-						</div>
-						<div class="col-sm-6">							
-							<input class="single-input" type="text" 
-								th:field="*{description}"
-								th:errorclass="'form-control is-invalid'" /></input>	
-								<small class="invalid-feedback"
-								th:if="${#fields.hasErrors('description')}"
-								th:errors="*{description}"></small>										
-						</div>
-					</div>				
-					
-					
-					<hr />
-					<div class="form-group row">
-						<div class="col-sm-3">
-							<i class="ti-layers"></i>
-							<label class="h5 col-form-label">&nbsp;Tipo:</label>						
-						</div>
-						<div class="col-sm-6">							
-							<input class="single-input" type="text" 
-								th:field="*{type}"
-								th:errorclass="'form-control is-invalid'" /></input>	
-								<small class="invalid-feedback"
-								th:if="${#fields.hasErrors('type')}"
-								th:errors="*{type}"></small>										
-						</div>
+					<div class="card col-md-12">
+								<div class="card-body">
+									<table id="tblDetalle" class="table table-hover">
+										<thead>
+										<tr>
+											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Detalle</th>
+											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Tipo</th>
+											<th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Valor</th>
+
+										</tr>
+										</thead>
+										<tbody>
+										<tr th:each="detail : ${details}" >
+											<td class="align-middle text-center" th:text="${detail.getDetail()}"></td>
+											<td class="align-middle text-center" th:text="${detail.getType()}"></td>
+											<td class="align-middle text-center" th:text="${detail.getValue()}"></td>
+										</tr>
+
+										</tbody>
+									</table>
+								</div>
 					</div>
-										
-					<hr />
-					<div class="form-group row">
-						<div class="col-sm-4">
-							<a class="genric-btn  danger circle" 
-								th:href="@{/incomes/list}">
-							<i class="ti-close"></i>&nbsp; Cancelar</a>
-							<button class="genric-btn success circle" type="submit">
-								<i class="ti-save"></i>&nbsp; Guardar
-							</button>
-						</div>
-					</div>
+							<input type="hidden" th:field="*{idincome}" />
 							
-				
-				</form>
-				
-	
-				
+							<div class="col-12 d-flex flex-row-reverse">
+								<a class="genric-btn  danger circle"
+								   th:href="@{/incomes/list}">
+									<i class="ti-close"></i>&nbsp; Cancelar</a>
+								<button class="genric-btn success circle" type="submit">
+									<i class="ti-save"></i>&nbsp; Guardar
+								</button>
+							</div>
+							
+						</form>
+					</div>
+				</div>
 			</div>
-		</div>
-			</div>
-			<footer th:replace="layout :: frgFooter"></footer>
 		</div>
 	</div>
 </div>
+<div id="addModal" class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Añadir detalle</h5>
+				<button type="button" class="close" data-dismiss="modal"
+						aria-label="Cerrar">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Detalle:</label>
+						</div>
+						<div class="content col-sm-6">
+							<input id="txbdetail" class="form-control" type="text" required/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Tipo:</label>
+						</div>
+						<div class="content col-sm-6">
+							<input id="txbtype" class="form-control" type="text" required/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Valor:</label>
+						</div>
+						<div class="content col-sm-6">
+							<input id="txbvalor" class="form-control" type="text" required />
+						</div>
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+				<a id="btnAdd" class="btn btn-success" data-dismiss="modal">Confirmar</a>
+			</div>
+		</div>
+	</div>
+</div>
+<footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/AjaxFunctions/AddDetailIncome.js}"></script>
 </body>
 </html>
