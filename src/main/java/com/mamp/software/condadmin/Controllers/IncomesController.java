@@ -138,7 +138,7 @@ public class IncomesController {
         	    monthlyAccount.setAnnualCounts(annualCount);
         	    srvMonthly.save(monthlyAccount);
             }
-        	income.setMonthlyAccounts(monthlyAccount);
+        	//income.setMonthlyAccounts(monthlyAccount);
         	income.setCondominium(condominium);
         	income.setIncomeDetailList(detalles);
     		service.save(income);

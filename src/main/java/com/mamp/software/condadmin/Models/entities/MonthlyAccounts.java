@@ -38,8 +38,12 @@ public class MonthlyAccounts implements Serializable {
     @ManyToOne
     private AnnualCounts annualCounts;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    //private List<Income> incomeList;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name= "IDMONTHCOUNTS")
     private List<Income> incomeList;
 
     @JsonIgnore

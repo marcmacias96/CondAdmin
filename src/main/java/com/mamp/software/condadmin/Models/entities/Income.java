@@ -37,6 +37,11 @@ public class Income implements Serializable {
     @NotEmpty
     private String description;
 
+    @Column(name = "STATE")
+    @Size(max=10)
+    @NotEmpty
+    private Boolean state;
+
     @Column(name = "TYPE")
     @Size(max=10)
     @NotEmpty
@@ -47,9 +52,9 @@ public class Income implements Serializable {
     @ManyToOne
     private House house;
 
-    @JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
-    @ManyToOne
-    private MonthlyAccounts monthlyAccounts;
+    //@JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
+    //@ManyToOne
+    //private MonthlyAccounts monthlyAccounts;
 
     @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
     @ManyToOne
@@ -76,6 +81,14 @@ public class Income implements Serializable {
 
 
 	/**/
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
+    }
 
     public Integer getIdincome() {
         return idincome;
@@ -123,14 +136,6 @@ public class Income implements Serializable {
 
     public void setHouse(House house) {
         this.house = house;
-    }
-
-    public MonthlyAccounts getMonthlyAccounts() {
-        return monthlyAccounts;
-    }
-
-    public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
-        this.monthlyAccounts = monthlyAccounts;
     }
 
     public Condominium getCondominium() {
