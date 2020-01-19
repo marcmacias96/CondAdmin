@@ -32,29 +32,20 @@ public class Income implements Serializable {
 	@Past
     private Calendar date;
 
-    @Column(name = "DESCRIPTION")
-    @Size(max=100)
-    @NotEmpty
-    private String description;
 
     @Column(name = "STATE")
-    @Size(max=10)
-    @NotEmpty
+    @NotNull
     private Boolean state;
 
-    @Column(name = "TYPE")
-    @Size(max=10)
-    @NotEmpty
-    private String type;
 
     //Relations
     @JoinColumn(name = "IDHOUSE", referencedColumnName = "IDHOUSE")
     @ManyToOne
     private House house;
 
-    //@JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
-    //@ManyToOne
-    //private MonthlyAccounts monthlyAccounts;
+    @JoinColumn(name = "IDMONTHCOUNTS", referencedColumnName = "IDMONTHCOUNTS")
+    @ManyToOne
+    private MonthlyAccounts monthlyAccounts;
 
     @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
     @ManyToOne
@@ -81,6 +72,14 @@ public class Income implements Serializable {
 
 
 	/**/
+
+    public MonthlyAccounts getMonthlyAccounts() {
+        return monthlyAccounts;
+    }
+
+    public void setMonthlyAccounts(MonthlyAccounts monthlyAccounts) {
+        this.monthlyAccounts = monthlyAccounts;
+    }
 
     public Boolean getState() {
         return state;
@@ -112,22 +111,6 @@ public class Income implements Serializable {
 
     public void setDate(Calendar date) {
         this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public House getHouse() {

@@ -1,8 +1,8 @@
 package com.mamp.software.condadmin.Controllers;
 
-import com.mamp.software.condadmin.Models.entities.Condominium;
-import com.mamp.software.condadmin.Models.entities.Role;
-import com.mamp.software.condadmin.Models.entities.USer;
+import com.mamp.software.condadmin.Models.dao.IAnnualCounts;
+import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
+import com.mamp.software.condadmin.Models.entities.*;
 import com.mamp.software.condadmin.services.CondominiumService;
 import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -29,6 +30,12 @@ public class UserController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public IAnnualCounts srvAnual;
+
+    @Autowired
+    public IMonthlyAccounts srvMonthly;
 
     @GetMapping(value="/create")
     public String registro(Model model) {
@@ -64,9 +71,26 @@ public class UserController {
             user.setPassword(passwordEncoder.encode(pass));
             user.getRoleList().add(new Role("ROLE_USER-ADMIN"));
             srvUser.save(user);
-            user = srvUser.findbyName(user.getName());
+           // user = srvUser.findbyName(user.getName());
             condominium.setuSer(user);
             srvCond.save(condominium);
+            condominium = srvCond.findByUser(user.getIdUser());
+            //Balances
+            Calendar fecha = Calendar.getInstance();
+            int year =fecha.get(Calendar.YEAR);
+            int month = fecha.get(Calendar.MONTH);
+            AnnualCounts annualCount = new AnnualCounts();
+            annualCount.setYear(year);
+            annualCount.setExpenses(0.0f);
+            annualCount.setIncome(0.0f);
+            annualCount.setCondominium(condominium);
+            srvAnual.save(annualCount);
+            MonthlyAccounts monthlyAccount= new MonthlyAccounts();
+            monthlyAccount.setExpenses(0.0f);
+            monthlyAccount.setIncome(0.0f);
+            monthlyAccount.setMonth(month);
+            monthlyAccount.setAnnualCounts(annualCount);
+            srvMonthly.save(monthlyAccount);
             flash.addFlashAttribute("success", "El registro fue guardado con éxito.");
         }
         catch(Exception ex) {

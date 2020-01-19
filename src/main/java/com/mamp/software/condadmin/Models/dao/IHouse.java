@@ -13,4 +13,5 @@ public interface IHouse extends CrudRepository<House, Integer> {
 
     @Query("SELECT HOU FROM House HOU WHERE HOU.condominium.idcondominium = :id")
     public List<House> findByCondom(Integer id);
+
 }

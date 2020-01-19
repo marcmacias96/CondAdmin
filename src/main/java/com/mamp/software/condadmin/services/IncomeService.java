@@ -36,4 +36,9 @@ public class IncomeService implements IIncomeService {
     public List<Income> findByCondom(Integer id){
     	return (List<Income>) dao.findByCondom(id);
     }
+
+    @Override
+    public List<Income> findByHouse(Integer id) {
+        return  (List<Income>) dao.findByHouse(id);
+    }
 }

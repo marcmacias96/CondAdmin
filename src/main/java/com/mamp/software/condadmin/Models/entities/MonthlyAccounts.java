@@ -1,6 +1,8 @@
 package com.mamp.software.condadmin.Models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -38,13 +40,10 @@ public class MonthlyAccounts implements Serializable {
     @ManyToOne
     private AnnualCounts annualCounts;
 
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
-    //private List<Income> incomeList;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name= "IDMONTHCOUNTS")
+    @JsonIgnore
+    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
     private List<Income> incomeList;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)

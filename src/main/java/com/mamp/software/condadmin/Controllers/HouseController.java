@@ -2,11 +2,9 @@ package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.dao.ICondominium;
 import com.mamp.software.condadmin.Models.dao.IUser;
-import com.mamp.software.condadmin.Models.entities.Condominium;
-import com.mamp.software.condadmin.Models.entities.House;
-import com.mamp.software.condadmin.Models.entities.Owner;
-import com.mamp.software.condadmin.Models.entities.USer;
+import com.mamp.software.condadmin.Models.entities.*;
 import com.mamp.software.condadmin.services.ICondominiumService;
+import com.mamp.software.condadmin.services.IIncomeService;
 import com.mamp.software.condadmin.services.IOwnerService;
 import com.mamp.software.condadmin.services.IHouseService;
 
@@ -39,6 +37,9 @@ public class HouseController {
     @Autowired
     private IUser srvUser;
 
+    @Autowired
+    private IIncomeService srvIncome;
+
     @GetMapping(value = "/create/{id}")
     public String create(@PathVariable(value = "id") Integer id, Model model){
         House house = new House();
@@ -51,7 +52,9 @@ public class HouseController {
     @GetMapping(value = "/retrive/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         House house = srvHouse.findById(id);
+        List<Income> incomeList = srvIncome.findByHouse(house.getIdhouse());
         model.addAttribute("house", house);
+        model.addAttribute("incomeList", incomeList);
         return "house/card";
     }
 

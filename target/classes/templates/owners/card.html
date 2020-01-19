@@ -35,7 +35,7 @@
 						<h3 th:text="${owner.name} + ' ' +  ${owner.lastName} "></h3>
 					</div>
 					<div class="col-6 d-flex flex-row-reverse">
-						<div sec:authorize="hasRole('ROLE_USER')" class="form-group px-2">
+						<div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
 							<a class="genric-btn btn-sm info circle" th:href="@{/house/create/} + ${owner.idowner}">
 								<i class="ti-plus"></i>&nbsp;Casa</a>
 						</div>
