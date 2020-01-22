@@ -154,11 +154,19 @@ public class MonthlyAccountsController {
             monthlyAccountsNext.setAnnualCounts(anualCounts);
             monthlyAccountsNext.setIncomeList(incomeList);
             srvMonthAcount.save(monthlyAccountsNext);
+            for (Income inc: monthlyAccountsNext.getIncomeList() ) {
+                inc.setMonthlyAccounts(monthlyAccounts);
+                srvIncome.save(inc);
+            }
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccountsNext.getIdmonthlyaccounts();
         } else {
             // si es el primer corte las alicuotas se agregaran al mes actual
             monthlyAccounts.setIncomeList(incomeList);
             srvMonthAcount.save(monthlyAccounts);
+            for (Income inc: monthlyAccounts.getIncomeList() ) {
+                inc.setMonthlyAccounts(monthlyAccounts);
+                srvIncome.save(inc);
+            }
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccounts.getIdmonthlyaccounts();
         }
 

@@ -61,6 +61,9 @@ public class IncomesController {
 
 	@Autowired
     private ICondominiumService srvCond;
+
+	@Autowired
+    private  IIncomeService srvIncome;
 	
     @GetMapping(value = "/create")
     public String create(Model model){
@@ -89,12 +92,13 @@ public class IncomesController {
         return "cuentas/incomes/form";
     }
 
-    @GetMapping(value = "update/{id}")
+    @GetMapping(value = "paid/{id}")
     public String paid(@PathVariable(value = "id") Integer id, Model model){
         Income income = service.findById(id);
         income.setState(true);
+        srvIncome.save(income);
         model.addAttribute("income",income);
-        return "redirect:/incomes/list";
+        return "redirect:/monthlyAccounts/retrive";
     }
 
     @GetMapping(value = "/delete/{id}")
