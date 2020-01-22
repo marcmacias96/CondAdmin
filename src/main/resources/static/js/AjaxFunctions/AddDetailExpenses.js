@@ -4,7 +4,7 @@ function addDetail(){
         value : $("#txbvalor").val()
     }
     $.ajax({
-        url : "/expenses/addDetail",
+        url : "/expenses/addDetailExpenses",
         method : 'POST',
         headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
         contentType : "application/json",

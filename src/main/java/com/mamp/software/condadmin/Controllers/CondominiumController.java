@@ -104,6 +104,6 @@ public class CondominiumController {
             System.out.println(e);
             redirectAttributes.addFlashAttribute("message","No se pudo guardar");
         }
-        return "redirect:/condominium/list";
+        return "redirect:/condominium/retrive/" + condominium.getIdcondominium();
     }
 }

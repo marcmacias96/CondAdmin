@@ -57,14 +57,14 @@
 
 									</div>
 								</li>
-								<li  class="nav-item"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
+								<li  class="nav-item dropdown"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
 									<a class="nav-link dropdown-toggle"
 									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Cuentas
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-										<a  class="dropdown-item" th:href="@{#}">Gestión Pago Alicuotas</a>
-										<a  class="dropdown-item nav-link" th:href="@{/templates/cuentas/incomes/list}">Ingresos</a>
+										<a  class="dropdown-item" th:href="@{/monthlyAccounts/retrive}">Balance Mensual</a>
+										<a  class="dropdown-item" th:href="@{/templates/cuentas/incomes/list}">Ingresos</a>
 										<a  class="dropdown-item" th:href="@{/templates/cuentas/expenses/list}">Gastos</a>
 									</div>
 								</li>
@@ -169,7 +169,6 @@
 		<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
 		<script th:src="@{https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js}"></script>
 		<script th:src="@{https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js}"></script>
-		<script th:src="@{/js/tables/datatable.js}"></script>
 
 		<div class="container">
 			<div class="row">

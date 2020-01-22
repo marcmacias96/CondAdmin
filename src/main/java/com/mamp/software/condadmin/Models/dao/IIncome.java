@@ -12,6 +12,6 @@ public interface IIncome extends CrudRepository<Income, Integer> {
 	@Query("SELECT INC FROM Income INC WHERE INC.condominium.idcondominium = :id")
     public List<Income> findByCondom(Integer id);
 
-    @Query("SELECT INC FROM Income INC WHERE INC.house.idhouse = :id AND INC.state=:FALSE")
+    @Query("SELECT INC FROM Income INC WHERE INC.house.idhouse = :id AND INC.state=false")
     public List<Income> findByHouse(Integer id);
 }

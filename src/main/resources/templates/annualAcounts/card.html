@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout :: frgHead"></head>
 <body>
@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb_iner">
                     <div class="breadcrumb_iner_item">
-                        <h2>Cuentas Mensuales</h2>
+                        <h2>Cuentas Anuales</h2>
                     </div>
                 </div>
             </div>
@@ -31,22 +31,32 @@
                 <div class="card col-md-12">
                     <div class="card-body">
                         <div class="form-group row">
-                            <div class="col-6 ">
-                                <h3 Balance Mensual></h3>
-                            </div>
                             <div class="col-6 d-flex flex-row-reverse">
-                                <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
-                                    <a class="genric-btn btn-sm success circle" th:href="@{/monthlyAccounts/closeBox/} + ${monthlyAccounts.getIdmonthlyaccounts()}">
-                                        <i class="ti-plus"></i>&nbsp; Cierre de Mes</a>
+                                <div class="form-group">
+                                    <a class="genric-btn btn-sm info circle" th:href="@{/annualCounts/list}">
+                                    	<i class="ti-back-left"></i>&nbsp; Atras</a>
                                 </div>
-                                <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
-                                    <a class="genric-btn btn-sm success circle" th:href="@{/annualCounts/list}">
-                                        <i class="ti-plus"></i>&nbsp; Anios posteriores</a>
+
+                            </div>
+                        </div>
+                        <input type="hidden" id="idannualcounts"
+                               th:value="${annualCounts.getIdannualcounts()}" />
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="content col-sm-3 bg-light">
+                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;A�o:</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h5 class="card-text" th:text="${annualCounts.year}"></h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="idMonthAccount"
-                               th:value="${monthlyAccounts.getIdmonthlyaccounts()}" />
+
+
                         <hr />
 
                         <div class="row">
@@ -56,7 +66,7 @@
                                         <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Ingresos:</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${monthlyAccounts.getIncome()}"></h5>
+                                        <h5 class="card-text" th:text="${annualCounts.income}"></h5>
                                     </div>
                                 </div>
                             </div>
@@ -69,10 +79,10 @@
                             <div class="col-md-12">
                                 <div class="form-group row">
                                     <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos:</label>
+                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos</label>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${monthlyAccounts.getExpenses()}"></h5>
+                                        <h5 class="card-text" th:text="${annualCounts.expenses}"></h5>
                                     </div>
                                 </div>
                             </div>
@@ -84,5 +94,6 @@
     </div>
 </div>
 <footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/tables/annualCountsDatatable.js}"></script>
 </body>
 </html>

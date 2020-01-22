@@ -14,4 +14,6 @@ public interface IAnnualCountsService {
     public List<AnnualCounts> findAll();
     
     public AnnualCounts findByYear(Integer year);
+
+    public List<AnnualCounts> findByCondom(Integer id);
 }

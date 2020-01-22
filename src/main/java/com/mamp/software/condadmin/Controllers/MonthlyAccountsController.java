@@ -1,11 +1,14 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.*;
 import com.mamp.software.condadmin.services.IAnnualCountsService;
+import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IIncomeService;
 import com.mamp.software.condadmin.services.IMonthlyAccountsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,12 +96,6 @@ public class MonthlyAccountsController {
     }
 
 
-    @GetMapping(value = "/list")
-    public String list(Model model){
-        List<MonthlyAccounts> monthlyAccountsList = srvMonthAcount.findAll();
-        model.addAttribute("monthlyAccountsList", monthlyAccountsList);
-        return "monthlyAccounts/list";
-    }
 
     @GetMapping(value = "/closeBox/{id}")
     public String closeBox(@PathVariable(value = "id") Integer id){

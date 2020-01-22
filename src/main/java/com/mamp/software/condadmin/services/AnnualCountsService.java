@@ -41,4 +41,10 @@ public class AnnualCountsService implements IAnnualCountsService {
 	public AnnualCounts findByYear(Integer year) {
 		return dao.findByYear(year);
 	}
+
+    @Override
+    public List<AnnualCounts> findByCondom(Integer id) {
+
+        return (List<AnnualCounts>) dao.findByCondom(id);
+    }
 }

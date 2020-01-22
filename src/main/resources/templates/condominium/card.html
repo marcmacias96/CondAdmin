@@ -36,8 +36,12 @@
                             </div>
                             <div class="col-6 d-flex flex-row-reverse">
                                 <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
-                                    <a class="genric-btn btn-sm success circle" th:href="@{/owner/create/} + ${condominium.idcondominium}">
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/owner/create}">
                                         <i class="ti-plus"></i>&nbsp; Propietario</a>
+                                </div>
+                                <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/condominium/update/} + ${condominium.idcondominium}">
+                                        <i class="ti-reload"></i>&nbsp; Actualizar</a>
                                 </div>
                             </div>
                         </div>

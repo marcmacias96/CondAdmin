@@ -46,8 +46,8 @@ public class OwnerController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping(value = "/create/{id}")
-    public String create(@PathVariable(value = "id") Integer id, Model model){
+    @GetMapping(value = "/create")
+    public String create( Model model){
         Owner owner = new Owner();
         model.addAttribute("owner", owner);
         model.addAttribute("title","Registro de nuevo propietario");
