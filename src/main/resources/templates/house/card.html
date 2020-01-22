@@ -95,7 +95,7 @@
 				</div>
 				
 			</div>
-			<div class="m-1 row">
+			<div class="m-1 pb-5 row">
 				<div class="col-md-4 pt-5">
 					<div class="about_us_img">
 						<img th:src="@{/img/GrupoCasa.png}" alt="">
@@ -122,12 +122,12 @@
 							<tbody>
 							<tr th:each="income : ${incomeList}" >
 								<td class="align-middle text-center" th:text="${income.getValue()}"></td>
-								<td class="align-middle text-center" th:text="${income.getDate()}"></td>
+								<td class="align-middle text-center" th:text=${#dates.format(income.date,'dd-MM-yyyy')}></td>
 
 								<td>
 									<div class="d-flex justify-content-center">
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm info-border circle" title="Edit"
-										   th:href="@{/house/update/} + ${house.idhouse}">
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm danger-border circle" title="Edit"
+										   th:href="@{/incomes/paid/} + ${income.idincome}">
 											<i class="ti-money"></i>
 										</a>
 									</div>
