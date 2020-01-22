@@ -89,7 +89,7 @@ public class IncomesController {
         return "cuentas/incomes/form";
     }
 
-    @GetMapping(value = "update/{id}")
+    @GetMapping(value = "paid/{id}")
     public String paid(@PathVariable(value = "id") Integer id, Model model){
         Income income = service.findById(id);
         income.setState(true);

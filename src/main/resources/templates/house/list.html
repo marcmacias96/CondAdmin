@@ -9,6 +9,32 @@
 			<img th:src="@{/img/GrupoCasa.png}" alt="">
 		</div>
 	</div>
+	
+	<!--<input type="hidden" th:field="${house.idhouse}" />
+		<div class="container">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-md-12 col-lg-12">
+					<div class="card col-md-12">
+						<div class="card-body">
+							<div class="form-group row">
+								<h3 class="card-title col-sm-11" th:text="${title}"><i class="ti-user"></i></h3>
+							</div>
+							<hr />
+							<table  id="houseTable" class="table table-striped table-bordered">
+								<thead>
+								<tr>
+									<th ><i class="ti-tag"></i>&nbsp;ID</th>
+									<th ><i class="ti-layers-alt"></i>&nbsp;Numero</th>
+									<th ><i class="ti-home"></i>&nbsp;Bloque</th>
+									<th ><i class="ti-panel"></i>&nbsp;Acciones</th>
+								</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>-->
 	<div class="card col-md-8">
 		<div class="card-body">
 			<div class="form-group  row">
@@ -18,13 +44,12 @@
 				<h3 class="card-title col-sm-10" th:text="${title}"></h3>
 			</div>
 			<hr />
-			<table class="table table-hover">
+			<table class="table table-hover" id="houseListByCondom">
 				<thead>
 				<tr>
 					<th class="align-middle text-center"><i class="ti-home"></i>&nbsp;Numero</th>
 					<th class="align-middle text-center"><i class="ti-layers-alt"></i>&nbsp;Bloque</th>
 					<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Acciones</th>
-
 				</tr>
 				</thead>
 				<tbody>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -80,7 +81,7 @@ public class HouseController {
     }
 
     @GetMapping(value = "/listByOwner/{id}")
-    public String listByOwner(@PathVariable(value = "id") Integer id,Model model){
+    public String listByOwner(@PathVariable(value = "id") Integer id, Model model){
         List<House> houseList = srvHouse.findByOwner(id);
         model.addAttribute("title","Listado de Casas");
         model.addAttribute("houseList", houseList);
@@ -88,11 +89,17 @@ public class HouseController {
     }
 
     @GetMapping(value = "/listByCondom/{id}")
-    public String lisByCondom(@PathVariable(value = "id") Integer id,Model model){
+    public String lisByCondom(@PathVariable(value = "id") Integer id, Model model){
         List<House> houseList = srvHouse.findByCondom(id);
         model.addAttribute("title","Listado de Casas");
         model.addAttribute("houseList", houseList);
-        return "house/list";
+        return "house/listByCondom";
+    }
+    
+    @GetMapping(value = "/listByCondomJson/{id}", produces = "application/json")
+    public @ResponseBody List<House> listJson(@PathVariable(value = "id") Integer id){
+        List<House> houseList = srvHouse.findByCondom(id);
+        return houseList;
     }
 
     @PostMapping(value = "/save")
