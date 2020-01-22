@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -101,6 +103,8 @@ public class MonthlyAccountsController {
     public String closeBox(@PathVariable(value = "id") Integer id){
         //aqui se debe agregar la multa por inpago
         //buscamos las cuentas mensuales acutales
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
+        Calendar calendar = Calendar.getInstance();
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
         //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecesnlas cuentas
         AnnualCounts anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());
@@ -113,6 +117,7 @@ public class MonthlyAccountsController {
         incomeDetails.add(detail);
         for (House house: anualCounts.getCondominium().getHouseList()){
             Income income = new Income();
+            income.setDate(calendar);
             income.setCondominium(anualCounts.getCondominium());
             income.setHouse(house);
             income.setState(false);

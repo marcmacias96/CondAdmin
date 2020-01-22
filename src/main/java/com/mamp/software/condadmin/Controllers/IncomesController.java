@@ -89,6 +89,14 @@ public class IncomesController {
         return "cuentas/incomes/form";
     }
 
+    @GetMapping(value = "update/{id}")
+    public String paid(@PathVariable(value = "id") Integer id, Model model){
+        Income income = service.findById(id);
+        income.setState(true);
+        model.addAttribute("income",income);
+        return "redirect:/incomes/list";
+    }
+
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
     	model.addAttribute("title","eliminacion de registro de nuevo ingreso");

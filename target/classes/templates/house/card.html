@@ -84,13 +84,59 @@
 								<i class="ti-id-badge"></i> <label class="h5 col-form-label">&nbsp;Propietario:</label>
 							</div>
 							<div class="col-sm-8">
-								<h5 class="align-middle text-cente" th:text="${house.owner.name}"></h5>
+								<h5 class="align-middle text-cente" th:text="${house.owner.name} + ${house.owner.lastName}"></h5>
 							</div>
 						</div>
 					</div>
 				</div>
 				
 			</div>
+			<div class="m-1 row">
+				<div class="col-md-4 pt-5">
+					<div class="about_us_img">
+						<img th:src="@{/img/GrupoCasa.png}" alt="">
+					</div>
+				</div>
+				<div class="card col-md-8">
+					<div class="card-body">
+						<div class="form-group  row">
+							<div class="content col-sm-1">
+								<i class="far fa-plus-square fa-2x"></i>
+							</div>
+							<h3 class="card-title col-sm-10"> Alicuotas por Pagar</h3>
+						</div>
+						<hr />
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th class="align-middle text-center"><i class="ti-home"></i>&nbsp;Valor</th>
+								<th class="align-middle text-center"><i class="ti-layers-alt"></i>&nbsp;Fecha</th>
+								<th class="align-middle text-center"><i class="ti-user"></i>&nbsp;Acciones</th>
+
+							</tr>
+							</thead>
+							<tbody>
+							<tr th:each="income : ${incomeList}" >
+								<td class="align-middle text-center" th:text="${income.getValue()}"></td>
+								<td class="align-middle text-center" th:text="${income.getDate()}"></td>
+
+								<td>
+									<div class="d-flex justify-content-center">
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm info-border circle" title="Edit"
+										   th:href="@{/house/update/} + ${house.idhouse}">
+											<i class="ti-money"></i>
+										</a>
+									</div>
+
+								</td>
+							</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
 		</div>
 		<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
