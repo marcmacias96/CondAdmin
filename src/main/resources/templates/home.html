@@ -13,11 +13,10 @@
 				<div class="col-lg-5 col-xl-5">
 					<div class="banner_text">
 						<div class="banner_text_iner">
-
 							<h1>Administraci&oacute;n y
 								control de Condomios</h1>
-							<p>Sea parte de la administraci&oacute;n de su condomino, acceda a sus cuentas y lleve control de sus pagos rapido y facil </p>
-							<a th:href="@{/user/create}" class="btn_2" sec:authorize="!isAuthenticated()">Unete a MyCondo</a>
+							<p align="justify">Sea parte de la administraci&oacute;n de su condomino, acceda a sus cuentas y lleve control de sus pagos r&aacute;pido y f&aacute;cil. </p>
+							<a th:href="@{/user/create}" class="btn_2" sec:authorize="!isAuthenticated()">&Uacute;nete a My Condo</a>
 
 						</div>
 					</div>
@@ -44,19 +43,19 @@
 				<div class="col-md-6 col-lg-5">
 					<div class="about_us_text">
 						<h2>Acerca de Nosotros</h2>
-						<p>Somos la mejor opcion para la administracion de su condominio. Tenga control sobre su condominio, sus vecinos y su propiedad.</p>
-						<a class="btn_2 " href="#">Aprende Mas</a>
+						<p align="justify">Somos la mejor opci&oacute;n para la administraci&oacute;n de su condominio. Tenga control sobre su condominio, sus vecinos y su propiedad.</p>
+						<!-- <a class="btn_2 " href="#">Aprende M&aacute;s</a> -->
 						<div class="banner_item">
 							<div class="single_item">
 								<img th:src="@{img/icon/banner_1.svg}" alt="">
 								<h5>Seguridad</h5>
 							</div>
 							<div class="single_item">
-								<img src="img/icon/banner_2.svg" alt="">
-								<h5>Turno</h5>
+								<img src="img/icon/admin.svg" alt="">
+								<h5>Administraci&oacute;n</h5>
 							</div>
 							<div class="single_item">
-								<img th:src="@{img/icon/banner_3.svg}" alt="">
+								<img th:src="@{img/icon/reportes.svg}" alt="">
 								<h5>Reportes</h5>
 							</div>
 						</div>

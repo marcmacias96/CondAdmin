@@ -10,13 +10,13 @@
 	<link rel="stylesheet" th:href="@{/css/themify-icons.css}" />
 	<link rel="stylesheet" th:href="@{/css/flaticon.css}" />
 	<link rel="stylesheet" th:href="@{/css/magnific-popup.css}" />
-	<link rel="stylesheet" th:href="@{/css/nice-select.css}" />
 	<link rel="stylesheet" th:href="@{/css/slick.css}" />
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
 
 	<!-- CDNS  -->
 	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css}">
 	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <head/>
 
 <body>
@@ -111,40 +111,10 @@
 							<a href="#"><i class="ti-skype"></i></a>
 						</div>-->
 					</div>
-					<div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
-						<h4>Quick Links</h4>
-						<ul>
-							<li><a href="#">About us</a></li>
-							<li><a href="#">Department</a></li>
-							<li><a href="#">Online payment</a></li>
-							<li><a href="#">Careers</a></li>
-							<li><a href="#">Department</a></li>
-						</ul>
-					</div>
-					<!-- <div class="col-xl-2 col-sm-6 col-md-4 single-footer-widget">
-						<h4>Explore</h4>
-						<ul>
-							<li><a href="#">In the community</a></li>
-							<li><a href="#">IU health foundation</a></li>
-							<li><a href="#">Family support </a></li>
-							<li><a href="#">Business solution</a></li>
-							<li><a href="#">Community clinic</a></li>
-						</ul>
-					</div>
-					<div class="col-xl-2 col-sm-6 col-md-6 single-footer-widget">
-						<h4>Resources</h4>
-						<ul>
-							<li><a href="#">Lights were season</a></li>
-							<li><a href="#"> Their is let wherein</a></li>
-							<li><a href="#">which given over</a></li>
-							<li><a href="#">Without given She</a></li>
-							<li><a href="#">Isn two signs think</a></li>
-						</ul>
-					</div> -->
+	
 					<div class="col-xl-3 col-sm-6 col-md-6 single-footer-widget">
-						<h4>Newsletter</h4>
-						<p>Seed good winged wherein which night multiply
-							midst does not fruitful</p>
+						<h4>Noticia</h4>
+						<p>Quieres trabajar con nosotros? Ingrese su email!</p>
 						<div class="form-wrap" id="mc_embed_signup">
 							<form target="_blank"
 								  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
@@ -192,7 +162,6 @@
 
 		<!-- owl carousel js -->
 		<script th:src="@{/js/owl.carousel.min.js}"></script>
-		<script th:src="@{/js/jquery.nice-select.min.js}"></script>
 		<!-- custom js -->
 		<script th:src="@{/js/custom.js}"></script>
 
@@ -201,6 +170,65 @@
 		<script th:src="@{https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js}"></script>
 		<script th:src="@{https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js}"></script>
 		<script th:src="@{/js/tables/datatable.js}"></script>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div id="success-alert" th:if="${success != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${success}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'success'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="error-alert" th:if="${error != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${error}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'error'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="warning-alert" th:if="${warning != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${warning}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'warning'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="info-alert" th:if="${info != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${info}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'info'});
+
+							/*]]>*/
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 	</footer>
 
