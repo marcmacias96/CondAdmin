@@ -13,10 +13,13 @@ function addDetail(){
         success : function(response){
             $('#tblDetalle tr:not(:first-child)')
                 .remove();
+            var total = 0;
             $.each(response, function(i, item){
                 $("#tblDetalle tr:last").after("<tr> <td  class='align-middle text-center'>" 
-                		+ item.detail+ " </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>");
+                		+ item.detail+ " </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>  <hr/>");
+                total+= item.value;
             });
+            $('#total').text(total)
         },
         error : function(err){
             console.log(err);

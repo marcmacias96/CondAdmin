@@ -79,18 +79,14 @@ public class MonthlyAccountsController {
         float incomes = 0.0f;
         for (Income inc: monthlyAccounts.getIncomeList()) {
             if(inc.getState()){
-                for (IncomeDetail det: inc.getIncomeDetailList()) {
-                    incomes+= det.getValue();
-                }
+               incomes+=inc.getValue();
             }
 
         }
         monthlyAccounts.setIncome(incomes);
         float expenses = 0.0f;
         for (Expenses exp: monthlyAccounts.getExpensesList()) {
-            for (ExpenseDetail det: exp.getExpenseDetailList()) {
-                expenses+= det.getValue();
-            }
+            expenses +=exp.getValue();
         }
         monthlyAccounts.setExpenses(expenses);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
@@ -101,10 +97,20 @@ public class MonthlyAccountsController {
 
     @GetMapping(value = "/closeBox/{id}")
     public String closeBox(@PathVariable(value = "id") Integer id){
-        //aqui se debe agregar la multa por inpago
         //buscamos las cuentas mensuales acutales
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
         Calendar calendar = Calendar.getInstance();
+        //aqui se debe agregar la multa por inpago
+
+        List<Income> inpaymentList = srvIncome.findByMonthAndYear(calendar.get(Calendar.MONTH),calendar.get(Calendar.YEAR));
+        for (Income inc : inpaymentList) {
+            IncomeDetail multa = new IncomeDetail();
+            multa.setType("Multa");
+            multa.setDetail("Multa por inpago");
+            multa.setValue(0.0f);
+            inc.getIncomeDetailList().add(multa);
+            srvIncome.save(inc);
+        }
+
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
         //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecesnlas cuentas
         AnnualCounts anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());

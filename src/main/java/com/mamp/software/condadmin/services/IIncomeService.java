@@ -16,4 +16,6 @@ public interface IIncomeService {
     public List<Income> findByCondom(Integer id);
 
     public List<Income> findByHouse(Integer id);
+
+    public  List<Income>  findByMonthAndYear (Integer month, Integer year);
 }

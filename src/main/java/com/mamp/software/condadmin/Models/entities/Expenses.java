@@ -73,7 +73,11 @@ public class Expenses implements Serializable {
     }
 
     public float getValue() {
-        return value;
+        float total =0;
+        for (ExpenseDetail det : this.expenseDetailList) {
+            total+=det.getValue();
+        }
+        return total;
     }
 
     public void setValue(float value) {

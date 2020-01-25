@@ -98,7 +98,11 @@ public class Income implements Serializable {
     }
 
     public float getValue() {
-        return value;
+        float total=0;
+        for (IncomeDetail det: this.getIncomeDetailList()) {
+            total+=det.getValue();
+        }
+        return total;
     }
 
     public void setValue(float value) {
@@ -138,5 +142,5 @@ public class Income implements Serializable {
 		this.incomeDetailList = incomeDetailList;
 	}
     
-    
+
 }

@@ -54,8 +54,13 @@
 											th:if="${#fields.hasErrors('date')}"
 											th:errors="*{date}"></small>
 								</div>
+								<div class="content col-sm-3">
+									<i class="ti-money"></i>
+									<label class="h5 col-form-label">&nbsp;Total:</label>
+									<label id="total" class="h5 col-form-label">&nbsp; 0</label>
+								</div>
 							</div>
-							<div class="card col-md-12">
+							<div class="card col-md-12 ">
 								<div class="card-body">
 									<table id="tblDetalle" class="table table-hover">
 										<thead>
@@ -66,10 +71,6 @@
 										</tr>
 										</thead>
 										<tbody>
-										<tr th:each="detail : ${details}" >
-											<td class="align-middle text-center" th:text="${detail.getDetail()}"></td>
-											<td class="align-middle text-center" th:text="${detail.getValue()}"></td>
-										</tr>
 
 										</tbody>
 									</table>
@@ -77,7 +78,7 @@
 							</div>
 							<input type="hidden" th:field="*{idexpenses}" />
 							
-							<div class="col-12 d-flex flex-row-reverse">
+							<div class="col-12 d-flex flex-row-reverse m-4">
 								<a class="genric-btn  danger circle"
 								   th:href="@{/expenses/myExpenses}">
 									<i class="ti-close"></i>&nbsp; Cancelar</a>
@@ -99,7 +100,7 @@
 
 
 <div id="addModal" class="modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Añadir detalle</h5>
@@ -115,7 +116,11 @@
 							<label class="h5 col-form-label">&nbsp;Detalle:</label>
 						</div>
 						<div class="content col-sm-6">
-							<input id="txbdetail" class="form-control" type="text" required/>
+							<select id="txbdetail" class="form-control">
+								<option value="">--Seleccione--</option>
+								<option value="Mantenimiento">Mantenimiento</option>
+								<option value="Servicios Basicos">Servicios Basicos</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -124,7 +129,7 @@
 							<label class="h5 col-form-label">&nbsp;Valor:</label>
 						</div>
 						<div class="content col-sm-6">
-							<input id="txbvalor" class="form-control" type="text" required />
+							<input id="txbvalor" class="form-control" type="number" step="0.01" required />
 						</div>
 					</div>
 			</div>
