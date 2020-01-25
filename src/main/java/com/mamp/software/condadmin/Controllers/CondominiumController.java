@@ -82,7 +82,7 @@ public class CondominiumController {
             Owner owner = srvOwner.findByUser(user.getIdUser());
             condominium = service.findById(owner.getCondominium().getIdcondominium());
         }
-        model.addAttribute("title","Codominios");
+        model.addAttribute("title","Condominios");
         model.addAttribute("condominium", condominium);
         return "condominium/card";
     }

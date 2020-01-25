@@ -51,10 +51,6 @@
 										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
 										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/owner/listByCondom}">Propietarios</a>
 										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/owner/myHouse}">Mi Casa</a>
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/myExpenses}">Gastos</a>
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a>
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/annualCounts/list}">Cuentas Anuales</a>
-
 									</div>
 								</li>
 								<li  class="nav-item dropdown"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
@@ -64,8 +60,9 @@
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<a  class="dropdown-item" th:href="@{/monthlyAccounts/retrive}">Balance Mensual</a>
-										<a  class="dropdown-item" th:href="@{/templates/cuentas/incomes/list}">Ingresos</a>
-										<a  class="dropdown-item" th:href="@{/templates/cuentas/expenses/list}">Gastos</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/myExpenses}">Gastos</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/annualCounts/list}">Cuentas Anuales</a>
 									</div>
 								</li>
 								

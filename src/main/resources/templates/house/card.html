@@ -34,11 +34,15 @@
 					<div class="col-6">
 						<h3	th:text="Casa"></h3>
 					</div>
-					<div  sec:authorize="hasRole('ROLE_USER')" class="col-6 d-flex flex-row-reverse">
+					<div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="col-6 d-flex flex-row-reverse">
 						<div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
 							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
 							<i class="ti-trash"></i>&nbsp; Eliminar</button>
 						</div>
+						<div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/house/update/} + ${house.idhouse}">
+                                        <i class="ti-reload"></i>&nbsp; Actualizar</a>
+                                </div>
 						
 					</div>
 				</div>
