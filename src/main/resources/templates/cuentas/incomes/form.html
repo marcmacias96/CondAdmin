@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout :: head"></head>
 <body>
 <header th:replace="layout :: frgHeader"></header>
@@ -16,32 +17,31 @@
 		</div>
 	</div>
 </section>
-<div id="container pb-5">
-	<div class="d-flex flex-column">
+<div class="container pb-5">
+	<div  class="d-flex flex-column">
 		<!-- Begin Page Content -->
 		<div class="container">
-			<div class="container-fluid">			
+			<div class="container-fluid">
 				<br />
-		<div class="card col-md-12">
-			<div class="card-body">
-				<div class="form-group row">
-					<div class="col-6 ">
-						<h3 th:text="${title}"></h3>
-					</div>
-						<div class="col-6 d-flex flex-row-reverse">
-							<div class="form-group px-2">
-								<a class="genric-btn btn-sm success circle"  data-toggle="modal" data-target="#addModal">
-									<i class="ti-plus"></i>&nbsp; Añadir Detalle</a>
+				<div class="card col-md-12">
+					<div class="card-body">
+						<div class="form-group row">
+							<div class="col-6 ">
+								<h3 th:text="${title}"></h3>
+							</div>
+							<div class="col-6 d-flex flex-row-reverse">
+								<div class="form-group px-2">
+									<a class="genric-btn btn-sm success circle"  data-toggle="modal" data-target="#addModal">
+										<i class="ti-plus"></i>&nbsp; Añadir Detalle</a>
+								</div>
+
 							</div>
 						</div>
-								
-				</div>
-				
-				<hr />
-				
-				<form th:action="@{/incomes/save}" th:object="${income}" method="post">
-					
-					<div class="form-group row">
+
+						<hr />
+
+						<form th:action="@{/incomes/save}" th:object="${income}" method="post">
+							<div class="form-group row">
 								<div class="content col-sm-3">
 									<i class="ti-calendar"></i>
 									<label class="h5 col-form-label">&nbsp;Fecha:</label>
@@ -55,49 +55,58 @@
 											th:if="${#fields.hasErrors('date')}"
 											th:errors="*{date}"></small>
 								</div>
-					</div>
-					<div class="card col-md-12">
+								<div class="content col-sm-3">
+									<i class="ti-money"></i>
+									<label class="h5 col-form-label">&nbsp;Total:</label>
+									<label id="total" class="h5 col-form-label">&nbsp; 0</label>
+								</div>
+							</div>
+							<div class="card col-md-12 ">
 								<div class="card-body">
 									<table id="tblDetalle" class="table table-hover">
 										<thead>
 										<tr>
-											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Detalle</th>
 											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Tipo</th>
+											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Detalle</th>
 											<th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Valor</th>
 
 										</tr>
 										</thead>
 										<tbody>
-										<tr th:each="detail : ${details}" >
-											<td class="align-middle text-center" th:text="${detail.getDetail()}"></td>
-											<td class="align-middle text-center" th:text="${detail.getType()}"></td>
-											<td class="align-middle text-center" th:text="${detail.getValue()}"></td>
+										<tr th:each="det : ${income.getIncomeDetailList()}" >
+											<td class="align-middle text-center" th:text="${det.getType()}"></td>
+											<td class="align-middle text-center" th:text="${det.getDetail()}"></td>
+											<td class="align-middle text-center" th:text="${det.getValue()}"></td>
 										</tr>
-
 										</tbody>
 									</table>
 								</div>
-					</div>
+							</div>
 							<input type="hidden" th:field="*{idincome}" />
-							
-							<div class="col-12 d-flex flex-row-reverse">
+
+							<div class="col-12 d-flex flex-row-reverse m-4">
 								<a class="genric-btn  danger circle"
-								   th:href="@{/incomes/list}">
+								   th:href="@{/expenses/myExpenses}">
 									<i class="ti-close"></i>&nbsp; Cancelar</a>
 								<button class="genric-btn success circle" type="submit">
 									<i class="ti-save"></i>&nbsp; Guardar
 								</button>
 							</div>
-							
+
 						</form>
+
+
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
+
+
 <div id="addModal" class="modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Añadir detalle</h5>
@@ -107,35 +116,37 @@
 				</button>
 			</div>
 			<div class="modal-body">
-					<div class="form-group row">
-						<div class="content col-sm-3">
-							<i class="fas fa-info-circle"></i>
-							<label class="h5 col-form-label">&nbsp;Detalle:</label>
-						</div>
-						<div class="content col-sm-6">
-							<input id="txbdetail" class="form-control" type="text" required/>
+				<div class="form-group row">
+					<div class="content col-sm-3">
+						<i class="fas fa-info-circle"></i>
+						<label class="h5 col-form-label">&nbsp;Tipo:</label>
+					</div>
+					<div class="content col-sm-6">
+						<select id="txbtype" class="form-control">
+							<option value="">--Seleccione--</option>
+							<option value="Mantenimiento">Mantenimiento</option>
+							<option value="Servicios Basicos">Servicios Basicos</option>
+						</select>
 						</div>
 					</div>
-					
-					<div class="form-group row">
-						<div class="content col-sm-3">
-							<i class="fas fa-info-circle"></i>
-							<label class="h5 col-form-label">&nbsp;Tipo:</label>
-						</div>
-						<div class="content col-sm-6">
-							<input id="txbtype" class="form-control" type="text" required/>
-						</div>
+				<div class="form-group row">
+					<div class="content col-sm-3">
+						<i class="fas fa-info-circle"></i>
+						<label class="h5 col-form-label">&nbsp;Detalle:</label>
 					</div>
-					
-					<div class="form-group row">
-						<div class="content col-sm-3">
-							<i class="fas fa-info-circle"></i>
-							<label class="h5 col-form-label">&nbsp;Valor:</label>
-						</div>
-						<div class="content col-sm-6">
-							<input id="txbvalor" class="form-control" type="text" required />
-						</div>
+					<div class="content col-sm-6">
+						<input id="txbdetail" class="form-control" type="text" required />
 					</div>
+				</div>
+				<div class="form-group row">
+					<div class="content col-sm-3">
+						<i class="fas fa-info-circle"></i>
+						<label class="h5 col-form-label">&nbsp;Valor:</label>
+					</div>
+					<div class="content col-sm-6">
+						<input id="txbvalor" class="form-control" type="number" step="0.01" required />
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

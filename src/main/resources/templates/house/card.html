@@ -126,7 +126,11 @@
 
 								<td>
 									<div class="d-flex justify-content-center">
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm danger-border circle" title="Edit"
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm danger-border circle" title="Editar"
+										   th:href="@{/incomes/update/} + ${income.idincome}">
+											<i class="ti-pencil"></i>
+										</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="genric-btn btn-sm danger-border circle" title="Pagar"
 										   th:href="@{/incomes/paid/} + ${income.idincome}">
 											<i class="ti-money"></i>
 										</a>

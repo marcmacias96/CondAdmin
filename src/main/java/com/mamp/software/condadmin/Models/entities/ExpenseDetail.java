@@ -21,12 +21,24 @@ public class ExpenseDetail implements Serializable {
     @NotEmpty
     private String detail;
 
+    @Column(name = "TIPO")
+    @NotEmpty
+    private String type;
+
     @Column(name = "PRICE")
     @NotNull
     private Float value;
 
 
     public ExpenseDetail() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getIdExpenseDetail() {

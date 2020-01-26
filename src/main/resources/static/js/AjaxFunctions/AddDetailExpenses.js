@@ -1,6 +1,7 @@
 function addDetail(){
     var detail = {
-        detail : $("#txbdetail").val(),
+        type : $("#txbtype").val(),
+        detail: $("#txbdetail").val(),
         value : $("#txbvalor").val()
     }
     $.ajax({
@@ -15,7 +16,8 @@ function addDetail(){
                 .remove();
             var total = 0;
             $.each(response, function(i, item){
-                $("#tblDetalle tr:last").after("<tr> <td  class='align-middle text-center'>" 
+
+                $("#tblDetalle tr:last").after("<tr>  <td  class='align-middle text-center'>" + item.type + " </td> <td  class='align-middle text-center'>"
                 		+ item.detail+ " </td> <td  class='align-middle text-center'>" + item.value+ " </td> </tr>  <hr/>");
                 total+= item.value;
             });

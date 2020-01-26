@@ -65,6 +65,7 @@
 									<table id="tblDetalle" class="table table-hover">
 										<thead>
 										<tr>
+											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Tipo</th>
 											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Detalle</th>
 											<th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Valor</th>
 
@@ -113,14 +114,23 @@
 					<div class="form-group row">
 						<div class="content col-sm-3">
 							<i class="fas fa-info-circle"></i>
-							<label class="h5 col-form-label">&nbsp;Detalle:</label>
+							<label class="h5 col-form-label">&nbsp;Tipo:</label>
 						</div>
 						<div class="content col-sm-6">
-							<select id="txbdetail" class="form-control">
+							<select id="txbtype" class="form-control">
 								<option value="">--Seleccione--</option>
 								<option value="Mantenimiento">Mantenimiento</option>
 								<option value="Servicios Basicos">Servicios Basicos</option>
 							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="content col-sm-3">
+							<i class="fas fa-info-circle"></i>
+							<label class="h5 col-form-label">&nbsp;Detalle:</label>
+						</div>
+						<div class="content col-sm-6">
+							<input id="txbdetail" class="form-control" type="text" required />
 						</div>
 					</div>
 					<div class="form-group row">

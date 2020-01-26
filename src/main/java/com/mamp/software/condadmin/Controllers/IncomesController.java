@@ -47,8 +47,7 @@ import java.util.List;
 @RequestMapping(value = "/incomes")
 @SessionAttributes({"details"})
 public class IncomesController {
-	@Autowired
-    public IIncomeService service;
+
 	
 	@Autowired
 	public IAnnualCounts srvAnual;
@@ -78,7 +77,7 @@ public class IncomesController {
 
     @GetMapping(value = "/retrieve/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Income income = service.findById(id);
+        Income income = srvIncome.findById(id);
         model.addAttribute("income", income);
         model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
         return "cuentas/incomes/card";
@@ -86,15 +85,16 @@ public class IncomesController {
 
     @GetMapping(value = "update/{id}")
     public String update(@PathVariable(value = "id") Integer id, Model model){
-        Income income = service.findById(id);
-        model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
+        Income income = srvIncome.findById(id);
+        model.addAttribute("title","Actualizacion de Ingreso");
+        model.addAttribute("details", new ArrayList<IncomeDetail>());
         model.addAttribute("income",income);
         return "cuentas/incomes/form";
     }
 
     @GetMapping(value = "paid/{id}")
     public String paid(@PathVariable(value = "id") Integer id, Model model){
-        Income income = service.findById(id);
+        Income income = srvIncome.findById(id);
         income.setState(true);
         srvIncome.save(income);
         model.addAttribute("income",income);
@@ -105,7 +105,7 @@ public class IncomesController {
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
     	model.addAttribute("title","eliminacion de registro de nuevo ingreso");
     	try {
-            service.delete(id);
+            srvIncome.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
@@ -118,7 +118,7 @@ public class IncomesController {
     public String list(Model model, Authentication authentication){
     	USer user = srvUser.findByName(authentication.getName());
     	Condominium condominium = srvCond.findByUser(user.getIdUser());
-        List<Income> incomeList = service.findByCondom(condominium.getIdcondominium());
+        List<Income> incomeList = srvIncome.findByCondom(condominium.getIdcondominium());
         model.addAttribute("title","Listado de Ingresos");
         model.addAttribute("incomeList", incomeList);
         return "cuentas/incomes/list";
@@ -153,8 +153,8 @@ public class IncomesController {
         	//income.setMonthlyAccounts(monthlyAccount);
         	income.setCondominium(condominium);
         	income.setIncomeDetailList(detalles);
-    		service.save(income);
-    		List<Income> ex = service.findByCondom(condominium.getIdcondominium());
+            srvIncome.save(income);
+    		List<Income> ex = srvIncome.findByCondom(condominium.getIdcondominium());
     		session.setComplete();
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
