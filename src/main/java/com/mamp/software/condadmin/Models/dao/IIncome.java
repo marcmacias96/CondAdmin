@@ -17,4 +17,7 @@ public interface IIncome extends CrudRepository<Income, Integer> {
 
     @Query("SELECT INC fROM Income INC WHERE INC.monthlyAccounts.month = :month AND INC.monthlyAccounts.annualCounts.year = :year AND INC.state = false")
     public List<Income> findByMonthAndYear (Integer month, Integer year);
+
+    @Query("SELECT INC fROM Income INC WHERE INC.monthlyAccounts.idmonthlyaccounts = :id AND INC.state = false")
+    public List<Income> findByState (Integer id);
 }

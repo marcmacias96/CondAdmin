@@ -150,11 +150,9 @@ public class IncomesController {
         	    monthlyAccount.setAnnualCounts(annualCount);
         	    srvMonthly.save(monthlyAccount);
             }
-        	//income.setMonthlyAccounts(monthlyAccount);
         	income.setCondominium(condominium);
         	income.setIncomeDetailList(detalles);
             srvIncome.save(income);
-    		List<Income> ex = srvIncome.findByCondom(condominium.getIdcondominium());
     		session.setComplete();
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){

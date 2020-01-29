@@ -101,7 +101,7 @@ public class MonthlyAccountsController {
         Calendar calendar = Calendar.getInstance();
         //aqui se debe agregar la multa por inpago
 
-        List<Income> inpaymentList = srvIncome.findByMonthAndYear(calendar.get(Calendar.MONTH),calendar.get(Calendar.YEAR));
+        List<Income> inpaymentList = srvIncome.findByState(id);
         for (Income inc : inpaymentList) {
             IncomeDetail multa = new IncomeDetail();
             multa.setType("Multa");
@@ -114,27 +114,27 @@ public class MonthlyAccountsController {
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
         //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecesnlas cuentas
         AnnualCounts anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());
-        ArrayList<Income> incomeList= new ArrayList<Income>();
-        ArrayList<IncomeDetail> incomeDetails = new ArrayList<IncomeDetail>();
-        IncomeDetail detail = new IncomeDetail();
-        detail.setDetail("Pago Alicuota");
-        detail.setType("Alicuota");
-        detail.setValue(anualCounts.getCondominium().getCostAli());
-        incomeDetails.add(detail);
+        ArrayList<Income> incomeList= new ArrayList<>();
         for (House house: anualCounts.getCondominium().getHouseList()){
+            ArrayList<IncomeDetail> incomeDetails = new ArrayList<>();
+            IncomeDetail detail = new IncomeDetail();
+            detail.setDetail("Pago Alicuota");
+            detail.setType("Alicuota");
+            detail.setValue(anualCounts.getCondominium().getCostAli());
+            incomeDetails.add(detail);
             Income income = new Income();
             income.setDate(calendar);
             income.setCondominium(anualCounts.getCondominium());
             income.setHouse(house);
             income.setState(false);
             income.setIncomeDetailList(incomeDetails);
-            income.setValue(anualCounts.getCondominium().getCostAli());
+            income.setValue(0);
             srvIncome.save(income);
             incomeList.add(income);
         }
         //Aqui comprobamos que el corte que realizamos no es el primero que se realiza
         //ya que si es el primero no se podra cobrar del mes en que se abrio la cuenta ya que no tiene alicuotas asignadas
-        if(monthlyAccounts.getIdmonthlyaccounts() != 1){
+        if(monthlyAccounts.getIncomeList().size() != 0 ){
             //creamos un nuevo corte de cuentas mensuales
             MonthlyAccounts monthlyAccountsNext = new MonthlyAccounts();
             //comprobamos si el mes actual es diciembre
@@ -161,7 +161,7 @@ public class MonthlyAccountsController {
             monthlyAccountsNext.setIncomeList(incomeList);
             srvMonthAcount.save(monthlyAccountsNext);
             for (Income inc: monthlyAccountsNext.getIncomeList() ) {
-                inc.setMonthlyAccounts(monthlyAccounts);
+                inc.setMonthlyAccounts(monthlyAccountsNext);
                 srvIncome.save(inc);
             }
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccountsNext.getIdmonthlyaccounts();

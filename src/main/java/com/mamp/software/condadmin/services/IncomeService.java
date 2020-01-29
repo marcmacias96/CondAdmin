@@ -47,5 +47,10 @@ public class IncomeService implements IIncomeService {
         return dao.findByMonthAndYear(month,year);
     }
 
+    @Override
+    public List<Income> findByState(Integer id) {
+        return  (List<Income>) dao.findByState(id);
+    }
+
 
 }

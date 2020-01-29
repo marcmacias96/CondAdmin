@@ -18,4 +18,6 @@ public interface IIncomeService {
     public List<Income> findByHouse(Integer id);
 
     public  List<Income>  findByMonthAndYear (Integer month, Integer year);
+
+    public List<Income> findByState (Integer id);
 }
