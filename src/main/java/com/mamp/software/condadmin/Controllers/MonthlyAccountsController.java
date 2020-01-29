@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +38,9 @@ public class MonthlyAccountsController {
         Calendar fecha = Calendar.getInstance();
         AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR));
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts());
+        //Aqui voy a buscar por fecha, entonces busco un mountly Account por el mes y por el año.
+        //Para obtener el monthly account debo tener el anual account
+        //
         if(monthlyAccounts== null) {
             Integer mes = 0;
             if(fecha.get(Calendar.MONTH) == 1) {
@@ -54,22 +54,30 @@ public class MonthlyAccountsController {
         float incomes = 0.0f;
         for (Income inc: monthlyAccounts.getIncomeList()) {
             if(inc.getState()){
-                for (IncomeDetail det: inc.getIncomeDetailList()) {
-                    incomes+= det.getValue();
-                }
+                incomes = inc.getValue();
             }
 
         }
         monthlyAccounts.setIncome(incomes);
         float expenses = 0.0f;
         for (Expenses exp: monthlyAccounts.getExpensesList()) {
-            for (ExpenseDetail det: exp.getExpenseDetailList()) {
-                expenses+= det.getValue();
-            }
+            expenses = exp.getValue();
         }
         monthlyAccounts.setExpenses(expenses);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
         return "monthlyAccounts/card";
+    }
+
+    @GetMapping(value = "/listJsonIncomes/{id}", produces = "application/json")
+    public @ResponseBody List<Income> listJsonIncome(@PathVariable(value = "id") Integer id){
+        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
+        return monthlyAccounts.getIncomeList();
+    }
+
+    @GetMapping(value = "/listJsonExpenses/{id}", produces = "application/json")
+    public @ResponseBody List<Expenses> listJsonExpenses(@PathVariable(value = "id") Integer id){
+        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
+        return monthlyAccounts.getExpensesList();
     }
 
     @GetMapping(value = "/retrive/{id}")
@@ -175,8 +183,6 @@ public class MonthlyAccountsController {
             }
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccounts.getIdmonthlyaccounts();
         }
-
-
 
     }
 }

@@ -82,7 +82,63 @@
             </div>
         </div>
     </div>
+
+    <!-- Incomes Datatable -->
+    <section class="about_us padding_top pb-5">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card col-md-12">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <h3 class="card-title col-sm-11" th:text="Ingresos"><i class="ti-user"></i></h3>
+                            </div>
+                            <hr />
+                            <table  id="incomeTable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th ><i class="ti-tag"></i>&nbsp;ID</th>
+                                    <th ><i class="ti-money"></i>&nbsp;Valor</th>
+                                    <th ><i class="ti-calendar"></i>&nbsp;Fecha</th>
+                                    <th ><i class="ti-panel"></i>&nbsp;Estado</th>
+                                    <th ><i class="ti-hand-point-up"></i>&nbsp;Acciones</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <hr/>
+                        <!-- Expenses Datatable -->
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <h3 class="card-title col-sm-11" th:text="Gastos"><i class="ti-user"></i></h3>
+                                <th><a class="genric-btn btn-sm info circle" th:href="@{/expenses/create}">
+                                    <i class="ti-plus"></i>&nbsp; Nuevo Gasto</a>
+                                </th>
+                            </div>
+                            <hr />
+                            <table  id="expensesTable" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th ><i class="ti-tag"></i>&nbsp;ID</th>
+                                    <th ><i class="ti-money"></i>&nbsp;Valor</th>
+                                    <th ><i class="ti-calendar"></i>&nbsp;Fecha</th>
+                                    <th ><i class="ti-hand-point-up"></i>&nbsp;Acciones</th>
+
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 </div>
 <footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/tables/incomesDatatable.js}"></script>
+<script th:src="@{/js/tables/expensesDatatable.js}"></script>
 </body>
 </html>
