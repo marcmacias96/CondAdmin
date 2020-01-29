@@ -1,11 +1,14 @@
 package com.mamp.software.condadmin.Models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -29,6 +32,37 @@ public class USer implements Serializable {
 
     @Transient
     private String condName;
+
+    //BITACORA
+    @Column(name = "CREADOPOR")
+    @Size(max = 35)
+    private String creadoPor;
+
+    @Column(name = "CREADOEN")
+    private Calendar creadoEn;
+
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
+    }
+
+    public Calendar getCreadoEn() {
+        return creadoEn;
+    }
+
+    public void setCreadoEn(Calendar creadoEn) {
+        this.creadoEn = creadoEn;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        creadoEn = Calendar.getInstance();
+        SecurityContext context = SecurityContextHolder.getContext();
+        creadoPor = context.getAuthentication().getName();
+    }
 
     @JsonIgnore
     @OneToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
