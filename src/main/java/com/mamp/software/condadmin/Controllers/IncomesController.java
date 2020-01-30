@@ -63,7 +63,8 @@ public class IncomesController {
 
 	@Autowired
     private  IIncomeService srvIncome;
-	
+
+
     @GetMapping(value = "/create")
     public String create(Model model){
     	
@@ -77,7 +78,18 @@ public class IncomesController {
 
     @GetMapping(value = "/retrieve/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
+        Calendar c = Calendar.getInstance();
+        Calendar fecha = Calendar.getInstance();
         Income income = srvIncome.findById(id);
+        for (IncomeDetail det:
+             income.getIncomeDetailList()) {
+            if(det.getType() == "Multa"){
+                c.setTimeInMillis(fecha.getTime().getTime() - income.getDate().getTime().getTime() );
+                det.setValue(c.get(Calendar.DAY_OF_YEAR)*1f);
+
+            }
+        }
+        srvIncome.save(income);
         model.addAttribute("income", income);
         model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
         return "cuentas/incomes/card";
@@ -93,12 +105,20 @@ public class IncomesController {
     }
 
     @GetMapping(value = "paid/{id}")
-    public String paid(@PathVariable(value = "id") Integer id, Model model){
+    public String paid(@PathVariable(value = "id") Integer id, Model model,  RedirectAttributes redirectAttributes){
         Income income = srvIncome.findById(id);
+        for (IncomeDetail det:
+             income.getIncomeDetailList()) {
+            if(det.getType() == "Multa"){
+                redirectAttributes.addFlashAttribute("message","Tiene una multa por pagar");
+                return "cuentas/incomes/retrive/" + income.getIdincome();
+            }
+        }
         income.setState(true);
         srvIncome.save(income);
         model.addAttribute("income",income);
-        return "redirect:/monthlyAccounts/retrive";
+        redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+        return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getAnnualCounts().getIdannualcounts();
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -122,6 +142,25 @@ public class IncomesController {
         model.addAttribute("title","Listado de Ingresos");
         model.addAttribute("incomeList", incomeList);
         return "cuentas/incomes/list";
+    }
+
+
+    @PostMapping(value = "/saveByUpdate")
+    public String saveByUpdate(@Valid Income income, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
+            , SessionStatus session){
+
+    try {
+        for (IncomeDetail det:
+                detalles) {
+            income.getIncomeDetailList().add(det);
+        }
+        srvIncome.save(income);
+        session.setComplete();
+    }catch (Exception e){
+        redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+        return "cuentas/incomes/form";
+    }
+        return "redirect:/incomes/list";
     }
 
     @PostMapping(value = "/save")

@@ -40,7 +40,7 @@
 
 						<hr />
 
-						<form th:action="@{/incomes/save}" th:object="${income}" method="post">
+						<form th:action="@{/incomes/saveByUpdate}" th:object="${income}" method="post">
 							<div class="form-group row">
 								<div class="content col-sm-3">
 									<i class="ti-calendar"></i>
@@ -84,7 +84,11 @@
 							</div>
 							<input type="hidden" th:field="*{idincome}" />
 							<input type="hidden" th:field="*{state}" />
-							<div class="col-12 d-flex flex-row-reverse m-4">
+							<input type="hidden" th:field="*{house}" />
+							<input type="hidden" th:field="*{monthlyAccounts}" />
+							<input type="hidden" th:field="*{condominium}" />
+							<input type="hidden" readonly="readonly" th:field="${income.incomeDetailList}" />
+							<div class="col-12 d-flex flex-row-r everse m-4">
 								<a class="genric-btn  danger circle"
 								   th:href="@{/expenses/myExpenses}">
 									<i class="ti-close"></i>&nbsp; Cancelar</a>
