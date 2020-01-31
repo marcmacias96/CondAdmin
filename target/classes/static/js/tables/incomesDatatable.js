@@ -35,7 +35,7 @@ $(document).ready( function () {
 
     $('#incomeTable tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr')).data();
-        var url = "/income/retrieve/" + data.idincome;
+        var url = "/incomes/retrieve/" + data.idincome;
         window.location.href = url;
     } );
 });

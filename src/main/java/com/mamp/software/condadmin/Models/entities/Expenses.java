@@ -42,6 +42,10 @@ public class Expenses implements Serializable {
     @ManyToOne
     private MonthlyAccounts monthlyAccounts;
 
+    @JoinColumn(name = "IDANNUALCOUNTS", referencedColumnName = "IDANNUALCOUNTS")
+    @ManyToOne
+    private AnnualCounts annualCounts;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name= "IDEXPENSES")
     private List<ExpenseDetail> expenseDetailList;

@@ -10,7 +10,7 @@ $(document).ready( function () {
         } ],
         "order": [[ 0, "asc" ]],
         "aoColumns": [
-            { "mData": "idexpenses"},
+            { "mData": "idexpenses" },
             { "mData": "value" },
             { "mData": "date" },
             { "mData": "acctions" }
@@ -31,7 +31,7 @@ $(document).ready( function () {
         }
     })
 
-    $('#expensesTable tbody').on( 'click', 'button', function () {
+    $('#expensesTable tbody').on('click', 'button', function () {
         var data = table.row( $(this).parents('tr')).data();
         var url = "/expenses/retrieve/" + data.idexpenses;
         window.location.href = url;

@@ -1,7 +1,8 @@
 $(document).ready( function () {
-    var id = $("#idMonthAccount").val();
-    var table = $('#expensesTable').DataTable({
-        "sAjaxSource": "/monthlyAccounts/listJsonExpenses/" + id,
+    var id = $("#idannualcounts").val();
+    console.log(id);
+    var table = $('#monthlyTable').DataTable({
+        "sAjaxSource": "/monthlyAccounts/listJsonMonthly/"+id,
         "sAjaxDataProp": "",
         "columnDefs": [ {
             "targets": -1,
@@ -10,9 +11,8 @@ $(document).ready( function () {
         } ],
         "order": [[ 0, "asc" ]],
         "aoColumns": [
-            { "mData": "idexpenses" },
-            { "mData": "value" },
-            { "mData": "date" },
+            { "mData": "idmonthlyaccounts"},
+            { "mData": "month" },
             { "mData": "acctions" }
         ],
         "language": {
@@ -31,10 +31,9 @@ $(document).ready( function () {
         }
     })
 
-    $('#expensesTable tbody').on('click', 'button', function () {
+    $('#monthlyTable tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr')).data();
-        var url = "/expenses/retrieve/" + data.idexpenses;
+        var url = "/monthlyAccounts/retrive/" + data.idmonthlyaccounts;
         window.location.href = url;
     } );
 });
-
