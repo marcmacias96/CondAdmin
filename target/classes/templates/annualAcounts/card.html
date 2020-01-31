@@ -35,8 +35,15 @@
                             <div class="col-6 ">
                                 <h3 th:text="${title2}"></h3>
                             </div>
+
                             <div class="col-6 d-flex flex-row-reverse">
+                               <!-- <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/annualAcounts/closeBox/} + ${annualAcounts.getIdannualcounts}">
+                                        <i class="ti-plus"></i>&nbsp; Cierre de Año</a>
+                                </div>-->
                                 <div class="form-group">
+                                    <!--<a class="genric-btn btn-sm success circle" th:href="@{/annualAcounts/closeBox/} + ${annualAcounts.getIdannualcounts}">
+                                        <i class="ti-plus"></i>&nbsp; Cierre de Año</a>-->
                                     <a class="genric-btn btn-sm info circle" th:href="@{/annualCounts/list}">
                                     	<i class="ti-back-left"></i>&nbsp; Atras</a>
                                 </div>
