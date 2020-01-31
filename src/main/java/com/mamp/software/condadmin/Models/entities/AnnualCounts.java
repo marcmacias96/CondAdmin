@@ -42,6 +42,14 @@ public class AnnualCounts implements Serializable {
     @OneToMany(mappedBy = "annualCounts", fetch = FetchType.LAZY)
     private List<MonthlyAccounts> monthlyAccountsList;
 
+    @JsonIgnore
+	@OneToMany(mappedBy = "annualCounts", fetch = FetchType.LAZY)
+	private List<Income> incomeList;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "annualCounts", fetch = FetchType.LAZY)
+	private List<Expenses> expensesList;
+
     /**/
     public AnnualCounts(){
         super();
@@ -72,7 +80,13 @@ public class AnnualCounts implements Serializable {
 	}
 
 	public float getIncome() {
-		return income;
+		float total = 0;
+		for(Income inc : this.incomeList){
+			if(inc.getState()){
+				total += inc.getValue();
+			}
+		}
+		return total;
 	}
 
 	public void setIncome(float income) {
@@ -80,7 +94,11 @@ public class AnnualCounts implements Serializable {
 	}
 
 	public float getExpenses() {
-		return expenses;
+		float total = 0;
+		for(Expenses exp : this.expensesList){
+			total += exp.getValue();
+		}
+		return total;
 	}
 
 	public void setExpenses(float expenses) {
@@ -101,5 +119,21 @@ public class AnnualCounts implements Serializable {
 
 	public void setMonthlyAccountsList(List<MonthlyAccounts> monthlyAccountsList) {
 		this.monthlyAccountsList = monthlyAccountsList;
+	}
+
+	public List<Income> getIncomeList() {
+		return incomeList;
+	}
+
+	public void setIncomeList(List<Income> incomeList) {
+		this.incomeList = incomeList;
+	}
+
+	public List<Expenses> getExpensesList() {
+		return expensesList;
+	}
+
+	public void setExpensesList(List<Expenses> expensesList) {
+		this.expensesList = expensesList;
 	}
 }

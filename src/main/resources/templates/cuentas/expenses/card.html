@@ -31,9 +31,9 @@
 					<h3 class="card-title col-sm-6"
 						th:text="${expenses.value}"></h3>
 					<div class="col-sm-4">
-						<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+						<button class="genric-btn btn-sm danger circle" data-toggle="modal" data-target="#deleteModal">
 						<i class="ti-trash"></i>&nbsp; Eliminar</button>
-						<a class="btn btn-primary" th:href="@{/expenses/myExpenses}"><i
+						<a class="genric-btn btn-sm success circle" th:href="@{/expenses/myExpenses}"><i
 							class="ti-arrow-left"></i>&nbsp; Atras</a>
 					</div>
 				</div>
@@ -50,21 +50,6 @@
 							</div>
 							<div class="col-sm-8">
 								<h5 class="card-text" th:text=${#dates.format(expenses.date,'dd-MM-yyyy')}></h5>
-							</div>
-						</div>						
-					</div>
-				</div>				
-				
-				<hr />
-				
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="content col-sm-3 bg-light">
-								<i class="ti-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Detalle:</label>
-							</div>
-							<div class="col-sm-8">
-								
 							</div>
 						</div>						
 					</div>
@@ -86,8 +71,8 @@
 						<p th:text="${expenses.value}"></p>
 					</div>
 					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<a th:href="@{/expenses/delete/} + ${expenses.idexpenses}" class="btn btn-success">Confirmar</a>
+						<button type="button" class="genric-btn btn-sm danger circle" data-dismiss="modal">Cancelar</button>
+						<a th:href="@{/expenses/delete/} + ${expenses.idexpenses}" class="genric-btn btn-sm success circle">Confirmar</a>
 					</div>
 				</div>
 			</div>

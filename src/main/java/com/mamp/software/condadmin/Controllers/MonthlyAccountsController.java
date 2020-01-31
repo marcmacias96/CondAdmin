@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
@@ -33,63 +30,86 @@ public class MonthlyAccountsController {
     private IAnnualCountsService srvAnualAccount;
 
     @Autowired
+    private ICondominiumService srvCond;
+
+    @Autowired
     private IIncomeService srvIncome;
+
+    @Autowired
+    private IUser srvUser;
 
 
 	@GetMapping(value = "/retrive")
     public String retriveByDate(Model model){
         Calendar fecha = Calendar.getInstance();
         AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR));
+
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts());
-        if(monthlyAccounts== null) {
+        //Aqui voy a buscar por fecha, entonces busco un mounthly Account por el mes y por el año.
+        //Para obtener el monthly account debo tener el anual account
+
+        if(monthlyAccounts == null) {
             Integer mes = 0;
             if(fecha.get(Calendar.MONTH) == 1) {
-                mes =12;
+                mes = 12;
             } else {
                 mes = fecha.get(Calendar.MONTH) -1;
             }
             monthlyAccounts = srvMonthAcount.findByMonth(mes,annualCounts.getIdannualcounts());
         }
 
-        float incomes = 0.0f;
-        for (Income inc: monthlyAccounts.getIncomeList()) {
-            if(inc.getState()){
-                for (IncomeDetail det: inc.getIncomeDetailList()) {
-                    incomes+= det.getValue();
-                }
-            }
+        monthlyAccounts.setIncome(monthlyAccounts.getIncome());
+        monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
 
-        }
-        monthlyAccounts.setIncome(incomes);
-        float expenses = 0.0f;
-        for (Expenses exp: monthlyAccounts.getExpensesList()) {
-            for (ExpenseDetail det: exp.getExpenseDetailList()) {
-                expenses+= det.getValue();
-            }
-        }
-        monthlyAccounts.setExpenses(expenses);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
+
+        model.addAttribute("title", "Ingresos");
+        model.addAttribute("title1", "Gastos");
+        model.addAttribute("title2", "Balances Mensuales");
+
         return "monthlyAccounts/card";
     }
+
+    @GetMapping(value = "/listJsonIncomes/{id}", produces = "application/json")
+    public @ResponseBody List<Income> listJsonIncome(@PathVariable(value = "id") Integer id){
+        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
+        return monthlyAccounts.getIncomeList();
+    }
+
+    @GetMapping(value = "/listJsonExpenses/{id}", produces = "application/json")
+    public @ResponseBody List<Expenses> listJsonExpenses(@PathVariable(value = "id") Integer id){
+        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
+        return monthlyAccounts.getExpensesList();
+    }
+
+    @GetMapping(value = "/listJsonMonthly/{id}", produces = "application/json")
+    public @ResponseBody List<MonthlyAccounts> listJsonMonthly(@PathVariable(value = "id") Integer id){
+      List<MonthlyAccounts> monthlyAccountsList = srvMonthAcount.findByYear(id);
+      return  monthlyAccountsList;
+    }
+
+    @GetMapping(value = "/list/{id}")
+    public String list (Model model, Authentication authentication, @PathVariable(value = "id") Integer id){
+        AnnualCounts annualCounts = srvAnualAccount.findById(id);
+        model.addAttribute("title","Balances Anuales");
+        model.addAttribute("annualCounts", annualCounts);
+        return "monthlyAccounts/list";
+    }
+
 
     @GetMapping(value = "/retrive/{id}")
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         //Esto calcula el balance de los ingresos y egresos y  suma solo las alicuotas pagadas
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
-        float incomes = 0.0f;
-        for (Income inc: monthlyAccounts.getIncomeList()) {
-            if(inc.getState()){
-               incomes+=inc.getValue();
-            }
 
-        }
-        monthlyAccounts.setIncome(incomes);
-        float expenses = 0.0f;
-        for (Expenses exp: monthlyAccounts.getExpensesList()) {
-            expenses +=exp.getValue();
-        }
-        monthlyAccounts.setExpenses(expenses);
+        monthlyAccounts.setIncome(monthlyAccounts.getIncome());
+        monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
+
         model.addAttribute("monthlyAccounts", monthlyAccounts);
+        model.addAttribute("title", "Ingresos");
+        model.addAttribute("title1", "Gastos");
+        model.addAttribute("title2", "Balances Mensuales");
+
         return "monthlyAccounts/card";
     }
 
@@ -112,7 +132,7 @@ public class MonthlyAccountsController {
         }
 
         MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
-        //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecesnlas cuentas
+        //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecen las cuentas
         AnnualCounts anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());
         ArrayList<Income> incomeList= new ArrayList<>();
         for (House house: anualCounts.getCondominium().getHouseList()){
@@ -138,7 +158,7 @@ public class MonthlyAccountsController {
             //creamos un nuevo corte de cuentas mensuales
             MonthlyAccounts monthlyAccountsNext = new MonthlyAccounts();
             //comprobamos si el mes actual es diciembre
-            if(monthlyAccounts.getMonth()==12){
+            if(monthlyAccounts.getMonth()==11){
                 // Si es diciembre el mes siguiente pertenece a otro corte anual que no existe asi que lo creamos
                 AnnualCounts newAnnualCounts = new AnnualCounts();
                 newAnnualCounts.setCondominium(anualCounts.getCondominium());
@@ -175,8 +195,5 @@ public class MonthlyAccountsController {
             }
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccounts.getIdmonthlyaccounts();
         }
-
-
-
     }
 }

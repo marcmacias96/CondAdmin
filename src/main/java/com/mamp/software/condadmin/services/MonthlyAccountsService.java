@@ -1,7 +1,6 @@
 package com.mamp.software.condadmin.services;
 
 import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
-import com.mamp.software.condadmin.Models.entities.AnnualCounts;
 import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,4 +41,11 @@ public class MonthlyAccountsService implements IMonthlyAccountsService {
 	public MonthlyAccounts findByMonth(Integer month, Integer id) {
 		return dao.findByMonth(month,id);
 	}
+
+    @Override
+    public List<MonthlyAccounts> findByYear( Integer id){
+        return   (List<MonthlyAccounts>) dao.findByYear(id);
+    }
+
+
 }

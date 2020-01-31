@@ -78,7 +78,13 @@ public class MonthlyAccounts implements Serializable {
     }
 
 	public float getIncome() {
-        return income;
+        float total = 0;
+        for(Income inc : this.incomeList){
+            if(inc.getState()){
+                total += inc.getValue();
+            }
+        }
+        return total;
     }
 
     public void setIncome(float income) {
@@ -86,7 +92,11 @@ public class MonthlyAccounts implements Serializable {
     }
 
     public float getExpenses() {
-        return expenses;
+        float total = 0;
+        for(Expenses exp : this.expensesList){
+            total += exp.getValue();
+        }
+        return total;
     }
 
     public void setExpenses(float expenses) {

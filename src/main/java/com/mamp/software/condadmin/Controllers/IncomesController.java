@@ -69,6 +69,7 @@ public class IncomesController {
     public String create(Model model){
     	
         Income income = new Income();
+        income.setState(false);
         model.addAttribute("income", income);
         model.addAttribute("title","Registro de nuevo Ingreso");
         model.addAttribute("details", new ArrayList<IncomeDetail>());

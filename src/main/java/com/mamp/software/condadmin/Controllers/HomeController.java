@@ -31,7 +31,7 @@ public class HomeController {
 		}		
 		if(error != null) {
 			model.addAttribute("error", "Usuario o contraseña incorrectas");
-		}				
+ 			}
 		return "login";
 	}
 	

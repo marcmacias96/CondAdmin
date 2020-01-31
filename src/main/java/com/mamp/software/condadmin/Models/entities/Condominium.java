@@ -76,7 +76,6 @@ public class Condominium implements Serializable {
         super();
     }
 
-
     private Condominium(Integer idcondominium){
         super();
         this.idcondominium = idcondominium;

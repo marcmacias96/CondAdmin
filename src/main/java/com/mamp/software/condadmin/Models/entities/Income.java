@@ -47,6 +47,10 @@ public class Income implements Serializable {
     @ManyToOne
     private MonthlyAccounts monthlyAccounts;
 
+    @JoinColumn(name = "IDANNUALCOUNTS", referencedColumnName = "IDANNUALCOUNTS")
+    @ManyToOne
+    private AnnualCounts annualCounts;
+
     @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
     @ManyToOne
     private Condominium condominium;

@@ -130,6 +130,6 @@ public class OwnerController {
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
             return "owner/form";
         }
-        return "redirect:/owner/listByCondom";
+        return "redirect:/owner/retrive/"+ owner.getIdowner();
     }
 }

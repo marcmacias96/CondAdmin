@@ -67,9 +67,8 @@
 										<thead>
 										<tr>
 											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Tipo</th>
-											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Detalle</th>
+											<th class="align-middle text-center"><i class="ti-text"></i>&nbsp;Descripción</th>
 											<th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Valor</th>
-
 										</tr>
 										</thead>
 										<tbody>
@@ -84,15 +83,11 @@
 							</div>
 							<input type="hidden" th:field="*{idincome}" />
 							<input type="hidden" th:field="*{state}" />
-							<input type="hidden" th:field="*{house}" />
-							<input type="hidden" th:field="*{monthlyAccounts}" />
-							<input type="hidden" th:field="*{condominium}" />
-							<input type="hidden" readonly="readonly" th:field="${income.incomeDetailList}" />
-							<div class="col-12 d-flex flex-row-r everse m-4">
-								<a class="genric-btn  danger circle"
-								   th:href="@{/expenses/myExpenses}">
+							<div class="col-12 d-flex flex-row-reverse m-4">
+								<a class="genric-btn btn-sm danger circle"
+								   th:href="@{/incomes/list}">
 									<i class="ti-close"></i>&nbsp; Cancelar</a>
-								<button class="genric-btn success circle" type="submit">
+								<button class="genric-btn btn-sm success circle" type="submit">
 									<i class="ti-save"></i>&nbsp; Guardar
 								</button>
 							</div>

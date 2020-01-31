@@ -60,8 +60,8 @@
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<a  class="dropdown-item" th:href="@{/monthlyAccounts/retrive}">Balance Mensual</a>
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/myExpenses}">Gastos</a>
-										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a>
+										<!-- <a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/expenses/myExpenses}">Gastos</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/incomes/list}">Ingresos</a> -->
 										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/annualCounts/list}">Balance Anual</a>
 									</div>
 								</li>
