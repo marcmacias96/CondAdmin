@@ -2,16 +2,26 @@ package com.mamp.software.condadmin.services;
 
 import com.mamp.software.condadmin.Models.dao.IExpenses;
 import com.mamp.software.condadmin.Models.entities.Expenses;
+import com.mamp.software.condadmin.Models.entities.RepTypeOfExpenses;
+import com.mamp.software.condadmin.Models.entities.RepTypeOfIncomes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExpensesService implements IExpensesService {
     @Autowired
     private IExpenses dao;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     @Transactional
@@ -40,5 +50,17 @@ public class ExpensesService implements IExpensesService {
     @Override
     public List<Expenses> findByCondom(Integer id) {
         return  (List<Expenses>) dao.findByCondom(id);
+    }
+
+    @Override
+    public List<RepTypeOfExpenses> repTypeOfExpenses(Integer Id) {
+        StoredProcedureQuery consulta = em.createStoredProcedureQuery("typeOfExpensesByCondom");
+        consulta.registerStoredProcedureParameter("Id", Integer.class, ParameterMode.IN);
+        consulta.setParameter("Id", Id);
+        consulta.execute();
+        List<Object[]> datos = consulta.getResultList();
+        return datos.stream()
+                .map(r -> new RepTypeOfExpenses((String)r[0], (Double)r[1]))
+                .collect(Collectors.toList());
     }
 }

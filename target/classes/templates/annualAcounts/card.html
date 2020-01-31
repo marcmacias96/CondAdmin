@@ -45,51 +45,62 @@
                         </div>
                         <input type="hidden"
                                th:value="${anualCounts.idannualcounts}" />
+
                         <hr />
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Año:</label>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-3 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Año:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${anualCounts.year}"></h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${anualCounts.year}"></h5>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-3 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Ingresos:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${anualCounts.getIncome()}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-3 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${anualCounts.getExpenses()}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="canvas-holder">
+                                            <canvas id="chart-ivse"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Ingresos:</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${anualCounts.income}"></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${anualCounts.expenses}"></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -125,5 +136,6 @@
 <footer th:replace="layout :: frgFooter"></footer>
 <script th:src="@{/js/tables/annualCountsDatatable.js}"></script>
 <script th:src="@{/js/tables/monthlyCountsDatatable.js}"></script>
+<script th:src="@{/js/Reports/RepIncVsExp.js}"></script>
 </body>
 </html>

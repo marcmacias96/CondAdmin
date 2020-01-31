@@ -117,6 +117,9 @@ public class IncomesController {
         }
         income.setState(true);
         srvIncome.save(income);
+        income.getMonthlyAccounts().setIncome(income.getMonthlyAccounts().getIncome());
+        income.getMonthlyAccounts().setExpenses(income.getMonthlyAccounts().getExpenses());
+        srvMonthly.save(income.getMonthlyAccounts());
         model.addAttribute("income",income);
         redirectAttributes.addFlashAttribute("message","No se pudo guardar");
         return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getAnnualCounts().getIdannualcounts();

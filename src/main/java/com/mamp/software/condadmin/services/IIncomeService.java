@@ -1,6 +1,7 @@
 package com.mamp.software.condadmin.services;
 
 import com.mamp.software.condadmin.Models.entities.Income;
+import com.mamp.software.condadmin.Models.entities.RepTypeOfIncomes;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IIncomeService {
     public  List<Income>  findByMonthAndYear (Integer month, Integer year);
 
     public List<Income> findByState (Integer id);
+
+    public List<RepTypeOfIncomes> repTypeOfIncome (String type);
 }

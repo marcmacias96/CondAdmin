@@ -2,10 +2,7 @@ package com.mamp.software.condadmin.Controllers;
 
 import com.mamp.software.condadmin.Models.dao.IUser;
 import com.mamp.software.condadmin.Models.entities.*;
-import com.mamp.software.condadmin.services.IAnnualCountsService;
-import com.mamp.software.condadmin.services.ICondominiumService;
-import com.mamp.software.condadmin.services.IIncomeService;
-import com.mamp.software.condadmin.services.IMonthlyAccountsService;
+import com.mamp.software.condadmin.services.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,7 +33,12 @@ public class MonthlyAccountsController {
     private IIncomeService srvIncome;
 
     @Autowired
+    private IExpensesService srvExpense;
+
+    @Autowired
     private IUser srvUser;
+
+
 
 
 	@GetMapping(value = "/retrive")
@@ -60,7 +62,7 @@ public class MonthlyAccountsController {
 
         monthlyAccounts.setIncome(monthlyAccounts.getIncome());
         monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
-
+        srvMonthAcount.save(monthlyAccounts);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
 
         model.addAttribute("title", "Ingresos");
@@ -68,6 +70,18 @@ public class MonthlyAccountsController {
         model.addAttribute("title2", "Balances Mensuales");
 
         return "monthlyAccounts/card";
+    }
+
+    @GetMapping(value = "/repTypeOfIncome/{type}", produces = "application/json")
+    public @ResponseBody List<RepTypeOfIncomes> repTypeOfIncome (@PathVariable(value = "type") String type){
+        List<RepTypeOfIncomes> repTypeOfIncomesList = srvIncome.repTypeOfIncome(type);
+        return  repTypeOfIncomesList;
+    }
+
+    @GetMapping(value = "/repTypeOfExpense/{Id}", produces = "application/json")
+    public @ResponseBody List<RepTypeOfExpenses> repTypeOfExpense (@PathVariable(value = "Id") Integer Id){
+        List<RepTypeOfExpenses> repTypeOfExpensesList = srvExpense.repTypeOfExpenses(Id);
+        return  repTypeOfExpensesList;
     }
 
     @GetMapping(value = "/listJsonIncomes/{id}", produces = "application/json")
@@ -104,7 +118,7 @@ public class MonthlyAccountsController {
 
         monthlyAccounts.setIncome(monthlyAccounts.getIncome());
         monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
-
+        srvMonthAcount.save(monthlyAccounts);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
         model.addAttribute("title", "Ingresos");
         model.addAttribute("title1", "Gastos");
@@ -179,11 +193,18 @@ public class MonthlyAccountsController {
             monthlyAccountsNext.setIncome(0.0f);
             monthlyAccountsNext.setAnnualCounts(anualCounts);
             monthlyAccountsNext.setIncomeList(incomeList);
+            monthlyAccountsNext.setExpensesList(new ArrayList<Expenses>());
             srvMonthAcount.save(monthlyAccountsNext);
             for (Income inc: monthlyAccountsNext.getIncomeList() ) {
                 inc.setMonthlyAccounts(monthlyAccountsNext);
                 srvIncome.save(inc);
             }
+            monthlyAccounts.setIncome(monthlyAccounts.getIncome());
+            monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
+            anualCounts.setIncome(anualCounts.getIncome());
+            anualCounts.setExpenses(anualCounts.getExpenses());
+            srvAnualAccount.save(anualCounts);
+            srvMonthAcount.save(monthlyAccounts);
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccountsNext.getIdmonthlyaccounts();
         } else {
             // si es el primer corte las alicuotas se agregaran al mes actual
@@ -196,4 +217,6 @@ public class MonthlyAccountsController {
             return "redirect:/monthlyAccounts/retrive/" + monthlyAccounts.getIdmonthlyaccounts();
         }
     }
+
+
 }

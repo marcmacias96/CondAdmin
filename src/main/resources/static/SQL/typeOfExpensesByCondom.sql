@@ -1,4 +1,4 @@
-CREATE PROCEDURE `typeOfExpensesByCondom` (IN ID INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `typeOfExpensesByCondom`(IN ID INT)
 BEGIN
 	SELECT expDet.tipo, SUM(expDet.price) AS value
 	FROM condominium AS cond

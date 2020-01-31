@@ -2,15 +2,26 @@ package com.mamp.software.condadmin.services;
 
 import com.mamp.software.condadmin.Models.dao.IIncome;
 import com.mamp.software.condadmin.Models.entities.Income;
+import com.mamp.software.condadmin.Models.entities.RepTypeOfIncomes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
+import java.math.BigInteger;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IncomeService implements IIncomeService {
     @Autowired
     private IIncome dao;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public void save(Income income) {
@@ -50,6 +61,18 @@ public class IncomeService implements IIncomeService {
     @Override
     public List<Income> findByState(Integer id) {
         return  (List<Income>) dao.findByState(id);
+    }
+
+    @Override
+    public List<RepTypeOfIncomes> repTypeOfIncome(String type) {
+        StoredProcedureQuery consulta = em.createStoredProcedureQuery("incomesByType");
+        consulta.registerStoredProcedureParameter("type", String.class, ParameterMode.IN);
+        consulta.setParameter("type", type);
+        consulta.execute();
+        List<Object[]> datos = consulta.getResultList();
+        return datos.stream()
+                .map(r -> new RepTypeOfIncomes((Integer)r[1], (BigInteger) r[0]))
+                .collect(Collectors.toList());
     }
 
 

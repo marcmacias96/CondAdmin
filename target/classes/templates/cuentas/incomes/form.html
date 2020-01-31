@@ -83,9 +83,13 @@
 							</div>
 							<input type="hidden" th:field="*{idincome}" />
 							<input type="hidden" th:field="*{state}" />
-							<div class="col-12 d-flex flex-row-reverse m-4">
-								<a class="genric-btn btn-sm danger circle"
-								   th:href="@{/incomes/list}">
+							<input type="hidden" th:field="*{house}" />
+							<input type="hidden" th:field="*{monthlyAccounts}" />
+							<input type="hidden" th:field="*{condominium}" />
+							<input type="hidden" readonly="readonly" th:field="${income.incomeDetailList}" />
+							<div class="col-12 d-flex flex-row-r everse m-4">
+								<a class="genric-btn  danger circle"
+								   th:href="@{/expenses/myExpenses}">
 									<i class="ti-close"></i>&nbsp; Cancelar</a>
 								<button class="genric-btn btn-sm success circle" type="submit">
 									<i class="ti-save"></i>&nbsp; Guardar

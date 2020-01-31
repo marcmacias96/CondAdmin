@@ -36,7 +36,7 @@ public class AnnualCountsController {
     private ICondominiumService srvCond;
 
     @Autowired
-    private IIncomeService srvIncome;
+    private IAnnualCountsService srvAnual;
 
     @GetMapping(value = "/retrieve")
     public String retriveByDate(Model model){
@@ -61,6 +61,7 @@ public class AnnualCountsController {
         AnnualCounts anualCounts = srvAnualAccount.findById(id);
 
         anualCounts.setIncome(anualCounts.getIncome());
+
         anualCounts.setExpenses(anualCounts.getExpenses());
         srvAnualAccount.save(anualCounts);
         model.addAttribute("anualCounts", anualCounts);
@@ -98,6 +99,12 @@ public class AnnualCountsController {
         List<AnnualCounts> annualCountsList = srvAnualAccount.findByCondom(id);
         model.addAttribute("title", "Balances Mensuales");
         return annualCountsList;
+    }
+
+    @GetMapping(value = "/repIncVsExp/{year}", produces = "application/json")
+    public @ResponseBody List<RepIncVsExp> repIncVsExp (@PathVariable(value = "year") Integer year){
+        List<RepIncVsExp> repTypeOfExpensesList = srvAnual.RepIncVsExp(year);
+        return  repTypeOfExpensesList ;
     }
 
     @GetMapping(value = "/list")

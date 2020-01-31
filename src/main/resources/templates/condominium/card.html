@@ -50,76 +50,76 @@
                         <hr />
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Costo Alicuota:</label>
+                            <div class="col-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-4 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Costo Alicuota:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${condominium.costAli}"></h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${condominium.costAli}"></h5>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-4 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Sector:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${condominium.sector}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-4 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Calle 1</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${condominium.street1}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-4 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Calle 2</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${condominium.street2}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-4 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Sector:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${condominium.reference}"></h5>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Sector:</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${condominium.sector}"></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Calle 1</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${condominium.street1}"></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Calle 2</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${condominium.street2}"></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <div class="content col-sm-3 bg-light">
-                                        <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Sector:</label>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <h5 class="card-text" th:text="${condominium.reference}"></h5>
-                                    </div>
+                            <div class="col-7">
+                                <div class="canvas-holder">
+                                    <canvas id="chart-inc"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
 </div>
 <footer th:replace="layout :: frgFooter"></footer>
 <script th:src="@{/js/AjaxFunctions/CondominiumCard.js}"></script>
-<!-- <script th:src="@{/js/AjaxFunctions/HouseCard.js}"></script> -->
 <script th:src="@{/js/tables/houseDatatable.js}"></script>
+<script th:src="@{/js/Reports/RepTypeOfIncomes.js}"></script>
 </body>
 </html>

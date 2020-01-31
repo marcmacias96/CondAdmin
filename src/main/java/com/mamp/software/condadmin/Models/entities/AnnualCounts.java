@@ -81,10 +81,14 @@ public class AnnualCounts implements Serializable {
 
 	public float getIncome() {
 		float total = 0;
-		for(Income inc : this.incomeList){
-			if(inc.getState()){
-				total += inc.getValue();
+		for(MonthlyAccounts monthly: this.getMonthlyAccountsList()){
+			for (Income inc:
+				 monthly.getIncomeList()) {
+				if(inc.getState()){
+					total += inc.getValue();
+				}
 			}
+
 		}
 		return total;
 	}
@@ -95,8 +99,13 @@ public class AnnualCounts implements Serializable {
 
 	public float getExpenses() {
 		float total = 0;
-		for(Expenses exp : this.expensesList){
-			total += exp.getValue();
+		for(MonthlyAccounts monthly : this.getMonthlyAccountsList()){
+				for (Expenses exp:
+						monthly.getExpensesList()) {
+					total += exp.getValue();
+				}
+
+
 		}
 		return total;
 	}
