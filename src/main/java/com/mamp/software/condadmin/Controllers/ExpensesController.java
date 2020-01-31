@@ -58,7 +58,7 @@ public class ExpensesController {
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Expenses expenses = service.findById(id);
         model.addAttribute("expenses", expenses);
-        model.addAttribute("title","Actualizacion de registro de nuevo gasto");
+        model.addAttribute("title","Expenses");
         return "cuentas/expenses/card";
     }
 

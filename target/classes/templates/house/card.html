@@ -35,15 +35,10 @@
 						<h3	th:text="Casa"></h3>
 					</div>
 					<div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="col-6 d-flex flex-row-reverse">
-						<div  sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
-							<button class="genric-btn danger circle" data-toggle="modal" data-target="#deleteModal">
-							<i class="ti-trash"></i>&nbsp; Eliminar</button>
-						</div>
 						<div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
                                     <a class="genric-btn btn-sm success circle" th:href="@{/house/update/} + ${house.idhouse}">
                                         <i class="ti-reload"></i>&nbsp; Actualizar</a>
-                                </div>
-						
+						</div>
 					</div>
 				</div>
 				<input type="hidden" id="idhouse"
@@ -160,8 +155,8 @@
 						<p th:text="${house.block}"></p>
 					</div>
 					<div class="modal-footer">						
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						<a th:href="@{/house/delete/} + ${house.idhouse}" class="btn btn-success">Confirmar</a>
+						<button type="button" class="genric-btn btn-sm danger circle" data-dismiss="modal">Cancelar</button>
+						<a th:href="@{/house/delete/} + ${house.idhouse}" class="genric-btn btn-sm success circle">Confirmar</a>
 					</div>
 				</div>
 			</div>

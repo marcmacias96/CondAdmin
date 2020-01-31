@@ -80,7 +80,7 @@ public class IncomesController {
     public String retrive(@PathVariable(value = "id") Integer id, Model model){
         Income income = srvIncome.findById(id);
         model.addAttribute("income", income);
-        model.addAttribute("title","Actualizacion de registro de nuevo ingreso");
+        model.addAttribute("title","Ingreso");
         return "cuentas/incomes/card";
     }
 
@@ -109,7 +109,7 @@ public class IncomesController {
             srvIncome.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
+            redirectAttributes.addFlashAttribute("message","Error al eliminar el registro");
 
         }
         return "redirect:/incomes/list";
