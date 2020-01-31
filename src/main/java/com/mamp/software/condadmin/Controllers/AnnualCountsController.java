@@ -107,6 +107,12 @@ public class AnnualCountsController {
         return  repTypeOfExpensesList ;
     }
 
+    @GetMapping(value = "/repTypeOfExpensesMonthly/{Id}", produces =  "application/json")
+    public @ResponseBody List<RepTypeOfExpensesMonthly> repTypeOfExpensesMonthlies (@PathVariable(value = "Id") Integer Id){
+        List<RepTypeOfExpensesMonthly> repTypeOfExpensesMonthlyList= srvAnual.RepTypeOfExpensesMonthly(Id);
+        return repTypeOfExpensesMonthlyList;
+    }
+
     @GetMapping(value = "/list")
     public String list (Model model, Authentication authentication){
         USer adminUser = srvUser.findByName(authentication.getName());

@@ -7,16 +7,10 @@ import com.mamp.software.condadmin.Models.entities.*;
 import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IExpensesService;
 
-import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -44,10 +38,11 @@ public class ExpensesController {
 	@Autowired
     private ICondominiumService srvCond;
 	
-    @GetMapping(value = "/create")
-    public String create(Model model){
-
+    @GetMapping(value = "/create/{id}")
+    public String create(Model model, @PathVariable(value = "id") Integer id){
+        Optional<MonthlyAccounts> monthlyAccounts = srvMonthly.findById(id);
     	Expenses expenses = new Expenses();
+    	expenses.setIdMonth(monthlyAccounts.get().getIdmonthlyaccounts());
         model.addAttribute("expenses", expenses);
         model.addAttribute("title","Registro de nuevo Gasto");
         model.addAttribute("details", new ArrayList<ExpenseDetail>());
@@ -98,34 +93,12 @@ public class ExpensesController {
     @PostMapping(value = "/save")
     public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<ExpenseDetail> detalles
             , SessionStatus session){
-        USer user = srvUser.findByName(authentication.getName());
-        Condominium condominium = srvCond.findByUser(user.getIdUser());
-    	int year = expenses.getDate().get(Calendar.YEAR);
-    	int month = expenses.getDate().get(Calendar.MONTH);
+
         try {
-            //Aqui hacemos la busqueda del reporte anual
-            //si no existe creamos uno esto debe aplicarse en ingresos tambien
-        	AnnualCounts annualCount = srvAnual.findByYear(year);
-        	if(annualCount == null) {
-        	    annualCount = new AnnualCounts();
-        	    annualCount.setYear(year);
-        	    annualCount.setExpenses(0.0f);
-        	    annualCount.setIncome(0.0f);
-        	    annualCount.setCondominium(condominium);
-        	    srvAnual.save(annualCount);
-            }
-            //Aqui hacemos la busqueda del reporte mensual
-            //si no existe creamos uno esto debe aplicarse en ingresos tambien
-        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
-        	if(monthlyAccount == null ) {
-        	    monthlyAccount= new MonthlyAccounts();
-        	    monthlyAccount.setExpenses(0.0f);
-        	    monthlyAccount.setIncome(0.0f);
-        	    monthlyAccount.setMonth(month);
-        	    monthlyAccount.setAnnualCounts(annualCount);
-        	    srvMonthly.save(monthlyAccount);
-            }
-        	expenses.setMonthlyAccounts(monthlyAccount);
+            USer user = srvUser.findByName(authentication.getName());
+            Condominium condominium = srvCond.findByUser(user.getIdUser());
+            Optional<MonthlyAccounts> monthlyAccounts = srvMonthly.findById(expenses.getIdMonth());
+            expenses.setMonthlyAccounts(monthlyAccounts.get());
         	expenses.setCondominium(condominium);
         	//guardamos la lista de detalles en el maestro
         	expenses.setExpenseDetailList(detalles);
