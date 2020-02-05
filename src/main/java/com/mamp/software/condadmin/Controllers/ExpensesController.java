@@ -93,11 +93,11 @@ public class ExpensesController {
     @PostMapping(value = "/save")
     public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<ExpenseDetail> detalles
             , SessionStatus session){
-
+        Optional<MonthlyAccounts> monthlyAccounts= null;
         try {
             USer user = srvUser.findByName(authentication.getName());
             Condominium condominium = srvCond.findByUser(user.getIdUser());
-            Optional<MonthlyAccounts> monthlyAccounts = srvMonthly.findById(expenses.getIdMonth());
+            monthlyAccounts = srvMonthly.findById(expenses.getIdMonth());
             expenses.setMonthlyAccounts(monthlyAccounts.get());
         	expenses.setCondominium(condominium);
         	//guardamos la lista de detalles en el maestro
@@ -111,7 +111,7 @@ public class ExpensesController {
             redirectAttributes.addFlashAttribute("message","No se pudo guardar");
             return "cuentas/expenses/form";
         }
-        return "redirect:/expenses/myExpenses";
+        return "redirect:/monthlyAccounts/retrive/" +  monthlyAccounts.get().getIdmonthlyaccounts();
     }
 
     @PostMapping(value="/addDetailExpenses", produces="application/json")
