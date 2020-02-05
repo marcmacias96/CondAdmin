@@ -4,14 +4,15 @@ function setContainer(response){
 }
 
 function listHousesCondominium () {
-    var id = $("#idCondom").val();
+    var id = $("#idcondominium").val();
+    console.log(id);
     $.ajax({
         url : "/house/listByCondom/" + id,
         method : 'GET',
         success : function(response){
 
             setContainer(response);
-            var id = $("#idCondom").val();
+            var id = $("#idcondominium").val();
             console.log(id)
         	var table = $('#houseListByCondom').DataTable({
         		"sAjaxSource": "/house/listByCondomJson/"+id,

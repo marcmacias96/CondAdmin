@@ -16,5 +16,5 @@ public interface IExpensesService {
 
     public List<Expenses> findByCondom(Integer id);
 
-    public List<RepTypeOfExpenses> repTypeOfExpenses(Integer Id);
+    public List<RepTypeOfExpenses>repTypeOfExpenses(Integer Id,Integer month);
 }

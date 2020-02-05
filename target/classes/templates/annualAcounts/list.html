@@ -33,15 +33,26 @@
                             <h3 class="card-title col-sm-11" th:text="${title}"><i class="ti-user"></i></h3>
                         </div>
                         <hr />
-                        <table  id="ownersTable" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th ><i class="ti-tag"></i>&nbsp;ID</th>
-                                    <th ><i class="ti-user"></i>&nbsp;A&ntilde;o</th>
-                                    <th ><i class="ti-panel"></i>&nbsp;Acciones</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="row">
+                            <div class="col-6">
+                                <table  id="ownersTable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th ><i class="ti-tag"></i>&nbsp;ID</th>
+                                        <th ><i class="ti-user"></i>&nbsp;A&ntilde;o</th>
+                                        <th ><i class="ti-panel"></i>&nbsp;Acciones</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="canvas-holder">
+                                    <canvas id="chart-expmonthly"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,5 +61,6 @@
 </section>
 <footer th:replace="layout :: frgFooter"></footer>
 <script th:src="@{/js/tables/annualCountsDatatable.js}"></script>
+<script th:src="@{/js/Reports/RepTypeOfExpensesMonthly.js}"></script>
 </body>
 </html>

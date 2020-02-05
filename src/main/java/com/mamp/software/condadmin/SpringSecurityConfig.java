@@ -25,7 +25,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UserService srvUser;
 
-
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -44,7 +43,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/expenses/**").hasAnyRole( "USER-ADMIN")
 			.antMatchers("/incomes/**").hasAnyRole( "USER-ADMIN")
 			.antMatchers("/annualcounts/**").hasAnyRole( "USER-ADMIN")
-			.antMatchers("/owners/**","/ownerRest/**").hasAnyRole("USER-ADMIN","USER")
+			.antMatchers("/owners/**","/ownerRest/**").hasAnyRole("USER-ADMIN")
 			.antMatchers("/condominium/**").hasAnyRole("USER-ADMIN","USER")
 			.anyRequest().authenticated()
 			.and()
@@ -58,8 +57,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 				.csrf().ignoringAntMatchers("/h2-console/**")
 			.and()
 				.headers().frameOptions().sameOrigin();
-
-			
 	}
 	
 }

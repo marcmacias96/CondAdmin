@@ -7,9 +7,9 @@ public class RepTypeOfIncomes implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int house;
-    private BigInteger value;
+    private Double value;
 
-    public RepTypeOfIncomes(int house, BigInteger value) {
+    public RepTypeOfIncomes(int house, Double value) {
         this.house = house;
         this.value = value;
     }
@@ -22,11 +22,11 @@ public class RepTypeOfIncomes implements Serializable {
         this.house = house;
     }
 
-    public BigInteger getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(BigInteger value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 }

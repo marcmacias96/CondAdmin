@@ -38,9 +38,9 @@ public class MonthlyAccountsService implements IMonthlyAccountsService {
     }
 
 	@Override
-	public MonthlyAccounts findByMonth(Integer month, Integer id) {
+	public MonthlyAccounts findByMonth(Integer month, Integer IdAnual, Integer IdCondom) {
 
-        return dao.findByMonth(month,id);
+        return dao.findByMonth(month,IdAnual,IdCondom);
 	}
 
     @Override

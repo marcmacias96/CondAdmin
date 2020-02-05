@@ -1,5 +1,6 @@
 $(document).ready( function () {
-    var id = $("#idUser").val();
+    var id = $("#idcondominium").val();
+    console.log(id);
     var table = $('#ownersTable').DataTable({
         "sAjaxSource": "/ownersRest/listByCondom/" + id,
         "sAjaxDataProp": "",

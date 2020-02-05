@@ -13,7 +13,6 @@ $(document).ready( function () {
         "aoColumns": [
             { "mData": "idincome"},
             { "mData": "value" },
-            { "mData": "date" },
             { "mData": "state" },
             { "mData": "acctions" }
         ],

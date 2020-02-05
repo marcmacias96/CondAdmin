@@ -12,7 +12,6 @@ $(document).ready( function () {
         "aoColumns": [
             { "mData": "idexpenses" },
             { "mData": "value" },
-            { "mData": "date" },
             { "mData": "acctions" }
         ],
         "language": {

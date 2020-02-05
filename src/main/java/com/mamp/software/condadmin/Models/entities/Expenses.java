@@ -50,6 +50,9 @@ public class Expenses implements Serializable {
     @JoinColumn(name= "IDEXPENSES")
     private List<ExpenseDetail> expenseDetailList;
 
+    @Transient
+    private int idMonth;
+
     /**/
     public Expenses(){
         super();
@@ -112,6 +115,12 @@ public class Expenses implements Serializable {
         this.monthlyAccounts = monthlyAccounts;
     }
 
+    public int getIdMonth() {
+        return idMonth;
+    }
 
+    public void setIdMonth(int idMonth) {
+        this.idMonth = idMonth;
+    }
 }
 

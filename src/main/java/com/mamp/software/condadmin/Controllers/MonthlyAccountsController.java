@@ -39,14 +39,17 @@ public class MonthlyAccountsController {
     private IUser srvUser;
 
 
-
+    @Autowired
+    private ICondominiumService service;
 
 	@GetMapping(value = "/retrive")
-    public String retriveByDate(Model model){
+    public String retriveByDate(Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = service.findByUser(user.getIdUser());
         Calendar fecha = Calendar.getInstance();
-        AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR));
+        AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR),condominium.getIdcondominium());
 
-        MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts());
+        MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts(), condominium.getIdcondominium());
         //Aqui voy a buscar por fecha, entonces busco un mounthly Account por el mes y por el año.
         //Para obtener el monthly account debo tener el anual account
 
@@ -57,14 +60,13 @@ public class MonthlyAccountsController {
             } else {
                 mes = fecha.get(Calendar.MONTH) -1;
             }
-            monthlyAccounts = srvMonthAcount.findByMonth(mes,annualCounts.getIdannualcounts());
+            monthlyAccounts = srvMonthAcount.findByMonth(mes,annualCounts.getIdannualcounts(),condominium.getIdcondominium());
         }
 
         monthlyAccounts.setIncome(monthlyAccounts.getIncome());
         monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
         srvMonthAcount.save(monthlyAccounts);
         model.addAttribute("monthlyAccounts", monthlyAccounts);
-
         model.addAttribute("title", "Ingresos");
         model.addAttribute("title1", "Gastos");
         model.addAttribute("title2", "Balances Mensuales");
@@ -72,15 +74,15 @@ public class MonthlyAccountsController {
         return "monthlyAccounts/card";
     }
 
-    @GetMapping(value = "/repTypeOfIncome/{type}", produces = "application/json")
-    public @ResponseBody List<RepTypeOfIncomes> repTypeOfIncome (@PathVariable(value = "type") String type){
-        List<RepTypeOfIncomes> repTypeOfIncomesList = srvIncome.repTypeOfIncome(type);
+    @GetMapping(value = "/repTypeOfIncome/{ID}", produces = "application/json")
+    public @ResponseBody List<RepTypeOfIncomes> repTypeOfIncome (@PathVariable(value = "ID") Integer ID){
+        List<RepTypeOfIncomes> repTypeOfIncomesList = srvIncome.repTypeOfIncome(ID);
         return  repTypeOfIncomesList;
     }
 
-    @GetMapping(value = "/repTypeOfExpense/{Id}", produces = "application/json")
-    public @ResponseBody List<RepTypeOfExpenses> repTypeOfExpense (@PathVariable(value = "Id") Integer Id){
-        List<RepTypeOfExpenses> repTypeOfExpensesList = srvExpense.repTypeOfExpenses(Id);
+    @GetMapping(value = "/repTypeOfExpense/{Id}/{month}", produces = "application/json")
+    public @ResponseBody List<RepTypeOfExpenses> repTypeOfExpense (@PathVariable(value = "Id") Integer Id,@PathVariable(value = "month") Integer month){
+        List<RepTypeOfExpenses> repTypeOfExpensesList = srvExpense.repTypeOfExpenses(Id,month);
         return  repTypeOfExpensesList;
     }
 
@@ -180,7 +182,7 @@ public class MonthlyAccountsController {
                 newAnnualCounts.setExpenses(0.0f);
                 newAnnualCounts.setYear(anualCounts.getYear()+1);
                 srvAnualAccount.save(newAnnualCounts);
-                newAnnualCounts = srvAnualAccount.findByYear(newAnnualCounts.getYear());
+                newAnnualCounts = srvAnualAccount.findByYear(newAnnualCounts.getYear(), anualCounts.getCondominium().getIdcondominium());
                 monthlyAccountsNext.setAnnualCounts(newAnnualCounts);
                 monthlyAccountsNext.setMonth(1);
             } else {

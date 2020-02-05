@@ -1,7 +1,6 @@
 function load(){
-    console.log("Hola");
     $.ajax({
-        url: "/monthlyAccounts/repTypeOfIncome/Alicuota",
+        url: "/monthlyAccounts/repTypeOfIncome/"+ $("#idcondominium").val(),
         method : 'GET',
         dataType : 'json',
         contentType : 'application/json',

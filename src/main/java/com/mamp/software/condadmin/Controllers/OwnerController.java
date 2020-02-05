@@ -35,6 +35,9 @@ public class OwnerController {
     private IOwnerService srvOwner;
 
     @Autowired
+    private ICondominiumService srvCond;
+
+    @Autowired
     private ICondominiumService srvCondom;
 
     @Autowired
@@ -99,7 +102,8 @@ public class OwnerController {
     @GetMapping(value = "/listByCondom")
     public String listByCondom( Model model, Authentication authentication){
         USer user = srvUser.findByName(authentication.getName());
-        model.addAttribute("user", user);
+        Condominium condominium = srvCond.findByUser(user.getIdUser());
+        model.addAttribute("condominium", condominium);
         model.addAttribute("title", "Listado de Propietarios");
         return "owners/list";
     }

@@ -1,6 +1,7 @@
 function load(){
+    console.log("/monthlyAccounts/repTypeOfExpense/" + $("#idcondominium").val() + "/" +  $("#month").val())
     $.ajax({
-        url: "/monthlyAccounts/repTypeOfExpense/"+1,
+        url: "/monthlyAccounts/repTypeOfExpense/" + $("#idcondominium").val() + "/" +  $("#month").val(),
         method : 'GET',
         dataType : 'json',
         contentType : 'application/json',

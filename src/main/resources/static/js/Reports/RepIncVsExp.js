@@ -1,11 +1,15 @@
 function load(){
+
     $.ajax({
-        url: "/annualCounts/repIncVsExp/"+2020,
+        url: "/annualCounts/repIncVsExp/"+$("#idcondominium").val(),
         method : 'GET',
         dataType : 'json',
         contentType : 'application/json',
         success : function (response) {
             console.log(response);
+
+            var MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+                'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
             var toData1 = [];
             var toData2 = [];
@@ -17,7 +21,7 @@ function load(){
                 console.log(item);
                 toData1.push(item.incomes);
                 toData2.push(item.expenses);
-                toLabels.push(item.month);
+                toLabels.push(MONTHS[item.month]);
                 var color1 = getRandomColor();
                 var color2 = getRandomColor();
                 toColors1.push(color1);

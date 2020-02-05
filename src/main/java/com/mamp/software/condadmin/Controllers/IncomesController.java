@@ -122,7 +122,7 @@ public class IncomesController {
         srvMonthly.save(income.getMonthlyAccounts());
         model.addAttribute("income",income);
         redirectAttributes.addFlashAttribute("message","No se pudo guardar");
-        return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getAnnualCounts().getIdannualcounts();
+        return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getIdmonthlyaccounts();
     }
 
     @GetMapping(value = "/delete/{id}")
@@ -175,7 +175,7 @@ public class IncomesController {
     	int year = income.getDate().get(Calendar.YEAR);
     	int month = income.getDate().get(Calendar.MONTH);
     	try {
-    		AnnualCounts annualCount = srvAnual.findByYear(year);
+    		AnnualCounts annualCount = srvAnual.findByYear(year,condominium.getIdcondominium());
     		if(annualCount == null) {
         	    annualCount = new AnnualCounts();
         	    annualCount.setYear(year);
@@ -184,7 +184,7 @@ public class IncomesController {
         	    annualCount.setCondominium(condominium);
         	    srvAnual.save(annualCount);
             }
-        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts());
+        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts(), condominium.getIdcondominium());
         	if(monthlyAccount == null ) {
         	    monthlyAccount= new MonthlyAccounts();
         	    monthlyAccount.setExpenses(0.0f);

@@ -64,14 +64,14 @@ public class IncomeService implements IIncomeService {
     }
 
     @Override
-    public List<RepTypeOfIncomes> repTypeOfIncome(String type) {
+    public List<RepTypeOfIncomes> repTypeOfIncome(Integer ID) {
         StoredProcedureQuery consulta = em.createStoredProcedureQuery("incomesByType");
-        consulta.registerStoredProcedureParameter("type", String.class, ParameterMode.IN);
-        consulta.setParameter("type", type);
+        consulta.registerStoredProcedureParameter("ID", Integer.class, ParameterMode.IN);
+        consulta.setParameter("ID", ID);
         consulta.execute();
         List<Object[]> datos = consulta.getResultList();
         return datos.stream()
-                .map(r -> new RepTypeOfIncomes((Integer)r[1], (BigInteger) r[0]))
+                .map(r -> new RepTypeOfIncomes((Integer)r[0], (Double) r[1]))
                 .collect(Collectors.toList());
     }
 

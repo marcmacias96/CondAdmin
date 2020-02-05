@@ -23,6 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/annualCounts")
 public class AnnualCountsController {
+
 	@Autowired
     public IAnnualCountsService srvAnualAccount;
 
@@ -39,9 +40,11 @@ public class AnnualCountsController {
     private IAnnualCountsService srvAnual;
 
     @GetMapping(value = "/retrieve")
-    public String retriveByDate(Model model){
+    public String retriveByDate(Model model, Authentication authentication){
+        USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = srvCond.findByUser(user.getIdUser());
         Calendar fecha = Calendar.getInstance();
-        AnnualCounts annualCounts = srvAnualAccount.findByYear((fecha.get(Calendar.YEAR)));
+        AnnualCounts annualCounts = srvAnualAccount.findByYear((fecha.get(Calendar.YEAR)),condominium.getIdcondominium());
 
         annualCounts.setIncome(annualCounts.getIncome());
         annualCounts.setExpenses(annualCounts.getExpenses());
@@ -86,7 +89,7 @@ public class AnnualCountsController {
 
         model.addAttribute("title","eliminacion de registro de nuevo ingreso");
         try {
-            AnnualCounts annualCountsYearNext = srvAnualAccount.findByYear(anualCounts.getYear()+1);
+            AnnualCounts annualCountsYearNext = srvAnualAccount.findByYear(anualCounts.getYear()+1,anualCounts.getCondominium().getIdcondominium());
             return "redirect:/annualAcounts/retrive/"+annualCountsYearNext.getIdannualcounts();
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se ha hecho el corte mensual de Diciembre, no existe un año posterior");

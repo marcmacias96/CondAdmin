@@ -22,5 +22,5 @@ public interface IIncomeService {
 
     public List<Income> findByState (Integer id);
 
-    public List<RepTypeOfIncomes> repTypeOfIncome (String type);
+    public List<RepTypeOfIncomes> repTypeOfIncome (Integer ID);
 }

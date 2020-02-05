@@ -53,10 +53,12 @@ public class ExpensesService implements IExpensesService {
     }
 
     @Override
-    public List<RepTypeOfExpenses> repTypeOfExpenses(Integer Id) {
-        StoredProcedureQuery consulta = em.createStoredProcedureQuery("typeOfExpensesByCondom");
+    public List<RepTypeOfExpenses> repTypeOfExpenses(Integer Id,Integer month) {
+        StoredProcedureQuery consulta = em.createStoredProcedureQuery("repTypeOfExpensesOnMonthByCondom");
         consulta.registerStoredProcedureParameter("Id", Integer.class, ParameterMode.IN);
+        consulta.registerStoredProcedureParameter("month", Integer.class, ParameterMode.IN);
         consulta.setParameter("Id", Id);
+        consulta.setParameter("month", month);
         consulta.execute();
         List<Object[]> datos = consulta.getResultList();
         return datos.stream()
