@@ -50,18 +50,29 @@ public class ExpensesController {
     }
 
     @GetMapping(value = "/retrieve/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Expenses expenses = service.findById(id);
-        model.addAttribute("expenses", expenses);
-        model.addAttribute("title","Expenses");
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Expenses expenses = service.findById(id);
+            model.addAttribute("expenses", expenses);
+            model.addAttribute("title","Expenses");
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/condominium/myCondo";
+        }
+
         return "cuentas/expenses/card";
     }
 
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        Expenses expenses = service.findById(id);
-        model.addAttribute("title","Actualizacion de registro de nuevo gasto");
-        model.addAttribute("expenses",expenses);
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Expenses expenses = service.findById(id);
+            model.addAttribute("title","Actualizacion de registro de nuevo gasto");
+            model.addAttribute("expenses",expenses);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/condominium/myCondo";
+        }
         return "cuentas/expenses/form";
     }
 
@@ -73,22 +84,10 @@ public class ExpensesController {
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el registro");
-
         }
-        return "redirect:/expenses/myExpenses";
+        return "redirect:/";
     }
 
-    @GetMapping(value = "/myExpenses")
-    public String list(Model model, Authentication authentication){
-        //Aqui tomamos el usuario loggeado y obtenemos el condominio al que pertenece
-        USer user = srvUser.findByName(authentication.getName());
-        //Cree una busqueda especifica en el dao para obtener los gastos de solo el condominio deseado (findbyCondom)
-        Condominium condominium = srvCond.findByUser(user.getIdUser());
-        List<Expenses> expensesList = service.findByCondom(condominium.getIdcondominium());
-        model.addAttribute("title","Listado de Gastos");
-        model.addAttribute("expensesList", expensesList);
-        return "cuentas/expenses/list";
-    }
 
     @PostMapping(value = "/save")
     public String save(@Valid Expenses expenses, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<ExpenseDetail> detalles

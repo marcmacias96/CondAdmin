@@ -58,25 +58,40 @@ public class OwnerController {
     }
 
     @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Owner owner = srvOwner.findById(id);
-        model.addAttribute("owner", owner);
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Owner owner = srvOwner.findById(id);
+            model.addAttribute("owner", owner);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/";
+        }
         return "owners/card";
     }
 
     @GetMapping(value = "/myHouse")
-    public String myHouse(Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
-        Owner owner = srvOwner.findByUser(user.getIdUser());
-        model.addAttribute("owner", owner);
+    public String myHouse(Model model, Authentication authentication,RedirectAttributes flash){
+        try{
+            USer user = srvUser.findByName(authentication.getName());
+            Owner owner = srvOwner.findByUser(user.getIdUser());
+            model.addAttribute("owner", owner);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/";
+        }
         return "owners/card";
     }
 
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        Owner owner = srvOwner.findById(id);
-        model.addAttribute("title","Actualizacion de registro de nuevo propietario");
-        model.addAttribute("owner",owner);
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Owner owner = srvOwner.findById(id);
+            model.addAttribute("title","Actualizacion de registro de nuevo propietario");
+            model.addAttribute("owner",owner);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error iniesperado");
+            return "redirect:/retrive/"+id;
+        }
         return "owners/form";
     }
 
@@ -100,11 +115,16 @@ public class OwnerController {
     }
 
     @GetMapping(value = "/listByCondom")
-    public String listByCondom( Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
-        Condominium condominium = srvCond.findByUser(user.getIdUser());
-        model.addAttribute("condominium", condominium);
-        model.addAttribute("title", "Listado de Propietarios");
+    public String listByCondom( Model model, Authentication authentication, RedirectAttributes flash){
+        try {
+            USer user = srvUser.findByName(authentication.getName());
+            Condominium condominium = srvCond.findByUser(user.getIdUser());
+            model.addAttribute("condominium", condominium);
+            model.addAttribute("title", "Listado de Propietarios");
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/";
+        }
         return "owners/list";
     }
 

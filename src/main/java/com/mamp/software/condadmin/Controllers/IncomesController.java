@@ -78,50 +78,66 @@ public class IncomesController {
     }
 
     @GetMapping(value = "/retrieve/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Calendar c = Calendar.getInstance();
-        Calendar fecha = Calendar.getInstance();
-        Income income = srvIncome.findById(id);
-        for (IncomeDetail det:
-             income.getIncomeDetailList()) {
-            if(det.getType() == "Multa"){
-                c.setTimeInMillis(fecha.getTime().getTime() - income.getDate().getTime().getTime() );
-                det.setValue(c.get(Calendar.DAY_OF_YEAR)*1f);
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Calendar c = Calendar.getInstance();
+            Calendar fecha = Calendar.getInstance();
+            Income income = srvIncome.findById(id);
+            for (IncomeDetail det:
+                    income.getIncomeDetailList()) {
+                if(det.getType() == "Multa"){
+                    c.setTimeInMillis(fecha.getTime().getTime() - income.getDate().getTime().getTime() );
+                    det.setValue(c.get(Calendar.DAY_OF_YEAR)*1f);
 
+                }
             }
+            srvIncome.save(income);
+            model.addAttribute("income", income);
+            model.addAttribute("title","Ingreso");
+        }catch (Exception e) {
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/condominium/myCondo";
         }
-        srvIncome.save(income);
-        model.addAttribute("income", income);
-        model.addAttribute("title","Ingreso");
         return "cuentas/incomes/card";
     }
 
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        Income income = srvIncome.findById(id);
-        model.addAttribute("title","Actualizacion de Ingreso");
-        model.addAttribute("details", new ArrayList<IncomeDetail>());
-        model.addAttribute("income",income);
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Income income = srvIncome.findById(id);
+            model.addAttribute("title","Actualizacion de Ingreso");
+            model.addAttribute("details", new ArrayList<IncomeDetail>());
+            model.addAttribute("income",income);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/incomes/retrieve/" + id;
+        }
         return "cuentas/incomes/form";
     }
 
     @GetMapping(value = "paid/{id}")
     public String paid(@PathVariable(value = "id") Integer id, Model model,  RedirectAttributes redirectAttributes){
-        Income income = srvIncome.findById(id);
-        for (IncomeDetail det:
-             income.getIncomeDetailList()) {
-            if(det.getType() == "Multa"){
-                redirectAttributes.addFlashAttribute("message","Tiene una multa por pagar");
-                return "cuentas/incomes/retrive/" + income.getIdincome();
+        Income income = null;
+        try{
+            income = srvIncome.findById(id);
+            for (IncomeDetail det:
+                    income.getIncomeDetailList()) {
+                if(det.getType() == "Multa"){
+                    redirectAttributes.addFlashAttribute("message","Tiene una multa por pagar");
+                    return "cuentas/incomes/retrive/" + income.getIdincome();
+                }
             }
+            income.setState(true);
+            srvIncome.save(income);
+            income.getMonthlyAccounts().setIncome(income.getMonthlyAccounts().getIncome());
+            income.getMonthlyAccounts().setExpenses(income.getMonthlyAccounts().getExpenses());
+            srvMonthly.save(income.getMonthlyAccounts());
+            model.addAttribute("income",income);
+
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("message","No se pudo realizar el pago");
         }
-        income.setState(true);
-        srvIncome.save(income);
-        income.getMonthlyAccounts().setIncome(income.getMonthlyAccounts().getIncome());
-        income.getMonthlyAccounts().setExpenses(income.getMonthlyAccounts().getExpenses());
-        srvMonthly.save(income.getMonthlyAccounts());
-        model.addAttribute("income",income);
-        redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+        redirectAttributes.addFlashAttribute("success","Pago realizado con exito");
         return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getIdmonthlyaccounts();
     }
 
@@ -137,17 +153,6 @@ public class IncomesController {
         }
         return "redirect:/incomes/list";
     }
-    /*/myIncomes*/
-    @GetMapping(value = "/list")
-    public String list(Model model, Authentication authentication){
-    	USer user = srvUser.findByName(authentication.getName());
-    	Condominium condominium = srvCond.findByUser(user.getIdUser());
-        List<Income> incomeList = srvIncome.findByCondom(condominium.getIdcondominium());
-        model.addAttribute("title","Listado de Ingresos");
-        model.addAttribute("incomeList", incomeList);
-        return "cuentas/incomes/list";
-    }
-
 
     @PostMapping(value = "/saveByUpdate")
     public String saveByUpdate(@Valid Income income, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
@@ -168,31 +173,13 @@ public class IncomesController {
     }
 
     @PostMapping(value = "/save")
-    public String save(@Valid Income income, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
+    public String save(@Valid Income income, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
             , SessionStatus session){
     	USer user = srvUser.findByName(authentication.getName());
         Condominium condominium = srvCond.findByUser(user.getIdUser());
     	int year = income.getDate().get(Calendar.YEAR);
     	int month = income.getDate().get(Calendar.MONTH);
     	try {
-    		AnnualCounts annualCount = srvAnual.findByYear(year,condominium.getIdcondominium());
-    		if(annualCount == null) {
-        	    annualCount = new AnnualCounts();
-        	    annualCount.setYear(year);
-        	    annualCount.setExpenses(0.0f);
-        	    annualCount.setIncome(0.0f);
-        	    annualCount.setCondominium(condominium);
-        	    srvAnual.save(annualCount);
-            }
-        	MonthlyAccounts monthlyAccount = srvMonthly.findByMonth(month, annualCount.getIdannualcounts(), condominium.getIdcondominium());
-        	if(monthlyAccount == null ) {
-        	    monthlyAccount= new MonthlyAccounts();
-        	    monthlyAccount.setExpenses(0.0f);
-        	    monthlyAccount.setIncome(0.0f);
-        	    monthlyAccount.setMonth(month);
-        	    monthlyAccount.setAnnualCounts(annualCount);
-        	    srvMonthly.save(monthlyAccount);
-            }
         	income.setCondominium(condominium);
         	income.setIncomeDetailList(detalles);
             srvIncome.save(income);

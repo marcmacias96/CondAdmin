@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.model.IModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,26 +44,33 @@ public class MonthlyAccountsController {
     private ICondominiumService service;
 
 	@GetMapping(value = "/retrive")
-    public String retriveByDate(Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
-        Condominium condominium = service.findByUser(user.getIdUser());
-        Calendar fecha = Calendar.getInstance();
-        AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR),condominium.getIdcondominium());
-
-        MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts(), condominium.getIdcondominium());
-        //Aqui voy a buscar por fecha, entonces busco un mounthly Account por el mes y por el año.
-        //Para obtener el monthly account debo tener el anual account
-
-        if(monthlyAccounts == null) {
-            Integer mes = 0;
-            if(fecha.get(Calendar.MONTH) == 1) {
-                mes = 12;
-            } else {
-                mes = fecha.get(Calendar.MONTH) -1;
+    public String retriveByDate(Model model, Authentication authentication, RedirectAttributes flash){
+	    try{
+            USer user = srvUser.findByName(authentication.getName());
+            Condominium condominium = service.findByUser(user.getIdUser());
+            Calendar fecha = Calendar.getInstance();
+            AnnualCounts annualCounts = srvAnualAccount.findByYear(fecha.get(Calendar.YEAR),condominium.getIdcondominium());
+            MonthlyAccounts monthlyAccounts = srvMonthAcount.findByMonth(fecha.get(Calendar.MONTH),annualCounts.getIdannualcounts(), condominium.getIdcondominium());
+            //Aqui voy a buscar por fecha, entonces busco un mounthly Account por el mes y por el año.
+            //Para obtener el monthly account debo tener el anual account
+            if(monthlyAccounts == null) {
+                Integer mes = 0;
+                if(fecha.get(Calendar.MONTH) == 1) {
+                    mes = 12;
+                } else {
+                    mes = fecha.get(Calendar.MONTH) -1;
+                }
+                monthlyAccounts = srvMonthAcount.findByMonth(mes,annualCounts.getIdannualcounts(),condominium.getIdcondominium());
             }
-            monthlyAccounts = srvMonthAcount.findByMonth(mes,annualCounts.getIdannualcounts(),condominium.getIdcondominium());
+            model = saveBalance(model, monthlyAccounts);
+        }catch (Exception e){
+	        flash.addAttribute("error","Ocurrio un error inesperado");
+	        return "redirect:/";
         }
+        return "monthlyAccounts/card";
+    }
 
+    private Model saveBalance(Model model, MonthlyAccounts monthlyAccounts) {
         monthlyAccounts.setIncome(monthlyAccounts.getIncome());
         monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
         srvMonthAcount.save(monthlyAccounts);
@@ -70,8 +78,7 @@ public class MonthlyAccountsController {
         model.addAttribute("title", "Ingresos");
         model.addAttribute("title1", "Gastos");
         model.addAttribute("title2", "Balances Mensuales");
-
-        return "monthlyAccounts/card";
+        return model;
     }
 
     @GetMapping(value = "/repTypeOfIncome/{ID}", produces = "application/json")
@@ -105,51 +112,61 @@ public class MonthlyAccountsController {
     }
 
     @GetMapping(value = "/list/{id}")
-    public String list (Model model, Authentication authentication, @PathVariable(value = "id") Integer id){
-        AnnualCounts annualCounts = srvAnualAccount.findById(id);
-        model.addAttribute("title","Balances Anuales");
-        model.addAttribute("annualCounts", annualCounts);
+    public String list (Model model, @PathVariable(value = "id") Integer id, RedirectAttributes flash){
+	    try{
+            AnnualCounts annualCounts = srvAnualAccount.findById(id);
+            model.addAttribute("title","Balances Anuales");
+            model.addAttribute("annualCounts", annualCounts);
+        }catch (Exception e){
+	        flash.addAttribute("error","Ocurrio un error iniesperado");
+	        return "redirect:/";
+        }
         return "monthlyAccounts/list";
     }
 
 
     @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
         //Esto calcula el balance de los ingresos y egresos y  suma solo las alicuotas pagadas
-        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
-
-        monthlyAccounts.setIncome(monthlyAccounts.getIncome());
-        monthlyAccounts.setExpenses(monthlyAccounts.getExpenses());
-        srvMonthAcount.save(monthlyAccounts);
-        model.addAttribute("monthlyAccounts", monthlyAccounts);
-        model.addAttribute("title", "Ingresos");
-        model.addAttribute("title1", "Gastos");
-        model.addAttribute("title2", "Balances Mensuales");
-
+        try{
+            MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
+            model = saveBalance(model, monthlyAccounts);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error iniesperado");
+            return "redirect:/";
+        }
         return "monthlyAccounts/card";
     }
 
 
 
     @GetMapping(value = "/closeBox/{id}")
-    public String closeBox(@PathVariable(value = "id") Integer id){
-        //buscamos las cuentas mensuales acutales
+    public String closeBox(@PathVariable(value = "id") Integer id, RedirectAttributes flash){
+        MonthlyAccounts monthlyAccounts= null;
+        AnnualCounts anualCounts = null;
         Calendar calendar = Calendar.getInstance();
-        //aqui se debe agregar la multa por inpago
+	    try{
+            //buscamos las cuentas mensuales acutales
 
-        List<Income> inpaymentList = srvIncome.findByState(id);
-        for (Income inc : inpaymentList) {
-            IncomeDetail multa = new IncomeDetail();
-            multa.setType("Multa");
-            multa.setDetail("Multa por inpago");
-            multa.setValue(0.0f);
-            inc.getIncomeDetailList().add(multa);
-            srvIncome.save(inc);
+            //aqui se debe agregar la multa por inpago
+
+            List<Income> inpaymentList = srvIncome.findByState(id);
+            for (Income inc : inpaymentList) {
+                IncomeDetail multa = new IncomeDetail();
+                multa.setType("Multa");
+                multa.setDetail("Multa por inpago");
+                multa.setValue(0.0f);
+                inc.getIncomeDetailList().add(multa);
+                srvIncome.save(inc);
+            }
+
+           monthlyAccounts = srvMonthAcount.findById(id);
+            //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecen las cuentas
+             anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error iniesperado");
+            return "redirect:/";
         }
-
-        MonthlyAccounts monthlyAccounts = srvMonthAcount.findById(id);
-        //obtenemos el corte anual al que pertenece el corte mensual para poder obtener el condominio al que pertenecen las cuentas
-        AnnualCounts anualCounts = srvAnualAccount.findById(monthlyAccounts.getAnnualCounts().getIdannualcounts());
         ArrayList<Income> incomeList= new ArrayList<>();
         for (House house: anualCounts.getCondominium().getHouseList()){
             ArrayList<IncomeDetail> incomeDetails = new ArrayList<>();

@@ -51,20 +51,31 @@ public class HouseController {
     }
 
     @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        House house = srvHouse.findById(id);
-        List<Income> incomeList = srvIncome.findByHouse(house.getIdhouse());
-        model.addAttribute("house", house);
-        model.addAttribute("incomeList", incomeList);
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            House house = srvHouse.findById(id);
+            List<Income> incomeList = srvIncome.findByHouse(house.getIdhouse());
+            model.addAttribute("house", house);
+            model.addAttribute("incomeList", incomeList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
         return "house/card";
     }
 
 
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        House house = srvHouse.findById(id);
-        house.setOwnerId(house.getOwner().getIdowner());
-        model.addAttribute("house",house);
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            House house = srvHouse.findById(id);
+            house.setOwnerId(house.getOwner().getIdowner());
+            model.addAttribute("house",house);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
+
         return "house/form";
     }
 
@@ -75,24 +86,33 @@ public class HouseController {
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
-
         }
         return "redirect:/house/list";
     }
 
     @GetMapping(value = "/listByOwner/{id}")
-    public String listByOwner(@PathVariable(value = "id") Integer id, Model model){
-        List<House> houseList = srvHouse.findByOwner(id);
-        model.addAttribute("title","Listado de Casas");
-        model.addAttribute("houseList", houseList);
+    public String listByOwner(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            List<House> houseList = srvHouse.findByOwner(id);
+            model.addAttribute("title","Listado de Casas");
+            model.addAttribute("houseList", houseList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
         return "house/list";
     }
 
     @GetMapping(value = "/listByCondom/{id}")
-    public String lisByCondom(@PathVariable(value = "id") Integer id, Model model){
-        List<House> houseList = srvHouse.findByCondom(id);
-        model.addAttribute("title","Listado de Casas");
-        model.addAttribute("houseList", houseList);
+    public String lisByCondom(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            List<House> houseList = srvHouse.findByCondom(id);
+            model.addAttribute("title","Listado de Casas");
+            model.addAttribute("houseList", houseList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
         return "house/listByCondom";
     }
     

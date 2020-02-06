@@ -37,61 +37,73 @@ public class CondominiumController {
         Condominium condominium = new Condominium();
         model.addAttribute("condominium", condominium);
         model.addAttribute("title","Registro de nuevo Condominio");
-
         return "condominium/form";
     }
 
-    @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Condominium condominium = service.findById(id);
-        model.addAttribute("condominium", condominium);
-        return "condominium/card";
-    }
-
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        Condominium condominium = service.findById(id);
-        model.addAttribute("condominium",condominium);
+    public String update(@PathVariable(value = "id") Integer id, Model model,  RedirectAttributes flash){
+        try{
+            Condominium condominium = service.findById(id);
+            model.addAttribute("condominium",condominium);
+        }catch (Exception e){
+            flash.addFlashAttribute("error","Error al actualizar el resgistro");
+            return "redirect:/myCondo";
+        }
         return "condominium/form";
     }
 
     @GetMapping(value = "/delete/{id}")
-    public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable(value = "id") Integer id, RedirectAttributes redirectAttributes){
         try {
             service.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
-
+            redirectAttributes.addFlashAttribute("error","Error al eliminar el resgistro");
         }
         return "redirect:/condominium/list";
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model){
-        List<Condominium> condominiumList = service.findAll();
-        model.addAttribute("title","Codominios");
-        model.addAttribute("condominiumList", condominiumList);
+    public String list(Model model, RedirectAttributes flash){
+        try{
+            List<Condominium> condominiumList = service.findAll();
+            model.addAttribute("title","Codominios");
+            model.addAttribute("condominiumList", condominiumList);
+        }catch (Exception e){
+            flash.addFlashAttribute("error","Error al listar");
+            return "redirect:/";
+        }
         return "condominium/list";
     }
+
     @GetMapping(value = "/myCondo")
-    public String listByCondom(Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
-        Condominium condominium = service.findByUser(user.getIdUser());
-        if(condominium == null) {
-            Owner owner = srvOwner.findByUser(user.getIdUser());
-            condominium = service.findById(owner.getCondominium().getIdcondominium());
+    public String listByCondom(Model model, Authentication authentication, RedirectAttributes flash){
+        try{
+            USer user = srvUser.findByName(authentication.getName());
+            Condominium condominium = service.findByUser(user.getIdUser());
+            if(condominium == null) {
+                Owner owner = srvOwner.findByUser(user.getIdUser());
+                condominium = service.findById(owner.getCondominium().getIdcondominium());
+            }
+            model.addAttribute("title","Condominios");
+            model.addAttribute("condominium", condominium);
+        }catch (Exception e){
+            flash.addFlashAttribute("error","Ocurrio un error inesperado.");
+            return "redirect:/";
         }
-        model.addAttribute("title","Condominios");
-        model.addAttribute("condominium", condominium);
         return "condominium/card";
     }
     @GetMapping(value = "/cliMyCondo")
-    public String cliMycondo(Model model, Authentication authentication){
-        USer user = srvUser.findByName(authentication.getName());
-        Condominium condominium = service.findByUser(user.getIdUser());
-        model.addAttribute("title","Codominios");
-        model.addAttribute("condominium", condominium);
+    public String cliMycondo(Model model, Authentication authentication, RedirectAttributes flash){
+        try{
+            USer user = srvUser.findByName(authentication.getName());
+            Condominium condominium = service.findByUser(user.getIdUser());
+            model.addAttribute("title","Codominios");
+            model.addAttribute("condominium", condominium);
+        }catch (Exception e){
+            flash.addFlashAttribute("error","Ocurrio un error inesperado.");
+            return "redirect:/";
+        }
         return "condominium/card";
     }
 
@@ -101,8 +113,7 @@ public class CondominiumController {
             service.save(condominium);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
-            System.out.println(e);
-            redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+            redirectAttributes.addFlashAttribute("error","No se pudo guardar");
         }
         return "redirect:/condominium/retrive/" + condominium.getIdcondominium();
     }

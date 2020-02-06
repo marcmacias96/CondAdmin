@@ -38,10 +38,15 @@ public class UserController {
     public IMonthlyAccounts srvMonthly;
 
     @GetMapping(value="/create")
-    public String registro(Model model) {
-        USer user = new USer();
-        model.addAttribute("user", user);
-        model.addAttribute("title", "Nuevo registro");
+    public String registro(Model model,  RedirectAttributes flash) {
+        try{
+            USer user = new USer();
+            model.addAttribute("user", user);
+            model.addAttribute("title", "Nuevo registro");
+        }catch (Exception e){
+            flash.addFlashAttribute("error", "Ocurrio un error reintente");
+            return "user/form";
+        }
         return "user/form";
     }
 
