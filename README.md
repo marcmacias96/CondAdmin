@@ -1,4 +1,5 @@
 # CondAdmin - Gestione cómoda y adecuadamente su conjunto habitacional
+![spring](https://github.com/marcmacias96/CondAdmin/blob/master/spring-boot-logo.png)
 
 ## Visión
 Aplicativo Web para la gestión administrativa de un conjunto residencial
@@ -18,4 +19,4 @@ Aplicativo Web para la gestión administrativa de un conjunto residencial
 ## Diagrama de datos
 ![Diagrama datos](https://github.com/marcmacias96/CondAdmin/blob/master/Diagrama%20de%20datos.png)
 
-![spring](https://github.com/marcmacias96/CondAdmin/blob/master/spr.png)
+
