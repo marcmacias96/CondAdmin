@@ -2,6 +2,8 @@
 
 ## Visión
 Aplicativo Web para la gestión administrativa de un conjunto residencial
+
+## Funcionalidades
 - Gestión de directiva
 - Gestión de pagos
 - Gestión de propietarios
