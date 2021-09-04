@@ -19,4 +19,7 @@ Aplicativo Web para la gestión administrativa de un conjunto residencial
 ## Diagrama de datos
 ![Diagrama datos](https://github.com/marcmacias96/CondAdmin/blob/master/Diagrama%20de%20datos.png)
 
+## Run Proyect with Docker
+1. docker build -t condadmin-springboot .
+2. docker-compose up -d
 
