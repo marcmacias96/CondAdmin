@@ -1,7 +1,23 @@
 package com.mamp.software.condadmin.Models.dao;
 
+import com.mamp.software.condadmin.Models.entities.House;
 import com.mamp.software.condadmin.Models.entities.Income;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IIncome extends CrudRepository<Income, Integer> {
+	@Query("SELECT INC FROM Income INC WHERE INC.condominium.idcondominium = :id")
+    public List<Income> findByCondom(Integer id);
+
+    @Query("SELECT INC FROM Income INC WHERE INC.house.idhouse = :id AND INC.state=false")
+    public List<Income> findByHouse(Integer id);
+
+    @Query("SELECT INC fROM Income INC WHERE INC.monthlyAccounts.month = :month AND INC.monthlyAccounts.annualCounts.year = :year AND INC.state = false")
+    public List<Income> findByMonthAndYear (Integer month, Integer year);
+
+    @Query("SELECT INC fROM Income INC WHERE INC.monthlyAccounts.idmonthlyaccounts = :id AND INC.state = false")
+    public List<Income> findByState (Integer id);
 }

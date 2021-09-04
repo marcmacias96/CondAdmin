@@ -12,4 +12,9 @@ public interface IMonthlyAccountsService {
     public void delete(Integer id);
 
     public List<MonthlyAccounts> findAll();
+
+    public MonthlyAccounts findByMonth(Integer month, Integer IdAnual, Integer IdCondom);
+
+    public List<MonthlyAccounts> findByYear( Integer id);
+
 }

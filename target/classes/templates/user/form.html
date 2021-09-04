@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+
+<header th:replace="layout :: header"></header>
+
+
+<!-- banner part start-->
+<section class="banner_part">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 col-xl-4 ">
+                <div class="banner_text">
+                    <div class="banner_text_iner">
+                        <form th:action="@{/user/save}" method="post" th:object="${user}">
+                            <div class="form-group col-4 typography">
+                                <h2>Registro</h2>
+                            </div>
+                            <div class="form-group ">
+                                <input type="text" th:field="*{name}"
+                                       class="single-input" placeholder="Usuario" autofocus required
+                                       th:errorclass="'form-control is-invalid'"/> <small
+                                        class="invalid-feedback"
+                                        th:if="${#fields.hasErrors('name')}"
+                                        th:errors="*{name}"></small>
+                            </div>
+
+                            <div class="form-group ">
+                                <input type="password" th:field="*{password}"
+                                       class="single-input" placeholder="Contraseña" autofocus required
+                                       th:errorclass="'form-control is-invalid'"/> <small
+                                    class="invalid-feedback"
+                                    th:if="${#fields.hasErrors('password')}"
+                                    th:errors="*{password}"></small>
+                            </div>
+                            <div class="form-group ">
+                                <input type="text" th:field="*{condName}"
+                                       class="single-input" placeholder="Nombre de condominio" autofocus required
+                                       th:errorclass="'form-control is-invalid'"/> <small
+                                    class="invalid-feedback"
+                                    th:if="${#fields.hasErrors('condName')}"
+                                    th:errors="*{condName}"></small>
+                            </div>
+
+                            <div class="form-group ">
+                                <input type="submit" class="btn_2"
+                                       value="Registro" />
+                            </div>
+                            <input  type="hidden" th:field="*{idUser}"/>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="banner_img">
+                    <img th:src="@{img/banner_img.png}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- banner part start-->
+
+
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

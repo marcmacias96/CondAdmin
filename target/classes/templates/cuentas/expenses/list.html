@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: frgHead"></head>
+<body>
+<div id="wrapper">
+	<header th:replace="layout :: frgHeader"></header>
+	<!-- breadcrumb start -->
+	<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Gastos</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	</section>
+	<!-- breadcrumb end -->'
+	
+<section class="about_us padding_top pb-5">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-2 col-lg-4">
+                <div class="about_us_img">
+                    <img th:src="@{/img/GrupoCasa.png}" alt="">
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-8">
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="content col-sm-1">
+                                <i class="far fa-plus-square fa-2x"></i>
+                            </div>
+                            <h3 class="card-title col-sm-10" th:text="${title}"></h3>
+                        </div>
+                        <hr />
+                        <table class="table table-hover">
+					<thead>
+						<tr>
+							<th><i class="ti-money"></i>&nbsp;Valor</th>
+							<th><i class="ti-calendar"></i>&nbsp;Fecha</th>
+
+							<th><a class="genric-btn btn-sm info circle" th:href="@{/expenses/create}" >
+								<i class="ti-plus"></i>&nbsp; Nuevo</a>
+							</th>
+						</tr>
+					</thead>
+					<tbody>						
+						<tr th:each="expenses : ${expensesList}" >
+							<td th:text="${expenses.value}"></td>
+							<td th:text=${#dates.format(expenses.date,'dd-MM-yyyy')}></td>
+							
+							<td>
+								<div class="row">
+									<a class="genric-btn btn-sm primary circle" title="Ver"
+									   th:href="@{/expenses/retrieve/} + ${expenses.idexpenses}">
+										<i class="ti-eye"></i>
+									</a>									
+								</div>
+
+							</td>							
+						</tr>				
+					
+					</tbody>
+				</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</section>
+
+<footer th:replace="layout :: frgFooter"></footer>
+</body>
+</html>

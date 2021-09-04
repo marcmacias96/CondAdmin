@@ -1,9 +1,14 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -37,13 +42,55 @@ public class Owner implements Serializable {
     @NotEmpty
     private String email;
 
+    //BITACORA
+	@Column(name = "CREADOPOR")
+	@Size(max = 35)
+	private String creadoPor;
+
+	@Column(name = "CREADOEN")
+	private Calendar creadoEn;
+
+	public String getCreadoPor() {
+		return creadoPor;
+	}
+
+	public void setCreadoPor(String creadoPor) {
+		this.creadoPor = creadoPor;
+	}
+
+	public Calendar getCreadoEn() {
+		return creadoEn;
+	}
+
+	public void setCreadoEn(Calendar creadoEn) {
+		this.creadoEn = creadoEn;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		creadoEn = Calendar.getInstance();
+		SecurityContext context = SecurityContextHolder.getContext();
+		creadoPor = context.getAuthentication().getName();
+	}
+
+	@Transient
+	private Integer condmId;
+
+	@Transient
+	private USer Tuser;
+
     //Relations
+	@JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<House> houselist;
 
-    @JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
-    @ManyToOne
-    private Condominium condominium;
+	@JoinColumn(name = "IDCONDOM", referencedColumnName = "IDCONDOM")
+	@ManyToOne
+	private Condominium condominium;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "IDUSER")
+	private USer uSer;
 
     /**/
     public Owner() {
@@ -55,7 +102,22 @@ public class Owner implements Serializable {
 		this.idowner = idowner;
 	}
 
-	/**/
+	public Integer getCondmId() {
+		return condmId;
+	}
+
+	public void setCondmId(Integer condmId) {
+		this.condmId = condmId;
+	}
+
+	public Condominium getCondominium() {
+		return condominium;
+	}
+
+	public void setCondominium(Condominium condominium) {
+		this.condominium = condominium;
+	}
+
 	public Integer getIdowner() {
 		return idowner;
 	}
@@ -95,5 +157,28 @@ public class Owner implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
+
+	public List<House> getHouselist() {
+		return houselist;
+	}
+
+	public void setHouselist(List<House> houselist) {
+		this.houselist = houselist;
+	}
+
+	public USer getuSer() {
+		return uSer;
+	}
+
+	public void setuSer(USer uSer) {
+		this.uSer = uSer;
+	}
+
+	public USer getTuser() {
+		return Tuser;
+	}
+
+	public void setTuser(USer tuser) {
+		Tuser = tuser;
+	}
 }

@@ -1,80 +1,234 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="frgHead">
-<meta charset="UTF-8">
-<title>CondAdmin</title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-	crossorigin="anonymous">
-</head>
+	<meta charset="UTF-8">
+	<title>My Condo</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/animate.css}" />
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/themify-icons.css}" />
+	<link rel="stylesheet" th:href="@{/css/flaticon.css}" />
+	<link rel="stylesheet" th:href="@{/css/magnific-popup.css}" />
+	<link rel="stylesheet" th:href="@{/css/slick.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+
+	<!-- CDNS  -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css}">
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<head/>
+
 <body>
-	<header th:fragment="frgHeader" class="container">
-		<br />
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" th:href="@{/}">Inicio</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse">
-				<ul class="navbar-nav mr-auto"> 
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/owner/list}">Owner</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/incomes/list}">Incomes</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/house/list}">House</a></li>
-						
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/expenses/list}">Expenses</a></li>
 
-				</ul>
+	<header th:fragment="frgHeader" class="main_menu home_menu">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-12">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<a class="navbar-brand" th:href="@{/}"> <img th:src="@{/img/logo.png}" th:alt="logo"> </a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse main-menu-item justify-content-center"
+							 id="navbarSupportedContent">
+							<ul class="navbar-nav align-items-center">
+								<li class="nav-item">
+									<a class="nav-link"  th:href="@{/}">Inicio</a>
+								</li>
+								<li  class="nav-item dropdown">
+								</li>
+								<li sec:authorize="isAuthenticated()"  class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle"
+									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mi Condominio
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
+										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/condominium/myCondo}">Mi Condominio</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/owner/listByCondom}">Propietarios</a>
+										<a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" th:href="@{/owner/myHouse}">Mi Casa</a>
+									</div>
+								</li>
+								<li  class="nav-item dropdown"  sec:authorize="hasRole('ROLE_USER-ADMIN')" >
+									<a class="nav-link dropdown-toggle"
+									   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Cuentas
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<a  class="dropdown-item" th:href="@{/monthlyAccounts/retrive}">Balance Mensual</a>
+										<a sec:authorize="hasRole('ROLE_USER-ADMIN')" class="dropdown-item" th:href="@{/annualCounts/list}">Balance Anual</a>
+									</div>
+								</li>
+								
+								<li sec:authorize="isAuthenticated()">
+									<form id="frmLogout" th:action="@{/logout}" method="post">
+										<a href="#"
+										   onclick="document.getElementById('frmLogout').submit();"><i
+												class="fas fa-sign-out-alt"></i><span sec:authentication="name"></span> Salir</a> <input type="hidden"
+																								 th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+									</form>
+								</li>
+							</ul>
+						</div>
+						<a sec:authorize="!isAuthenticated()" class="btn_2 d-none d-lg-block" th:href="@{login.html}">Iniciar Sesión</a>
+					</nav>
+				</div>
 			</div>
-	</nav>
+		</div>
+	</header>
+<!-- Header part end-->
 
-			<div id="success-alert" class="alert alert-success" role="alert"
-                th:if="${success != null}">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <span th:text=${success}></span>
-            </div>
-            <div id="error-alert" class="alert alert-error" role="alert" th:if="${error != null}"
-                th:text=${error}></div>
-            <div id="warning-alert" class="alert alert-warning" role="alert"
-                th:if="${warning != null}" th:text=${warning}></div>
-            <div id="info-alert" class="alert alert-info" role="alert" th:if="${info != null}"
-                th:text=${info}></div>
- 
-        </header>
+<!-- footer part start-->
+	<footer  th:fragment="frgFooter" class="footer-area">
+		<div class="footer section_padding">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-xl-3 col-md-4 col-sm-6 single-footer-widget">
+						<!-- <a href="#" class="footer_logo"> <img th:src="@{/img/logo.png}" alt="#"> </a> -->
+						<h4>Contactos</h4>
+						<h5>Teléfonos:</h5>
+						<p>Marco Macías - 0998758287</p>
+						<p>Darex León - 0987638245</p>
+						<br/>
+						<h5>Dirección:</h5>
+						<p>EC - Latacunga</p>
+						<br/>
+						<h5>Correo:</h5>
+						<p>info@mycondo.com</p>
+						<!--<div class="social_logo">
+							<a href="#"><i class="ti-facebook"></i></a>
+							<a href="#"> <i class="ti-twitter"></i> </a>
+							<a href="#"><i class="ti-instagram"></i></a>
+							<a href="#"><i class="ti-skype"></i></a>
+						</div>-->
+					</div>
+	
+					<div class="col-xl-3 col-sm-6 col-md-6 single-footer-widget">
+						<h4>Noticia</h4>
+						<p>Quieres trabajar con nosotros? Ingrese su email!</p>
+						<div class="form-wrap" id="mc_embed_signup">
+							<form target="_blank"
+								  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+								  method="get" class="form-inline">
+								<input class="form-control" name="EMAIL" placeholder="Your Email Address"
+									   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
+									   required="" type="email">
+								<button class="click-btn btn btn-default text-uppercase"> <i class="ti-angle-right"></i>
+								</button>
+								<div style="position: absolute; left: -5000px;">
+									<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+										   type="text">
+								</div>
 
-        <div class="container"></div>
+								<div class="info"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <footer th:fragment="frgFooter" class="container">
-                <br />
-            <hr />
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fas fa-university fa-5x"></i>
-                </div>
-                <div class="col-md-9">
-                    <h5 class="card-title">Universidad de las Fuerzas Armadas</h5>
-                    <div class="card-text">
-                        <strong>Career: Software Engineering</strong><br /> <small>Belisario
-                            Quevedo - Latacunga</small>
-                    </div>
-                </div>
-                <div class="col-md-1 center-block">
-                    <p>ISOW&copy;2019</p>
-                </div>
-            </div>
-            <hr />
-            <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
-            <script th:src="@{/js/popper.js}"></script>
-            <script th:src="@{/js/bootstrap.min.js}"></script>
-        </footer>
+		<div class="copyright_part">
+			<div class="container">
+				<div class="row align-items-center">
+					<p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
+					<div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
+						<a href="#"><i class="ti-facebook"></i></a>
+						<a href="#"> <i class="ti-twitter"></i> </a>
+						<a href="#"><i class="ti-instagram"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- jquery plugins here-->
+
+		<script th:src="@{/js/jquery-1.12.1.min.js}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- popper js -->
+		<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"></script>
+
+
+		<!-- owl carousel js -->
+		<script th:src="@{/js/owl.carousel.min.js}"></script>
+		<!-- custom js -->
+		<script th:src="@{/js/custom.js}"></script>
+
+		<!-- CDNS  -->
+		<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js}"></script>
+		<script th:src="@{/js/Chart.min.js}"></script>
+		<script th:src="@{/js/layout.js}"></script>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div id="success-alert" th:if="${success != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${success}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'success'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="error-alert" th:if="${error != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${error}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'error'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="warning-alert" th:if="${warning != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${warning}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'warning'});
+
+							/*]]>*/
+						</script>
+					</div>
+
+					<div id="info-alert" th:if="${info != null}">
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+
+							var message = /*[[${info}]]*/;
+							Swal.fire({
+									text: message,
+									icon: 'info'});
+
+							/*]]>*/
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</footer>
+
+	<!-- footer part end-->
 
     </body>
-    </html>
+</html>

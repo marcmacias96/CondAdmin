@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="layout :: head"></head>
+<body>
+<header th:replace="layout :: frgHeader"></header>
+<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Propietarios</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container pb-5">
+    <div  class="d-flex flex-column">
+        <!-- Begin Page Content -->
+        <div class="container">
+            <div class="container-fluid">
+                <br />
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="content col-sm-1">
+                                <i class="far fa-plus-square fa-2x"></i>
+                            </div>
+                            <h3 class="card-title col-sm-10" th:text="${title}"></h3>
+                        </div>
+                        <hr />
+
+                        <form th:action="@{/condominium/save}" th:object="${condominium}" method="post">
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <i class="ti-home"></i>
+                                    <label class="h5 col-form-label">&nbsp;Nombre</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{name}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('name')}"
+                                           th:errors="*{name}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <i class="ti-money"></i>
+                                    <label class="h5 col-form-label">&nbsp;Costo</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="single-input" type="number"
+                                           th:field="*{costAli}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('costAli')}"
+                                           th:errors="*{costAli}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="content col-sm-3">
+                                    <i class="ti-map"></i>
+                                    <label class="h5 col-form-label">&nbsp;Sector</label>
+                                </div>
+                                <div class="content col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{sector}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('sector')}"
+                                           th:errors="*{sector}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="content col-sm-3">
+                                    <i class="ti-map"></i>
+                                    <label class="h5 col-form-label">&nbsp;Calle 1</label>
+                                </div>
+                                <div class="content col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{street1}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('street1')}"
+                                           th:errors="*{street1}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="content col-sm-3">
+                                    <i class="ti-map"></i>
+                                    <label class="h5 col-form-label">&nbsp;Calle 2</label>
+                                </div>
+                                <div class="content col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{street2}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('street2')}"
+                                           th:errors="*{street2}"></small>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="form-group row">
+                                <div class="content col-sm-3">
+                                    <i class="ti-map"></i>
+                                    <label class="h5 col-form-label">&nbsp;Referencia</label>
+                                </div>
+                                <div class="content col-sm-6">
+                                    <input class="single-input" type="text"
+                                           th:field="*{reference}"
+                                           th:errorclass="'form-control is-invalid'" />
+                                    <small class="invalid-feedback"
+                                           th:if="${#fields.hasErrors('reference')}"
+                                           th:errors="*{reference}"></small>
+                                </div>
+                            </div>
+                            <input type="hidden" th:field="*{idcondominium}" />
+                            <input type="hidden" th:field="*{uSer.idUser}" />
+                            <div class="col-12 d-flex flex-row-reverse">
+                                <a class="genric-btn  danger circle"
+                                   th:href="@{/owner/listByCondom}">
+                                    <i class="ti-close"></i>&nbsp; Cancelar</a>
+                                <button class="genric-btn success circle" type="submit">
+                                    <i class="ti-save"></i>&nbsp; Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer th:replace="layout :: frgFooter"></footer>
+</body>
+</html>

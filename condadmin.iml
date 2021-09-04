@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <conelement value="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src/main/java" expected_position="0" />
+      <src_folder value="file://$MODULE_DIR$/src/main/resources" expected_position="1" />
+      <src_folder value="file://$MODULE_DIR$/src/test/java" expected_position="2" />
+    </src_description>
+  </component>
   <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
@@ -23,11 +41,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" level="application" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.2.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:3.4.1" level="project" />
@@ -55,7 +73,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.28" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.0.RELEASE" level="project" />
@@ -124,5 +141,12 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-security:2.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.28" level="project" />
   </component>
 </module>

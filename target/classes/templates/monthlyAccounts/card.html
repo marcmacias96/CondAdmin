@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: frgHead"></head>
+<body>
+
+<!-- breadcrumb start-->
+
+<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Balance Mensual</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb ends-->
+<div class="container">
+    <header th:replace="layout :: frgHeader"></header>
+    <div  class="d-flex flex-column">
+        <!-- Begin Page Content -->
+        <div class="container">
+            <div class="container-fluid">
+                <br />
+
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-6 ">
+                                    <h3 th:text="${title2}"></h3>
+                            </div>
+                            <div class="col-6 d-flex flex-row-reverse">
+                                <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm info circle" th:href="@{/monthlyAccounts/closeBox/} + ${monthlyAccounts.getIdmonthlyaccounts()}">
+                                        <i class="ti-plus"></i>&nbsp; Cierre de Mes</a>
+                                </div>
+                                <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                    <a class="genric-btn btn-sm success circle" th:href="@{/monthlyAccounts/list/} + ${monthlyAccounts.getAnnualCounts().getIdannualcounts()} ">
+                                        <i class="ti-plus"></i>&nbsp; Meses Posteriores</a>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="idMonthAccount"
+                               th:value="${monthlyAccounts.getIdmonthlyaccounts()}" />
+                        <input type="hidden" id="idcondominium"
+                               th:value="${monthlyAccounts.getAnnualCounts().getCondominium().idcondominium}" />
+                        <input type="hidden" id="month"
+                               th:value="${monthlyAccounts.month}" />
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="content col-sm-3 bg-light">
+                                                <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Ingresos:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h5 class="card-text" th:text="${monthlyAccounts.getIncome()}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="content col-sm-3 bg-light">
+                                            <i class="far fa-sticky-note"></i> <label class="h5 col-form-label">&nbsp;Gastos:</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h5 class="card-text" th:text="${monthlyAccounts.getExpenses()}"></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <br>
+    <!-- Incomes Datatable -->
+    <section class="about_us padding_top pb-5">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-12 col-lg-12">
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-6 ">
+                                <h3 th:text="${title}"></h3>
+                            </div>
+                        </div>
+                        <hr />
+
+                            <div class="col-12">
+                                <table  id="incomeTable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th ><i class="ti-tag"></i>&nbsp;ID</th>
+                                        <th ><i class="ti-money"></i>&nbsp;Valor</th>
+                                        <th ><i class="ti-panel"></i>&nbsp;Estado</th>
+                                        <th ><i class="ti-hand-point-up"></i>&nbsp;Acciones</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="container pt-4">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card col-md-12">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <h3 th:text="${title1}"></h3>
+                                </div>
+                                <div class="col-6 d-flex flex-row-reverse">
+                                    <div sec:authorize="hasRole('ROLE_USER-ADMIN')" class="form-group px-2">
+                                        <a class="genric-btn btn-sm success circle" th:href="@{/expenses/create/} + ${monthlyAccounts.getIdmonthlyaccounts()}">
+                                            <i class="ti-plus"></i>&nbsp; Gastos</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <table  id="expensesTable" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th ><i class="ti-tag"></i>&nbsp;ID</th>
+                                            <th ><i class="ti-money"></i>&nbsp;Valor</th>
+                                            <th ><i class="ti-hand-point-up"></i>&nbsp;Acciones</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="canvas-holder">
+                                        <canvas id="chart-exp"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/tables/incomesDatatable.js}"></script>
+<script th:src="@{/js/tables/expensesDatatable.js}"></script>
+<script th:src="@{/js/Reports/RepTypeOfExpenses.js}"></script>
+
+</body>
+</html>

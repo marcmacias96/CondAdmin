@@ -1,77 +1,200 @@
 package com.mamp.software.condadmin.Controllers;
 
+import com.mamp.software.condadmin.Models.dao.IAnnualCounts;
+import com.mamp.software.condadmin.Models.dao.IMonthlyAccounts;
+import com.mamp.software.condadmin.Models.dao.IUser;
+import com.mamp.software.condadmin.Models.entities.AnnualCounts;
+import com.mamp.software.condadmin.Models.entities.Condominium;
+import com.mamp.software.condadmin.Models.entities.ExpenseDetail;
 import com.mamp.software.condadmin.Models.entities.Expenses;
+import com.mamp.software.condadmin.Models.entities.IncomeDetail;
 import com.mamp.software.condadmin.Models.entities.Income;
+import com.mamp.software.condadmin.Models.entities.MonthlyAccounts;
+import com.mamp.software.condadmin.Models.entities.USer;
+import com.mamp.software.condadmin.services.ICondominiumService;
 import com.mamp.software.condadmin.services.IIncomeService;
 
+import com.mamp.software.condadmin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
+import java.util.TimeZone;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/incomes")
+@SessionAttributes({"details"})
 public class IncomesController {
+
+	
 	@Autowired
-    public IIncomeService service;
+	public IAnnualCounts srvAnual;
+	
+	@Autowired
+	public IMonthlyAccounts srvMonthly;
+	
+	@Autowired
+    private IUser srvUser;
+
+	@Autowired
+    private ICondominiumService srvCond;
+
+	@Autowired
+    private  IIncomeService srvIncome;
+
 
     @GetMapping(value = "/create")
     public String create(Model model){
+    	
         Income income = new Income();
+        income.setState(false);
         model.addAttribute("income", income);
         model.addAttribute("title","Registro de nuevo Ingreso");
+        model.addAttribute("details", new ArrayList<IncomeDetail>());
 
-        return "incomes/form";
+        return "cuentas/incomes/form";
     }
 
-    @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        Income income = service.findById(id);
-        model.addAttribute("income", income);
-        return "incomes/card";
+    @GetMapping(value = "/retrieve/{id}")
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Calendar c = Calendar.getInstance();
+            Calendar fecha = Calendar.getInstance();
+            Income income = srvIncome.findById(id);
+            for (IncomeDetail det:
+                    income.getIncomeDetailList()) {
+                if(det.getType() == "Multa"){
+                    c.setTimeInMillis(fecha.getTime().getTime() - income.getDate().getTime().getTime() );
+                    det.setValue(c.get(Calendar.DAY_OF_YEAR)*1f);
+
+                }
+            }
+            srvIncome.save(income);
+            model.addAttribute("income", income);
+            model.addAttribute("title","Ingreso");
+        }catch (Exception e) {
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/condominium/myCondo";
+        }
+        return "cuentas/incomes/card";
     }
 
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        Income income = service.findById(id);
-        model.addAttribute("income",income);
-        return "incomes/form";
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            Income income = srvIncome.findById(id);
+            model.addAttribute("title","Actualizacion de Ingreso");
+            model.addAttribute("details", new ArrayList<IncomeDetail>());
+            model.addAttribute("income",income);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return "redirect:/incomes/retrieve/" + id;
+        }
+        return "cuentas/incomes/form";
+    }
+
+    @GetMapping(value = "paid/{id}")
+    public String paid(@PathVariable(value = "id") Integer id, Model model,  RedirectAttributes redirectAttributes){
+        Income income = null;
+        try{
+            income = srvIncome.findById(id);
+            for (IncomeDetail det:
+                    income.getIncomeDetailList()) {
+                if(det.getType() == "Multa"){
+                    redirectAttributes.addFlashAttribute("message","Tiene una multa por pagar");
+                    return "cuentas/incomes/retrive/" + income.getIdincome();
+                }
+            }
+            income.setState(true);
+            srvIncome.save(income);
+            income.getMonthlyAccounts().setIncome(income.getMonthlyAccounts().getIncome());
+            income.getMonthlyAccounts().setExpenses(income.getMonthlyAccounts().getExpenses());
+            srvMonthly.save(income.getMonthlyAccounts());
+            model.addAttribute("income",income);
+
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("message","No se pudo realizar el pago");
+        }
+        redirectAttributes.addFlashAttribute("success","Pago realizado con exito");
+        return "redirect:/monthlyAccounts/retrive/" + income.getMonthlyAccounts().getIdmonthlyaccounts();
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
-            service.delete(id);
+    	model.addAttribute("title","eliminacion de registro de nuevo ingreso");
+    	try {
+            srvIncome.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
+            redirectAttributes.addFlashAttribute("message","Error al eliminar el registro");
 
         }
         return "redirect:/incomes/list";
     }
 
-    @GetMapping(value = "/list")
-    public String list(Model model){
-        List<Income> incomeListList = service.findAll();
-        model.addAttribute("title","Listado de Ingresos");
-        model.addAttribute("incomeList", incomeListList);
-        return "incomes/list";
+    @PostMapping(value = "/saveByUpdate")
+    public String saveByUpdate(@Valid Income income, Model model, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
+            , SessionStatus session){
+
+    try {
+        for (IncomeDetail det:
+                detalles) {
+            income.getIncomeDetailList().add(det);
+        }
+        srvIncome.save(income);
+        session.setComplete();
+    }catch (Exception e){
+        redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+        return "cuentas/incomes/form";
+    }
+        return "redirect:/incomes/list";
     }
 
     @PostMapping(value = "/save")
-    public String save(Income income, Model model, RedirectAttributes redirectAttributes){
-        try {
-            service.save(income);
+    public String save(@Valid Income income, RedirectAttributes redirectAttributes, Authentication authentication, @SessionAttribute(value="details") List<IncomeDetail> detalles
+            , SessionStatus session){
+    	USer user = srvUser.findByName(authentication.getName());
+        Condominium condominium = srvCond.findByUser(user.getIdUser());
+    	int year = income.getDate().get(Calendar.YEAR);
+    	int month = income.getDate().get(Calendar.MONTH);
+    	try {
+        	income.setCondominium(condominium);
+        	income.setIncomeDetailList(detalles);
+            srvIncome.save(income);
+    		session.setComplete();
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
+            redirectAttributes.addFlashAttribute("message","No se pudo guardar");
+            return "cuentas/incomes/form";
         }
         return "redirect:/incomes/list";
+    }
+    
+    @PostMapping(value="/addDetailIncome", produces="application/json")
+    public @ResponseBody List<IncomeDetail> addDetailIncomes(@RequestBody IncomeDetail detail, @SessionAttribute(value="details") List<IncomeDetail> detalles) {
+        detalles.add(detail);
+        return detalles;
     }
 }

@@ -3,6 +3,8 @@ package com.mamp.software.condadmin.services;
 import com.mamp.software.condadmin.Models.dao.IOwner;
 import com.mamp.software.condadmin.Models.entities.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +18,12 @@ public class OwnerService implements IOwnerService {
     @Override
     @Transactional
     public void save(Owner owner) {
-        dao.save(owner);
+        try {
+            dao.save(owner);
+        }
+        catch(Exception ex) {
+            throw ex;
+        }
     }
 
     @Override
@@ -35,5 +42,17 @@ public class OwnerService implements IOwnerService {
     @Transactional(readOnly=true)
     public List<Owner> findAll() {
         return (List<Owner>) dao.findAll();
+    }
+
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<Owner> findByCondom(Integer id) {
+        return (List<Owner>) dao.findByCondom(id);
+    }
+
+    @Override
+    public Owner findByUser(Integer id) {
+        return dao.findByUser(id);
     }
 }

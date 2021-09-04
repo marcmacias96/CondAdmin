@@ -1,12 +1,18 @@
 package com.mamp.software.condadmin.Models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "MONTHLYACCOUNTS")
@@ -20,23 +26,28 @@ public class MonthlyAccounts implements Serializable {
     private Integer idmonthlyaccounts;
 
     @Column(name = "MONTH")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotEmpty
-    private Calendar month;
+    @NotNull
+    private Integer month;
 
     @Column(name = "INCOME",precision=8, scale = 2)
-    @NotEmpty
     private float income;
 
     @Column(name = "EXPENSES",precision=8, scale = 2)
-    @NotEmpty
     private float expenses;
 
     //Relations
     @JoinColumn(name = "IDANNUALCOUNTS", referencedColumnName = "IDANNUALCOUNTS")
     @ManyToOne
     private AnnualCounts annualCounts;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    private List<Income> incomeList;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "monthlyAccounts", fetch = FetchType.LAZY)
+    private List<Expenses> expensesList;
 
     /**/
     public MonthlyAccounts(){
@@ -49,37 +60,70 @@ public class MonthlyAccounts implements Serializable {
     }
 
     /**/
-	public Integer getIdmonthlyaccounts() {
-		return idmonthlyaccounts;
-	}
 
-	public void setIdmonthlyaccounts(Integer idmonthlyaccounts) {
-		this.idmonthlyaccounts = idmonthlyaccounts;
-	}
+    public Integer getIdmonthlyaccounts() {
+        return idmonthlyaccounts;
+    }
 
-	public Calendar getMonth() {
-		return month;
-	}
+    public void setIdmonthlyaccounts(Integer idmonthlyaccounts) {
+        this.idmonthlyaccounts = idmonthlyaccounts;
+    }
 
-	public void setMonth(Calendar month) {
-		this.month = month;
-	}
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
 
 	public float getIncome() {
-		return income;
-	}
+        float total = 0;
+        for(Income inc : this.incomeList){
+            if(inc.getState()){
+                total += inc.getValue();
+            }
+        }
+        return total;
+    }
 
-	public void setIncome(float income) {
-		this.income = income;
-	}
+    public void setIncome(float income) {
+        this.income = income;
+    }
 
-	public float getExpenses() {
-		return expenses;
-	}
+    public float getExpenses() {
+        float total = 0;
+        for(Expenses exp : this.expensesList){
+            total += exp.getValue();
+        }
+        return total;
+    }
 
-	public void setExpenses(float expenses) {
-		this.expenses = expenses;
-	}
+    public void setExpenses(float expenses) {
+        this.expenses = expenses;
+    }
 
-    
+    public AnnualCounts getAnnualCounts() {
+        return annualCounts;
+    }
+
+    public void setAnnualCounts(AnnualCounts annualCounts) {
+        this.annualCounts = annualCounts;
+    }
+
+    public List<Income> getIncomeList() {
+        return incomeList;
+    }
+
+    public void setIncomeList(List<Income> incomeList) {
+        this.incomeList = incomeList;
+    }
+
+    public List<Expenses> getExpensesList() {
+        return expensesList;
+    }
+
+    public void setExpensesList(List<Expenses> expensesList) {
+        this.expensesList = expensesList;
+    }
 }

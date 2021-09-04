@@ -36,4 +36,17 @@ public class HouseService implements IHouseService {
     public List<House> findAll() {
         return (List<House>) dao.findAll();
     }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<House> findByOwner(Integer id) {
+        return dao.findByOwner(id);
+    }
+
+    @Override
+    public List<House> findByCondom(Integer id) {
+        return dao.findByCondom(id);
+    }
+
+
 }

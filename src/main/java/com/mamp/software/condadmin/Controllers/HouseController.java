@@ -1,76 +1,146 @@
 package com.mamp.software.condadmin.Controllers;
 
-import com.mamp.software.condadmin.Models.entities.House;
+import com.mamp.software.condadmin.Models.dao.ICondominium;
+import com.mamp.software.condadmin.Models.dao.IUser;
+import com.mamp.software.condadmin.Models.entities.*;
+import com.mamp.software.condadmin.services.ICondominiumService;
+import com.mamp.software.condadmin.services.IIncomeService;
+import com.mamp.software.condadmin.services.IOwnerService;
 import com.mamp.software.condadmin.services.IHouseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/house")
 public class HouseController {
 	@Autowired
-    public IHouseService service;
+    private IHouseService srvHouse;
+	
+	@Autowired
+	private IOwnerService srvOwner;
 
-    @GetMapping(value = "/create")
-    public String create(Model model){
+    @Autowired
+    private ICondominiumService srvCondm;
+
+    @Autowired
+    private IUser srvUser;
+
+    @Autowired
+    private IIncomeService srvIncome;
+
+    @GetMapping(value = "/create/{id}")
+    public String create(@PathVariable(value = "id") Integer id, Model model){
         House house = new House();
+        house.setOwnerId(id);
         model.addAttribute("house", house);
         model.addAttribute("title","Registro de nueva Casa");
-
         return "house/form";
     }
 
     @GetMapping(value = "/retrive/{id}")
-    public String retrive(@PathVariable(value = "id") Integer id, Model model){
-        House house = service.findById(id);
-        model.addAttribute("house", house);
+    public String retrive(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            House house = srvHouse.findById(id);
+            List<Income> incomeList = srvIncome.findByHouse(house.getIdhouse());
+            model.addAttribute("house", house);
+            model.addAttribute("incomeList", incomeList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
         return "house/card";
     }
 
+
     @GetMapping(value = "update/{id}")
-    public String update(@PathVariable(value = "id") Integer id, Model model){
-        House house = service.findById(id);
-        model.addAttribute("house",house);
+    public String update(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            House house = srvHouse.findById(id);
+            house.setOwnerId(house.getOwner().getIdowner());
+            model.addAttribute("house",house);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
+
         return "house/form";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes redirectAttributes){
         try {
-            service.delete(id);
+            srvHouse.delete(id);
             redirectAttributes.addFlashAttribute("message","El registro se elimino exitosamente");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","Error al eliminar el resgistro");
-
         }
         return "redirect:/house/list";
     }
 
-    @GetMapping(value = "/list")
-    public String list(Model model){
-        List<House> houseList = service.findAll();
-        model.addAttribute("title","Listado de Casas");
-        model.addAttribute("houseList", houseList);
+    @GetMapping(value = "/listByOwner/{id}")
+    public String listByOwner(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            List<House> houseList = srvHouse.findByOwner(id);
+            model.addAttribute("title","Listado de Casas");
+            model.addAttribute("houseList", houseList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
         return "house/list";
     }
 
+    @GetMapping(value = "/listByCondom/{id}")
+    public String lisByCondom(@PathVariable(value = "id") Integer id, Model model, RedirectAttributes flash){
+        try{
+            List<House> houseList = srvHouse.findByCondom(id);
+            model.addAttribute("title","Listado de Casas");
+            model.addAttribute("houseList", houseList);
+        }catch (Exception e){
+            flash.addAttribute("error","Ocurrio un error inesperado");
+            return  "redirect:/condominium/myCondo";
+        }
+        return "house/listByCondom";
+    }
+    
+    @GetMapping(value = "/listByCondomJson/{id}", produces = "application/json")
+    public @ResponseBody List<House> listJson(@PathVariable(value = "id") Integer id){
+        List<House> houseList = srvHouse.findByCondom(id);
+        return houseList;
+    }
+
     @PostMapping(value = "/save")
-    public String save(House house, Model model, RedirectAttributes redirectAttributes){
+    public String save(@Valid  House house, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, Authentication authentication){
+        Condominium condominium = null;
+        Owner owner= null;
         try {
-            service.save(house);
+            if (bindingResult.hasErrors()){
+                model.addAttribute("title","Error al guardar");
+                return "house/form";
+            }
+            owner = srvOwner.findById(house.getOwnerId());
+            USer user = srvUser.findByName(authentication.getName());
+            condominium = srvCondm.findByUser(user.getIdUser());
+            house.setCondominium(condominium);
+            house.setOwner(owner);
+            srvHouse.save(house);
             redirectAttributes.addFlashAttribute("message","Registro guardado con exito");
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("message","No se pudo guerdar");
         }
-        return "redirect:/house/list";
+        return "redirect:/owner/retrive/" + owner.getIdowner() ;
     }
 }

@@ -36,4 +36,9 @@ public class CondominiumService implements ICondominiumService{
     public List<Condominium> findAll() {
         return (List<Condominium>) dao.findAll();
     }
+
+    @Override
+    public Condominium findByUser(Integer id) {
+        return dao.findByUser(id);
+    }
 }

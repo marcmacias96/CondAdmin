@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<body>
+
+	<header th:replace="layout :: header"></header>
+
+
+	<!-- banner part start-->
+	<section class="banner_part">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-4 col-xl-4 ">
+					<div class="banner_text">
+						<div class="banner_text_iner">
+							<form th:action="@{/login}" method="post">
+								<div class="form-group col-4 typography">
+									<h2>Ingreso</h2>
+								</div>
+								<div class="form-group ">
+									<input type="text" name="username"
+										   class="single-input" placeholder="Usuario" autofocus required />
+								</div>
+
+								<div class="form-group ">
+									<input type="password" name="password"
+										   class="single-input" placeholder="Contrase&nacute;a" required />
+								</div>
+
+								<div class="form-group ">
+									<input type="submit" class="btn_2"
+										   value="Ingresar" />
+								</div>
+								<input  type="hidden" th:name="${_csrf.parameterName}"
+										th:value="${_csrf.token}" />
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-lg-8">
+					<div class="banner_img">
+						<img th:src="@{img/banner_img.png}" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- banner part start-->
+
+
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

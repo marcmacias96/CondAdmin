@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout :: frgHead"></head>
+<body>
+<header th:replace="layout :: frgHeader"></header>
+<!-- breadcrumb start-->
+<section class="breadcrumb_part breadcrumb_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Condominios</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb end-->
+
+
+<!-- about us part start-->
+<section class="about_us padding_top pb-5">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-2 col-lg-4">
+                <div class="about_us_img">
+                    <img th:src="@{/img/GrupoCasa.png}" alt="">
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-8">
+                <div class="card col-md-12">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="content col-sm-1">
+                                <i class="far fa-plus-square fa-2x"></i>
+                            </div>
+                            <h3 class="card-title col-sm-10" th:text="${title}"></h3>
+                        </div>
+                        <hr />
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="align-middle text-center"><i class="ti-home"></i>&nbsp;Nombre</th>
+                                <th class="align-middle text-center"><i class="ti-money"></i>&nbsp;Costo</th>
+                                <th class="align-middle text-center"><i class="ti-map"></i> Sector</th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr th:each="cond : ${condominiumList}" >
+                                <td class="align-middle text-center" th:text="${cond.name}"></td>
+                                <td class="align-middle text-center" th:text="${cond.costAli}"></td>
+                                <td class="align-middle text-center" th:text="${cond.sector}"></td>
+                                <td>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="row">
+                                        <a class="genric-btn btn-sm info-border circle" title="Edit"
+                                           th:href="@{/condominium/update/} + ${cond.idcondominium}">
+                                            <i class="ti-pencil"></i>
+                                        </a>
+                                        <a class="genric-btn btn-sm info-border circlegenric-btn btn-sm info-border circle" title="View"
+                                           th:href="@{/condominium/retrive/} + ${cond.idcondominium}">
+                                            <i class="ti-hand-point-up"></i>
+                                        </a>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</section>
+<footer th:replace="layout :: frgFooter"></footer>
+<script th:src="@{/js/tables/houseDatatable.js}"></script>
+</body>
+</html>
